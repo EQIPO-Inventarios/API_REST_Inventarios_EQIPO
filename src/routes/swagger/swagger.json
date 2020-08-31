@@ -1,0 +1,167 @@
+
+{
+    "swagger": "2.0",
+    "info": {
+       "description": "Inventory API",
+       "version": "1.0.0",
+       "title": "Inventory API",
+       "contact": {
+          "email": "jhosepchai@gmail.com"
+       },
+       "license": {
+          "name": "MIT",
+          "url": "https://opensource.org/licenses/MIT"
+       }
+    },
+    "tags": [
+       {
+          "name": "users",
+          "description": "User management"
+       },
+       {
+          "name": "developers",
+          "description": "Operations available to regular developers"
+       }
+    ],
+    "paths": {
+       "/listUsuarios": {
+          "get": {
+             "tags": [
+                "users"
+             ],
+             "summary": "list of registered users",
+             "operationId": "listUsuarios",
+             "description": "You can list users registered in the system",
+             "produces": [
+                "application/json"
+             ],             
+             "responses": {
+                "200": {
+                   "description": "search results matching criteria",
+                   "schema": {
+                      "type": "array",
+                      "items": {
+                         "$ref": "#/definitions/UserItem"
+                      }
+                   }
+                },
+                "400": {
+                   "description": "bad input parameter"
+                }
+             }
+          },
+          "post": {
+             "tags": [
+                "admins"
+             ],
+             "summary": "adds an inventory item",
+             "operationId": "addInventory",
+             "description": "Adds an item to the system",
+             "consumes": [
+                "application/json"
+             ],
+             "produces": [
+                "application/json"
+             ],
+             "parameters": [
+                {
+                   "in": "body",
+                   "name": "inventoryItem",
+                   "description": "Inventory item to add",
+                   "schema": {
+                      "$ref": "#/definitions/InventoryItem"
+                   }
+                }
+             ],
+             "responses": {
+                "201": {
+                   "description": "item created"
+                },
+                "400": {
+                   "description": "invalid input, object invalid"
+                },
+                "409": {
+                   "description": "an existing item already exists"
+                }
+             }
+          }
+       }
+    },
+    "definitions": {
+       "InventoryItem": {
+          "type": "object",
+          "required": [
+             "id",
+             "name",
+             "manufacturer",
+             "releaseDate"
+          ],
+          "properties": {
+             "id": {
+                "type": "string",
+                "format": "uuid",
+                "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+             },
+             "name": {
+                "type": "string",
+                "example": "Widget Adapter"
+             },
+             "releaseDate": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2016-08-29T09:12:33.001Z"
+             },
+             "manufacturer": {
+                "$ref": "#/definitions/Manufacturer"
+             }
+          }
+       },
+       "UserItem": {
+         "type": "object",         
+         "properties": {
+            "_id": {
+               "type": "string",
+               "format": "uuid",
+               "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+            },
+            "name": {
+               "type": "string",
+               "example": "Widget Adapter"
+            },
+            "releaseDate": {
+               "type": "string",
+               "format": "date-time",
+               "example": "2016-08-29T09:12:33.001Z"
+            },
+            "manufacturer": {
+               "$ref": "#/definitions/Manufacturer"
+            }
+         }
+      },
+       "Manufacturer": {
+          "required": [
+             "name"
+          ],
+          "properties": {
+             "name": {
+                "type": "string",
+                "example": "ACME Corporation"
+             },
+             "homePage": {
+                "type": "string",
+                "format": "url",
+                "example": "https://www.acme-corp.com"
+             },
+             "phone": {
+                "type": "string",
+                "example": "408-867-5309"
+             }
+          }
+       }
+    },
+    "host": "localhost:3000",
+    "basePath": "/api",
+    "schemes": [
+       "http"
+    ]
+ }

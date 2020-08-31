@@ -8,7 +8,6 @@ const Usuario  = require("../models/Usuario");
 const { model } = require("../models/Usuario");
 
 
-//app
 let listarUsuarios = async (req, res) =>{
     const model = await Usuario.find()
     Usuario.countDocuments({}, (err, total ) =>{
@@ -24,4 +23,27 @@ let listarUsuarios = async (req, res) =>{
     })
   };
 
-  module.exports ={listarUsuarios}
+
+  let login = async(req, res)  =>{
+    const   {user_name, password} = req.body;
+    
+    const objUser = new Usuario({
+      user_name,
+      password
+    }) 
+  
+    const model = await Usuario.findOne({user_name: objUser.user_name, 
+      password: objUser.password})
+    if(model){
+      res.json(model) //sustituir por validacion de token
+    }else{
+      res.json({
+        status : 404,
+        message : "Usuario no registrado"        
+      })
+    }
+   
+
+  }
+
+  module.exports ={listarUsuarios,login}
