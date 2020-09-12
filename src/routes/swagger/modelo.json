@@ -1,0 +1,42 @@
+[{
+    "entrada" : {
+        "_id" : "Object",
+        "Fecha" : "Date",
+        "Detalle": "String",
+        "Producto": {
+                        "_id" : "Object",
+                        "Codigo" : "String",
+                        "nombre" : "String",
+                        "material" : "String",
+                        "caracteristicas" : "String",
+                        "Existencias" : "float",
+                        "Proveedor" : {
+                                    "_id": "Object" 
+                        },
+                        "Precio Unitario" : "float",
+                        "Ubicacion en bodega" : {
+                                    "_id" : "Object",
+                                    "bodega" : {
+                                            "...." : "..."
+                                    },
+                                    "estanteria" : "int",
+                                    "x": "int",
+                                    "y" : "int"
+                        },
+                        "estado" : "boolean"
+        },
+        "monto" : "float",
+        "cantidad" :"float",
+        "sucursal" : {
+                    "_id":"Object",
+                    "nombre":"String",
+                    "codigo": "String",
+                    "Contacto" : {
+                        "...":"..."
+            },
+            "estado" : "boolean"
+        }
+    }
+},
+
+]

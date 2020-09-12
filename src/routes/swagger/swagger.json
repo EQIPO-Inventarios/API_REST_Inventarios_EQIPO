@@ -1,167 +1,142 @@
-
 {
-    "swagger": "2.0",
-    "info": {
-       "description": "Inventory API",
-       "version": "1.0.0",
-       "title": "Inventory API",
-       "contact": {
-          "email": "jhosepchai@gmail.com"
-       },
-       "license": {
-          "name": "MIT",
-          "url": "https://opensource.org/licenses/MIT"
-       }
-    },
-    "tags": [
-       {
-          "name": "users",
-          "description": "User management"
-       },
-       {
-          "name": "developers",
-          "description": "Operations available to regular developers"
-       }
-    ],
-    "paths": {
-       "/listUsuarios": {
-          "get": {
-             "tags": [
-                "users"
-             ],
-             "summary": "list of registered users",
-             "operationId": "listUsuarios",
-             "description": "You can list users registered in the system",
-             "produces": [
-                "application/json"
-             ],             
-             "responses": {
-                "200": {
-                   "description": "search results matching criteria",
-                   "schema": {
-                      "type": "array",
-                      "items": {
-                         "$ref": "#/definitions/UserItem"
-                      }
-                   }
-                },
-                "400": {
-                   "description": "bad input parameter"
-                }
+   "swagger": "2.0",
+   "info": {
+     "description": "This is a simple API",
+     "version": "1.0.0",
+     "title": "Simple Inventory API",
+     "contact": {
+       "email": "you@your-company.com"
+     },
+     "license": {
+       "name": "Apache 2.0",
+       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+     }
+   },
+   "tags": [
+     {
+       "name": "Usuarios",
+       "description": "operaciones de usuarios"
+     }
+   ],
+   "paths": {
+     "/Usuarios/listar": {
+       "get": {
+         "tags": [
+           "Usuarios"
+         ],
+         "summary": "searches inventory",
+         "operationId": "searchInventory",
+         "description": "By passing in the appropriate options, you can search for\navailable inventory in the system\n",
+         "produces": [
+           "application/json"
+         ],
+         "responses": {
+           "200": {
+             "description": "search results matching criteria",
+             "schema": {
+               "type": "array",
+               "items": {
+                 "$ref": "#/definitions/User"
+               }
              }
-          },
-          "post": {
-             "tags": [
-                "admins"
-             ],
-             "summary": "adds an inventory item",
-             "operationId": "addInventory",
-             "description": "Adds an item to the system",
-             "consumes": [
-                "application/json"
-             ],
-             "produces": [
-                "application/json"
-             ],
-             "parameters": [
-                {
-                   "in": "body",
-                   "name": "inventoryItem",
-                   "description": "Inventory item to add",
-                   "schema": {
-                      "$ref": "#/definitions/InventoryItem"
-                   }
-                }
-             ],
-             "responses": {
-                "201": {
-                   "description": "item created"
-                },
-                "400": {
-                   "description": "invalid input, object invalid"
-                },
-                "409": {
-                   "description": "an existing item already exists"
-                }
-             }
-          }
-       }
-    },
-    "definitions": {
-       "InventoryItem": {
-          "type": "object",
-          "required": [
-             "id",
-             "name",
-             "manufacturer",
-             "releaseDate"
-          ],
-          "properties": {
-             "id": {
-                "type": "string",
-                "format": "uuid",
-                "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
-             },
-             "name": {
-                "type": "string",
-                "example": "Widget Adapter"
-             },
-             "releaseDate": {
-                "type": "string",
-                "format": "date-time",
-                "example": "2016-08-29T09:12:33.001Z"
-             },
-             "manufacturer": {
-                "$ref": "#/definitions/Manufacturer"
-             }
-          }
-       },
-       "UserItem": {
-         "type": "object",         
-         "properties": {
-            "_id": {
-               "type": "string",
-               "format": "uuid",
-               "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
-            },
-            "name": {
-               "type": "string",
-               "example": "Widget Adapter"
-            },
-            "releaseDate": {
-               "type": "string",
-               "format": "date-time",
-               "example": "2016-08-29T09:12:33.001Z"
-            },
-            "manufacturer": {
-               "$ref": "#/definitions/Manufacturer"
-            }
+           },
+           "400": {
+             "description": "bad input parameter"
+           }
          }
-      },
-       "Manufacturer": {
-          "required": [
-             "name"
-          ],
-          "properties": {
-             "name": {
-                "type": "string",
-                "example": "ACME Corporation"
-             },
-             "homePage": {
-                "type": "string",
-                "format": "url",
-                "example": "https://www.acme-corp.com"
-             },
-             "phone": {
-                "type": "string",
-                "example": "408-867-5309"
-             }
-          }
        }
-    },
-    "host": "localhost:3000",
-    "basePath": "/api",
-    "schemes": [
-       "http"
-    ]
+     },
+     "/Usuarios/login": {
+       "post": {
+         "tags": [
+           "Usuarios"
+         ],
+         "summary": "adds an inventory item",
+         "operationId": "addInventory",
+         "description": "Adds an item to the system",
+         "consumes": [
+           "application/json"
+         ],
+         "produces": [
+           "application/json"
+         ],
+         "parameters": [
+           {
+             "in": "body",
+             "name": "inventoryItem",
+             "description": "Inventory item to add",
+             "schema": {
+               "$ref": "#/definitions/user_login"
+             }
+           }
+         ],
+         "responses": {
+           "404": {
+             "description": "invalid input, object invalid"
+           }
+         }
+       }
+     }
+   },
+   "definitions": {
+     "user_login": {
+       "type": "object",
+       "required": [
+         "usuario",
+         "password",
+         "name",
+         "lastname",
+         "createAt",
+         "token",
+         "estado"
+       ],
+       "properties": {
+         "usuario": {
+           "type": "string",
+           "example": "jhosepIslam"
+         },
+         "password": {
+           "type": "string",
+           "example": "123"
+         }
+       }
+     },
+     "User": {
+       "type": "object",
+       "properties": {
+         "id": {
+           "type": "object"
+         },
+         "usuario": {
+           "type": "string"
+         },
+         "name": {
+           "type": "string"
+         },
+         "lastName": {
+           "type": "string"
+         },
+         "email": {
+           "type": "string"
+         },
+         "password": {
+           "type": "string"
+         },
+         "createdAt": {
+           "type": "string"
+         },
+         "estado": {
+           "type": "boolean"
+         }
+       },
+       "xml": {
+         "name": "User"
+       }
+     }
+   },
+   "host": "localhost:3000",
+   "basePath": "/api",
+   "schemes": [     
+     "http"
+   ]
  }
