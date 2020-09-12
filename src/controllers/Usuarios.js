@@ -5,7 +5,6 @@ const express = require("express");
 const pool = require("../settings/db");
 //Modelo BD
 const Usuario  = require("../models/Usuario");
-const { model } = require("../models/Usuario");
 
 
 let listarUsuarios = async (req, res) =>{
@@ -25,20 +24,34 @@ let listarUsuarios = async (req, res) =>{
 
 
   let login = async(req, res)  =>{
-    const   {user_name, password} = req.body;
+    const   {usuario, password} = req.body;
     
     const objUser = new Usuario({
-      user_name,
+      usuario,
       password
-    }) 
-  
-    const model = await Usuario.findOne({user_name: objUser.user_name, 
-      password: objUser.password})
-    if(model){
-      res.json(model) //sustituir por validacion de token
+    })   
+    const model = await Usuario.findOne({usuario: objUser.usuario})
+    if(model){      
+      if(model.password == password){
+        if(model.estado == true){
+          res.status(200).json({           
+            token : model.token        
+          })
+        }else{
+          res.json({
+            status : 204,
+            message : "Usuario no registrado"        
+          })
+        }
+      }else{
+        res.json({
+          status : 204,
+          message : "Usuario o contraseña incorrectos"        
+        })
+      }
     }else{
       res.json({
-        status : 404,
+        status : 204,
         message : "Usuario no registrado"        
       })
     }
