@@ -1,13 +1,9 @@
-const express = require("express");
-
-//conexion BD
-
 const pool = require("../settings/db");
 //Modelo BD
-const Usuario  = require("../models/Usuario");
+const Usuario  = require("../models/GestionUsuarios/Usuario");
 
 
-let listarUsuarios = async (req, res) =>{
+const listarUsuarios = async (req, res) =>{
     const model = await Usuario.find()
     Usuario.countDocuments({}, (err, total ) =>{
       if (err) {
