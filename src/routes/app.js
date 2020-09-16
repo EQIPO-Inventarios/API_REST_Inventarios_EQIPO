@@ -1,32 +1,29 @@
 const express = require("express"),
+path = require("path"),
 app = express.Router();
 
 const Usuarios = require("../controllers/Usuarios")
-
-var swaggerUi = require('swagger-ui-express'),
-    swaggerDocument = require("./swagger/swagger.json");
+const swaggerUi = require('swagger-ui-express')
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load(path.resolve(__dirname,"./swagger/swagger.yaml"));
+const Niveles = require("../controllers/Niveles");
+const Departamentos = require("../controllers/Deparatamentos");
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-/*
-app.all("/test", (req, res)=>{
-    res.send("hola mundo");
-})
-app.get("/Usuarios/listar",Usuarios.listarUsuarios)
-app.post("/Usuarios/login",Usuarios.login)
-*/
-app.get("/Usuarios/listar",Usuarios.listarUsuarios)
-app.post("/Usuarios/login", Usuarios.login)
+// usuarios
+app.get("/Usuarios/listar",Usuarios.listarUsuarios);
+app.post("/Usuarios/login", Usuarios.login);
 
+// niveles de usuario.
+app.post("/Niveles/crear", Niveles.crear);
+app.delete("/Niveles/eliminar/:_id", Niveles.eliminar);
+app.put("/Niveles/actualizar", Niveles.actualizar);
+app.get("/Niveles/listar",Niveles.listar);
 
+//Departamentos
 
+app.post("/Departamentos/listar",Departamentos.listar)
 
-
-app.get("/prueba",(req, res)=>{
-    res.status(200).json({
-        saludo : "hola mundo",
-        creado : "mi v:"
-    })
-})
 
 module.exports = app;
