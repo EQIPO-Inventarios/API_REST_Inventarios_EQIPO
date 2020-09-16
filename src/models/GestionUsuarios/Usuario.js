@@ -8,34 +8,27 @@ const userSchema = mongoose.Schema({
       type: String,
       required: true,
       trim: true
-   },
-   apellido: {
+  },
+  apellido: {
     type: String,
     required: true,
     trim: true
- },
- usuario: {
+  },
+  usuario: {
     type: String,
     required: true,
     trim: true,
     unique: true,
  },
-   email: {
-      type: String,
-      required: true,
-      unique: true,
-      lowercase: true,
-      validate: value => {
-         if (!validator.isEmail(value)) {
-            throw new Error({error: 'Invalid Email address'})
-         }
-      }
-   },
    password: {
       type: String,
       required: true,
       minLength: 7
-   },   
+   },nivel : {
+     type : mongoose.Schema.Types.ObjectId,
+     ref : 'Niveles',
+     require: true
+   },
       token: {
          type: String,
          required: true
