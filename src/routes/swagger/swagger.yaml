@@ -14,8 +14,10 @@ info:
 # tags are used for organizing operations
 tags:
 - name: Usuarios
-  description: operaciones de usuarios
 - name: Niveles
+- name: Departamentos
+
+
 
 paths:
   /Usuarios/listar:
@@ -155,7 +157,27 @@ paths:
             items:
               $ref : '#/definitions/NivelItem'
           
-        
+    
+    
+    
+  /Departamentos/listar:
+    get:
+      tags:
+      - Departamentos
+      summary: Listar todos Departamentos
+      description: Listar todos Departamentos del Pais
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Departamentos'    
 definitions:
   user_login:
     type: object
@@ -224,6 +246,22 @@ definitions:
     xml:
       name: NewNivel
     
+  Departamentos:
+    type: object
+    properties:
+      Departamento:
+        type: string
+      Municipios:
+        type: array
+        items:
+          type: string
+          minItems: 5
+            
+            
+          
+          
+    xml:
+      name: Departamentos
       
       
 host: localhost:3000

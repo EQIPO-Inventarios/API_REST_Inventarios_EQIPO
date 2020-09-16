@@ -23,7 +23,7 @@ app.get("/Niveles/listar",Niveles.listar);
 
 //Departamentos
 
-app.post("/Departamentos/listar",Departamentos.listar)
+app.get("/Departamentos/listar",Departamentos.listar)
 
 
 module.exports = app;
