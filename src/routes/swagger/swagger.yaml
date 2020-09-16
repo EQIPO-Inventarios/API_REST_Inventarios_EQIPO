@@ -1,0 +1,232 @@
+swagger: '2.0'
+info:
+  description: API
+  version: 1.0.0
+  title: Inventarios API
+  # put the contact info for your development or API team
+  contact:
+    email: jhosepchai@gmail.com
+
+  license:
+    name: GNU GPL 3.0
+    url: https://www.gnu.org/licenses/gpl-3.0.html
+
+# tags are used for organizing operations
+tags:
+- name: Usuarios
+  description: operaciones de usuarios
+- name: Niveles
+
+paths:
+  /Usuarios/listar:
+    get:
+      tags:
+      - Usuarios
+      summary: Lista usuarios
+      operationId: listarUsuarios
+      description: |
+        Al hacer la peticion sin parametros se devolvera una lista de objetos de usuarios
+      produces:
+      - application/json
+      
+      responses:
+        200:
+          description: Devuelve array de usuarios activos
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        400:
+          description: bad input parameter
+          
+  /Usuarios/login:
+    post:
+      tags:
+      - Usuarios
+      summary: Login de usuario
+      description: Permite al usuario hacer login
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: itemLogin
+        description: Datos correctos para hacer login
+        schema:
+          $ref: '#/definitions/user_login'
+      responses:
+        200:
+          description: peticion correcta
+          
+     
+        404:
+          description: invalid input, object invalid
+          
+          
+  /Niveles/crear:
+    post:
+      tags:
+      - Niveles
+      summary: Agregar un nuevo nivel
+      description: Agregar un nuevo nivel de usuario
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: NivelItem
+        description: Item de nivel a agregar
+        schema:
+          $ref: '#/definitions/NewNivel'
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/NivelItem'
+              
+  /Niveles/eliminar/{_id}:
+    delete:
+      tags:
+      - Niveles
+      summary: Eliminar un  nivel
+      description: Eliminar un  nivel de usuario
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: _id
+        in: path
+        description: ID del nivel a eliminar
+        required: true
+        type: string
+        
+      
+      responses:
+        200:
+          description: OK
+  
+  /Niveles/actualizar:
+    put:
+      tags:
+      - Niveles
+      summary: Actualiza un  nivel
+      description: Actualizar un  nivel de usuario
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Nivel item
+        description: Item de nivel a actualizar
+        schema:
+          $ref: '#/definitions/NewNivel'
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/NivelItem'
+          
+  /Niveles/listar:
+    get:
+      tags:
+      - Niveles
+      summary: Listar todos niveles
+      description: Listar todos nivel de usuario
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/NivelItem'
+          
+        
+definitions:
+  user_login:
+    type: object
+    required:
+    - usuario
+    - password
+    - name
+    - lastname
+    - createAt
+    - token
+    - estado
+    
+    properties:
+      usuario:
+        type: string
+        example: jhosepIslam
+      password:
+        type: string
+        example: 123 
+    
+  User:
+    type: object
+    properties:
+      id:
+        type: object
+      usuario:
+        type: string
+      name:
+        type: string
+      lastName:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      createdAt:
+        type: string
+      estado:
+        type: boolean
+      
+    xml:
+      name: User
+      
+  NivelItem:
+    type: object
+    properties:
+      _id:
+        type: object
+      Estado:
+        type: boolean
+      Tipo:
+        type: string
+      Numero:
+        type: number
+    xml:
+      name: Nivel
+    
+    
+  NewNivel:
+    type: object
+    properties:
+      Tipo:
+        type: string
+      Numero:
+        type: number
+    xml:
+      name: NewNivel
+    
+      
+      
+host: localhost:3000
+basePath: /api
+schemes:
+ - http
