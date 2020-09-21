@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const contactoSchema = mongoose.Schema({
     Direccion : {
         type : mongoose.Schema.Types.ObjectId,
+        ref : 'Direcciones',
         require : true
     },
     Telefono : {

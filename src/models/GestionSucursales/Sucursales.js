@@ -13,6 +13,7 @@ const sucursalSchema = mongoose.Schema({
     },
     Contacto : {
         type : mongoose.Types.ObjectId,
+        ref : 'Contatos',
         required : true
     },
     Estado : {
