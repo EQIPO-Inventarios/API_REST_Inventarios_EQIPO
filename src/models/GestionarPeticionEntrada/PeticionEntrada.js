@@ -33,6 +33,7 @@ const peticion_entradaSchema = mongoose.Schema(
     
 });
 
+
 const PeticionEntrada = mongoose.model('Peticiones_Entradas', peticion_entradaSchema)
 
 module.exports = PeticionEntrada

@@ -24,6 +24,7 @@ const proveedorSchema = mongoose.Schema(
 
 });
 
+
 const Proveedor = mongoose.model('Proveedores', proveedorSchema)
 
 module.exports = Proveedor

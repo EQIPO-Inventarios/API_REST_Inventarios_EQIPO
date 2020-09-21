@@ -22,6 +22,6 @@ const ubicacion_bodegaSchema = mongoose.Schema(
     
 });
 
-const UbicacionBodega = mongoose.model('Ubicaciones_Bodega', ubicacion_bodegaSchema)
+const UbicacionBodega = mongoose.model('Ubicaciones_Bodegas', ubicacion_bodegaSchema)
 
 module.exports = UbicacionBodega

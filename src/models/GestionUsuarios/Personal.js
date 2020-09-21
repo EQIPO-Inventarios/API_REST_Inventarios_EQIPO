@@ -48,5 +48,6 @@ const personalSchema = mongoose.Schema({
     }
 });
 
+
 const Personal = mongoose.model('Personales',personalSchema);
 module.exports = Personal;

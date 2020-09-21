@@ -32,6 +32,7 @@ const entradaSchema = mongoose.Schema(
 
 });
 
+
 const Entradas = mongoose.model('Entradas', entradaSchema)
 
 module.exports = Entradas

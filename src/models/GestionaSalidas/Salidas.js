@@ -32,6 +32,7 @@ const salidaSchema = mongoose.Schema(
     
 });
 
+
 const Salidas = mongoose.model('Salidas', salidaSchema)
 
 module.exports = Salidas
