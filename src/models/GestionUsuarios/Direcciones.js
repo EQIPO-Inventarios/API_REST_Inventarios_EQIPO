@@ -19,4 +19,4 @@ const direccionesSchema = mongoose.Schema({
 });
 
 const Direcciones = mongoose.model('Direcciones', direccionesSchema);
-module.exports = Direcciones;
+module.exports = {direccionesSchema ,Direcciones};

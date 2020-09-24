@@ -1,11 +1,8 @@
 const mongoose = require('mongoose');
+const { direccionesSchema } = require('./Direcciones');
 
 const contactoSchema = mongoose.Schema({
-    Direccion : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : 'Direcciones',
-        require : true
-    },
+    Direccion : direccionesSchema,
     Telefono : {
         type : String,
         trim : true,
@@ -20,4 +17,4 @@ const contactoSchema = mongoose.Schema({
 
 
 const Contactos = mongoose.model("Contactos", contactoSchema);
-module.exports = Contactos;
+module.exports = {contactoSchema ,Contactos};
