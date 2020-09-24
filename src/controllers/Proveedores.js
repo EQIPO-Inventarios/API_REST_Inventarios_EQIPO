@@ -1,9 +1,9 @@
 //Conexion BD
 const pool = require("../settings/db");
 //Modelo BD
-const {Proveedores} = require("../models/GestionProveedores/Proveedores");
-const Direcciones = require("../models/GestionUsuarios/Direcciones");
-const Contactos = require("../models/GestionUsuarios/Contactos");
+const Proveedores = require("../models/GestionProveedores/Proveedores");
+const {direccionesSchema, direccion} = require("../models/GestionUsuarios/Direcciones");
+const {contactoSchema, contacto} = require("../models/GestionUsuarios/Contactos");
 
 
 //GET
@@ -30,8 +30,7 @@ const crear = async(req, res) =>{
         Municipio,
         Descripcion
     })
-
-    const Contacto = ( {
+    const Contacto =  ( {
         Direccion,
         Telefono,
         Correo
