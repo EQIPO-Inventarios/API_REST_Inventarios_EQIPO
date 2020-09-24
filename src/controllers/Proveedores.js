@@ -2,8 +2,8 @@
 const pool = require("../settings/db");
 //Modelo BD
 const Proveedores = require("../models/GestionProveedores/Proveedores");
-const Direcciones = require("../models/GestionUsuarios/Direcciones");
-const Contactos = require("../models/GestionUsuarios/Contactos");
+const {direccionesSchema, direccion} = require("../models/GestionUsuarios/Direcciones");
+const {contactoSchema, contacto} = require("../models/GestionUsuarios/Contactos");
 
 
 //GET
@@ -25,12 +25,12 @@ const listar = async(req, res) =>{
 //POST
 const crear = async(req, res) =>{
     const {Nombre, Razon_Social, Correo, Telefono, Departamento, Municipio, Descripcion} = req.body;
-    const Direccion = new Direcciones ({
+    const Direccion = ({
         Departamento,
         Municipio,
         Descripcion
     })
-    const Contacto = new  Contactos ( {
+    const Contacto =  ( {
         Direccion,
         Telefono,
         Correo

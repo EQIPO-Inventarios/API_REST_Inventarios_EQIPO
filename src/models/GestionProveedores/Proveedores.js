@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { contactoSchema } = require('../GestionUsuarios/Contactos');
 
 const proveedorSchema = mongoose.Schema(
     {
@@ -12,11 +13,7 @@ const proveedorSchema = mongoose.Schema(
       required: true,
       trim: true
     },
-    Contacto: {
-      type : mongoose.Schema.Types.ObjectId,
-      ref : 'Contactos',
-      required: true
-    },
+    Contacto: contactoSchema,
     Estado: {
       type : Boolean,
       default: true
