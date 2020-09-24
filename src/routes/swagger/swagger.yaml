@@ -16,6 +16,7 @@ tags:
 - name: Usuarios
 - name: Niveles
 - name: Departamentos
+- name: Proveedores
 
 
 
@@ -177,7 +178,77 @@ paths:
           schema :
             type : array
             items:
-              $ref : '#/definitions/Departamentos'    
+              $ref : '#/definitions/Departamentos'
+  
+  /Proveedores/listar:
+    get:
+      tags:
+      - Proveedores
+      summary: Listar todos los proveedores
+      description: Listar todos los proveedores existentes
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Proveedores'
+  
+  /Proveedores/crear:
+    post:
+      tags:
+      - Proveedores
+      summary: Agregar nuevo proveedor
+      description: Agregar un nuevo proveedor
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Proveedores
+        description: Items de proveedor a agregar
+        schema:
+          $ref: '#/definitions/NewProveedor'
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Proveedores'
+
+  /Proveedores/actualizar:
+    put:
+      tags:
+      - Proveedores
+      summary: Actualizar proveedor
+      description: Actualizar un proveedor
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Proveedores
+        description: Items de proveedor a actualizar
+        schema:
+          $ref: '#/definitions/UpdateProveedor'
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Proveedores'  
+
 definitions:
   user_login:
     type: object
@@ -262,6 +333,79 @@ definitions:
           
     xml:
       name: Departamentos
+
+  
+  Proveedores:
+    type: object
+    properties:
+      _id:
+        type: object
+      Nombre:
+        type: string
+      Razon_Social:
+        type: string
+      Contacto:
+        type: object
+        properties:
+          Direccion:
+            type: object
+            properties:
+              Departamento: 
+                type: string
+              Municipio:
+                type: string
+              Detalle:
+                type: string
+          Telefono:
+            type: string
+          Correo:
+            type: string
+      Estado:
+        type: boolean
+    xml:
+      name: Proveedores
+  
+  NewProveedor:
+    type: object
+    properties:
+      Nombre:
+        type: string
+      Razon_Social:
+        type: string
+      Departamento:
+        type: string
+      Municipio:
+        type: string
+      Descripcion:
+        type: string
+      Telefono:
+        type: string
+      Correo:
+        type: string
+    xml:
+      name: NewProveedores
+
+  UpdateProveedor:
+    type: object
+    properties:
+      id:
+        type: object
+      Nombre:
+        type: string
+      Razon_Social:
+        type: string
+      Departamento:
+        type: string
+      Municipio:
+        type: string
+      Descripcion:
+        type: string
+      Telefono:
+        type: string
+      Correo:
+        type: string
+    xml:
+      name: UpdateProveedor
       
       
 host: localhost:3000

@@ -8,6 +8,7 @@ const YAML = require('yamljs');
 const swaggerDocument = YAML.load(path.resolve(__dirname,"./swagger/swagger.yaml"));
 const Niveles = require("../controllers/Niveles");
 const Departamentos = require("../controllers/Deparatamentos");
+const Proveedores = require("../controllers/Proveedores");
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
@@ -23,7 +24,13 @@ app.get("/Niveles/listar",Niveles.listar);
 
 //Departamentos
 
-app.get("/Departamentos/listar",Departamentos.listar)
+app.get("/Departamentos/listar",Departamentos.listar);
+
+//Proveedores
+
+app.get("/Proveedores/listar", Proveedores.listar);
+app.post("/Proveedores/crear", Proveedores.crear);
+app.put("/Proveedores/actualizar", Proveedores.actualizar);
 
 
 module.exports = app;

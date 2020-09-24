@@ -23,5 +23,13 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JhosepIslam/API_REST_Invetario_Multibodegas.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JhosepIslam/API_REST_Invetario_Multibodegas/issues"
+  },
+  "homepage": "https://github.com/JhosepIslam/API_REST_Invetario_Multibodegas#readme"
 }

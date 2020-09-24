@@ -19,7 +19,7 @@ const proveedorSchema = mongoose.Schema(
     },
     Estado: {
       type : Boolean,
-      required: true
+      default: true
     }
 
 });
