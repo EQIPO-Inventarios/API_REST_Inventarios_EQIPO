@@ -1,12 +1,9 @@
 const mongoose = require('mongoose');
+const {bodegaSchema} = require('./Bodegas');
 
 const ubicacion_bodegaSchema = mongoose.Schema(
     {
-    Bodega: {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : 'Bodegas',
-        required : true
-    },
+    Bodega: bodegaSchema,
     Estanteria: {
         type : Number,
         required : true
@@ -24,4 +21,4 @@ const ubicacion_bodegaSchema = mongoose.Schema(
 
 const UbicacionBodega = mongoose.model('Ubicaciones_Bodegas', ubicacion_bodegaSchema)
 
-module.exports = UbicacionBodega
+module.exports = {UbicacionBodega, ubicacion_bodegaSchema};

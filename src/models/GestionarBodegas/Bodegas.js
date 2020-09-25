@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
+const {sucursalSchema} = require('../GestionSucursales/Sucursales');
 
 const bodegaSchema = mongoose.Schema(
     {
-    Sucursal: {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : 'Sucursales',
-        required : true
+    Sucursal: sucursalSchema,
+    NumeroBodega: {
+        type : Number,
+        unique: true,
+        default: 1
     },
     Estanterias: {
         type : Number,
@@ -21,7 +23,7 @@ const bodegaSchema = mongoose.Schema(
     },
     Estado: {
         type: Boolean,
-        required: true
+        default: true
     }
 
 });
@@ -29,4 +31,4 @@ const bodegaSchema = mongoose.Schema(
 
 const Bodegas = mongoose.model('Bodegas', bodegaSchema)
 
-module.exports = Bodegas
+module.exports = {Bodegas, bodegaSchema};

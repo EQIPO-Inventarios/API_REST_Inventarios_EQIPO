@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const {productoSchema} = require('../GestionProductos/Productos');
+const {sucursalSchema} = require('../GestionSucursales/Sucursales');
 
 const entradaSchema = mongoose.Schema(
     {
@@ -11,11 +13,7 @@ const entradaSchema = mongoose.Schema(
         trim : true,
         required : true
     },
-    Producto: {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : 'Productos',
-        required : true
-    },
+    Producto: productoSchema,
     Cantidad: {
         type : Number,
         required : true
@@ -24,11 +22,7 @@ const entradaSchema = mongoose.Schema(
         type : Number,
         required : true
     },
-    Sucursal: {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : 'Sucursales',
-        required : true
-    }
+    Sucursal: sucursalSchema
 
 });
 
