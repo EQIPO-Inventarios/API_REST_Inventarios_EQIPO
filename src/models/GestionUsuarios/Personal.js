@@ -29,7 +29,7 @@ const personalSchema = mongoose.Schema({
     },
     Estado_Civil : {
         type : mongoose.Types.ObjectId,
-        ref : 'EstadosCiviles',
+        ref : 'Estados_Civiles',
         require : true  
     },
     ContactoUsuario :{
@@ -47,6 +47,7 @@ const personalSchema = mongoose.Schema({
         default : true
     }
 });
+
 
 const Personal = mongoose.model('Personales',personalSchema);
 module.exports = Personal;

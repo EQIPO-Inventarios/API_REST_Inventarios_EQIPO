@@ -13,6 +13,7 @@ const sucursalSchema = mongoose.Schema({
     },
     Contacto : {
         type : mongoose.Types.ObjectId,
+        ref : 'Contacto',
         required : true
     },
     Estado : {
@@ -20,6 +21,7 @@ const sucursalSchema = mongoose.Schema({
         default : true
     }
 });
+
 
 const Sucursales  = mongoose.model('Sucursales',sucursalSchema);
 module.exports = Sucursales;
