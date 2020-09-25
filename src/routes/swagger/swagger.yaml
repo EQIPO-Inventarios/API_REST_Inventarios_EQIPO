@@ -528,7 +528,7 @@ definitions:
       
       
 host: api-multibodegas-eqipo.azurewebsites.net/
-basePath: /api
+basePath: api
 schemes:
  - http
  - https
