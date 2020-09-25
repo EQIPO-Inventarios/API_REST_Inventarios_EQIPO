@@ -14,11 +14,11 @@ const listarUsuarios = async (req, res) =>{
 
         })
       }
-      res.json( model) ;       
-    })
-  };
+      res.json(model);       
+    });
+}
 
-
+//POST
   let login = async(req, res)  =>{
     const   {usuario, password} = req.body;
     

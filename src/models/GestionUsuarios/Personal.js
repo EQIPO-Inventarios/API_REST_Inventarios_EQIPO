@@ -1,4 +1,7 @@
 const mongoose = require("mongoose");
+const {estadosCivilesSchema} = require("./Estados_Civiles");
+const {contactoSchema} = require("./Contactos")
+const {sucursalSchema} = require("../GestionSucursales/Sucursales")
 
 const personalSchema = mongoose.Schema({
     Nombres : {
@@ -27,21 +30,9 @@ const personalSchema = mongoose.Schema({
         trim : true,
         require : true  
     },
-    Estado_Civil : {
-        type : mongoose.Types.ObjectId,
-        ref : 'Estados_Civiles',
-        require : true  
-    },
-    ContactoUsuario :{
-        type : mongoose.Types.ObjectId,
-        ref : 'Contactos',
-        require : true
-    },
-    Sucursal : {
-        type : mongoose.Types.ObjectId,
-        ref : 'Sucursales',
-        require : true
-    },
+    Estado_Civil : estadosCivilesSchema,
+    ContactoUsuario : contactoSchema,
+    Sucursal : sucursalSchema,
     Estado : {
         type: Boolean,
         default : true
@@ -50,4 +41,4 @@ const personalSchema = mongoose.Schema({
 
 
 const Personal = mongoose.model('Personales',personalSchema);
-module.exports = Personal;
+module.exports = {personalSchema, Personal};

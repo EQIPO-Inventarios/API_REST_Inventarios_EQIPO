@@ -13,4 +13,4 @@ const estadosCivilesSchema = mongoose.Schema({
 });
 
 const  Estados_Civiles = mongoose.model('Estados_Civiles', estadosCivilesSchema);
-module.exports = Estados_Civiles;
+module.exports = {estadosCivilesSchema, Estados_Civiles};

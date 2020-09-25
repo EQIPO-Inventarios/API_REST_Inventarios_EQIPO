@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const {proveedorSchema} = require('../GestionProveedores/Proveedores');
+const {ubicacion_bodegaSchema} = require('../GestionarBodegas/UbicacionBodega');
 
 const productoSchema = mongoose.Schema(
   {
@@ -27,23 +29,15 @@ const productoSchema = mongoose.Schema(
       type : Number,
       required : true
     },
-    Proveedor: {
-      type : mongoose.Schema.Types.ObjectId,
-      ref : 'Proveedores', 
-      required : true
-    },
+    Proveedor: proveedorSchema,
     Precio_Unitario: {
       type : Number,
       required : true
     },
-    Ubicacion_Bodega: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref : "Ubicacion_Bodega",
-      required: true
-    },
+    Ubicacion_Bodega: ubicacion_bodegaSchema,
     Estado: {
       type: Boolean,
-      required: true
+      default: true
     }
 
 });
@@ -51,4 +45,4 @@ const productoSchema = mongoose.Schema(
 
 const Productos = mongoose.model('Productos', productoSchema)
 
-module.exports = Productos
+module.exports = {Productos, productoSchema};

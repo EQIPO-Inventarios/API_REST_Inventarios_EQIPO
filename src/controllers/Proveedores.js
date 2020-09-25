@@ -25,12 +25,13 @@ const listar = async(req, res) =>{
 //POST
 const crear = async(req, res) =>{
     const {Nombre, Razon_Social, Correo, Telefono, Departamento, Municipio, Descripcion} = req.body;
-    const Direccion = new Direcciones ({
+    const Direccion = ({
         Departamento,
         Municipio,
         Descripcion
     })
-    const Contacto = new  Contactos ( {
+
+    const Contacto = ( {
         Direccion,
         Telefono,
         Correo
@@ -69,19 +70,19 @@ const actualizar = async (req, res) =>{
     
     const {id, Nombre, Razon_Social, Correo, Telefono, Departamento, Municipio, Descripcion} = req.body;
 
-    const Direccion = new direccion({
+    const Direccion = ({
         Departamento,
         Municipio,
         Descripcion
     })
-    const Contacto = new contacto({
+    const Contacto = ({
         Direccion,
         Telefono,
         Correo
     })
 
     const model = await Proveedores.findOne({Nombre : Nombre})
-    if(model){
+    if(model._id != id){
         res.json({
             status : 412,
             message : "Nombre de Proveedor ya existente"
@@ -106,4 +107,24 @@ const actualizar = async (req, res) =>{
     
 }
 
-module.exports = {listar, crear, actualizar} 
+//DELETE 
+const eliminar = async (req, res) =>{
+    const _id = req.params;
+
+    await Proveedores.findOneAndUpdate({_id : _id}, 
+        {Estado : false}, (error, data)=>{
+        if(error){
+            res.json({
+                mensaje : "Error al tratar de dar de baja a proveedor",
+                error
+            });
+        }else{
+            res.status(200).json({
+                mensaje : "Proveedor dado de bajo exitosamente",
+                data
+            });
+        }
+    });
+}
+
+module.exports = {listar, crear, actualizar, eliminar} 

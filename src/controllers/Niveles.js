@@ -1,11 +1,11 @@
 const pool = require("../settings/db");
 //Modelo BD
-const Niveles  = require("../models/GestionUsuarios/Niveles");
+const {Nivel}  = require("../models/GestionUsuarios/Niveles");
 
 //post
 const crear = async (req, res) =>{
     const {Tipo, Numero} = req.body;
-    const nivel = new Niveles({
+    const nivel = new Nivel({
         Tipo,
         Numero        
     });
@@ -29,7 +29,7 @@ const crear = async (req, res) =>{
 const eliminar = async (req, res) =>{
     const id = req.params;
 
-    await Niveles.findOneAndUpdate({_id : id},{Estado : false}, (error, data)=>{
+    await Nivel.findOneAndUpdate({_id : id},{Estado : false}, (error, data)=>{
         if(error){
             res.json({
                 mensaje : "Error al tratar de eliminar el nivel",
@@ -50,7 +50,7 @@ const actualizar = async (req,res) =>{
 
     const {id, Tipo, Numero} = req.body;
 
-    Niveles.findOneAndUpdate({_id : id},
+    Nivel.findOneAndUpdate({_id : id},
          {Tipo : Tipo,Numero : Numero}, (error, data)=>{
 
             if(error){
@@ -72,7 +72,7 @@ const actualizar = async (req,res) =>{
 
 //get
 const listar = async (req, res) =>{
-    await Niveles.find({Estado : true}, (error, data)=>{
+    await Nivel.find({Estado : true}, (error, data)=>{
         if (error) {
             res.json({
                 mensaje : "Error al listar los Niveles",

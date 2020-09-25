@@ -24,4 +24,4 @@ const sucursalSchema = mongoose.Schema({
 
 
 const Sucursales  = mongoose.model('Sucursales',sucursalSchema);
-module.exports = Sucursales;
+module.exports = {sucursalSchema, Sucursales};

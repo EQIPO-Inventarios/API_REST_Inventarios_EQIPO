@@ -31,6 +31,7 @@ app.get("/Departamentos/listar",Departamentos.listar);
 app.get("/Proveedores/listar", Proveedores.listar);
 app.post("/Proveedores/crear", Proveedores.crear);
 app.put("/Proveedores/actualizar", Proveedores.actualizar);
+app.delete("/Proveedores/eliminar/:_id", Proveedores.eliminar);
 
 
 module.exports = app;

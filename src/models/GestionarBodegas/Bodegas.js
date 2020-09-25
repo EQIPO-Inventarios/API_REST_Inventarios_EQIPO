@@ -29,4 +29,4 @@ const bodegaSchema = mongoose.Schema(
 
 const Bodegas = mongoose.model('Bodegas', bodegaSchema)
 
-module.exports = Bodegas
+module.exports = {Bodegas, bodegaSchema};

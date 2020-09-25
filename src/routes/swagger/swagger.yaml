@@ -248,6 +248,28 @@ paths:
             type : array
             items:
               $ref : '#/definitions/Proveedores'  
+  
+  /Proveedores/eliminar/{_id}:
+    delete:
+      tags:
+      - Proveedores
+      summary: Eliminar un proveedor
+      description: Eliminar un  proveedor
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: _id
+        in: path
+        description: ID del proveedor a eliminar
+        required: true
+        type: string
+        
+      
+      responses:
+        200:
+          description: OK
 
 definitions:
   user_login:
@@ -310,6 +332,8 @@ definitions:
   NewNivel:
     type: object
     properties:
+      id:
+        type: object
       Tipo:
         type: string
       Numero:
