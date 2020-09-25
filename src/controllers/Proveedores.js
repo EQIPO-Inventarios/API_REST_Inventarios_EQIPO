@@ -1,7 +1,7 @@
 //Conexion BD
 const pool = require("../settings/db");
 //Modelo BD
-const Proveedores = require("../models/GestionProveedores/Proveedores");
+const {Proveedores} = require("../models/GestionProveedores/Proveedores");
 const Direcciones = require("../models/GestionUsuarios/Direcciones");
 const Contactos = require("../models/GestionUsuarios/Contactos");
 
@@ -81,13 +81,13 @@ const actualizar = async (req, res) =>{
         Correo
     })
 
-    const model = await Proveedores.findOne({Nombre : Nombre})
-    if(model._id != id){
-        res.json({
-            status : 412,
-            message : "Nombre de Proveedor ya existente"
-        })
-    }else{
+    //const model = await Proveedores.findOne({Nombre : Nombre})
+    //if(model._id != id){
+    //    res.json({
+    //        status : 412,
+    //        message : "Nombre de Proveedor ya existente"
+    //    })
+    //}else{
         Proveedores.findOneAndUpdate({_id : id}, 
             {Nombre : Nombre, Razon_Social : Razon_Social, Contacto : Contacto}, (error, data) =>{
     
@@ -103,7 +103,7 @@ const actualizar = async (req, res) =>{
                     });
                 }
             });
-    }
+    //}
     
 }
 
