@@ -4,14 +4,12 @@ const pool = require("../settings/db");
 const {Sucursales} = require('../models/GestionSucursales/Sucursales');
 const Direcciones = require("../models/GestionUsuarios/Direcciones");
 const Contactos = require("../models/GestionUsuarios/Contactos");
-const {Bodegas} = require('../models/GestionarBodegas/Bodegas');
-const bodegas = require('../models/GestionSucursales/Sucursales');
-
+const  bodega = require('../models/GestionarBodegas/Bodegas');
 
 //POST
 const crear = async(req, res) =>{
     const {Nombre, Codigo, Telefono, Correo, Departamento, Municipio,
-    Descripcion, Largo, Ancho, Estanterias} = req.body;
+    Descripcion, NumeroBodega, Largo, Ancho, Estanterias} = req.body;
     //Modelo para Sucursal
     const Direccion = ({
         Departamento,
@@ -25,24 +23,18 @@ const crear = async(req, res) =>{
         Correo
     })
 
-    const sucursal = new Sucursales({
-        Nombre,
-        Codigo,
-        Contacto
-    });
-    //-------------------------------------------
-    //Modelo para Bodega
-    const Sucursal = ({
-        Nombre,
-        Codigo,
-        Contacto
-    })
-
-    const bodega = new Bodegas({
-        Sucursal,
+    const bodega = ({
+        NumeroBodega,
         Estanterias,
         Largo,
         Ancho
+    })
+
+    const sucursal = new Sucursales({
+        Nombre,
+        Codigo,
+        Contacto,
+        Bodega : bodega,
     });
 
     const model = await Sucursales.findOne({Nombre : sucursal.Nombre});
@@ -59,27 +51,28 @@ const crear = async(req, res) =>{
                     error
                 });
             }else{
-                /*return res.status(200).json({
-                    mensaje : "Sucursal agregada exitosamente",
+                return res.status(200).json({
+                    mensaje : "Sucursal y bodega agregada exitosamente",
                     data
-                });*/
-
-                bodega.save((error, data)=>{
-                    if(error){
-                        return res.json({
-                            mensaje : "Error al agregar la bodega",
-                            error
-                        });
-                    }else{
-                        return res.status(200).json({
-                            mensaje : "Sucursal y Bodega agregada exitosamente",
-                            data
-                        });
-                    }
                 });
             }
         });
     }
 }
 
-module.exports = {crear};
+//GET
+const listar = async(req, res)=>{
+    await Sucursales.find({}, (error, data)=>{
+        if(error){
+            res.json({
+                mensaje : "Erro al listar proveedores",
+            });
+        }else{
+            res.status(200).json(
+                data
+            )
+        }
+    });
+}
+
+module.exports = {crear, listar};

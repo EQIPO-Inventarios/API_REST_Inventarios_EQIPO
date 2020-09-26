@@ -36,6 +36,7 @@ app.delete("/Proveedores/eliminar/:_id", Proveedores.eliminar);
 
 //Sucursales
 app.post("/Sucursales/crear", Sucursales.crear);
+app.get("/Sucursales/listar", Sucursales.listar);
 
 
 module.exports = app;

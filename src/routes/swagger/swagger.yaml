@@ -294,7 +294,26 @@ paths:
           schema :
             type : array
             items:
-              $ref : '#/definitions/Bodega'
+              $ref : '#/definitions/Sucursal'
+
+  /Sucursales/listar:
+    get:
+      tags:
+      - Sucursales
+      summary: Listar todas las sucursales
+      description: Listar todos las sucursales existentes
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Sucursal'
 
 definitions:
   user_login:
@@ -473,6 +492,8 @@ definitions:
         type: string
       Correo:
         type: string
+      NumeroBodega:
+        type: number
       Largo:
         type: number
       Ancho:
@@ -483,52 +504,42 @@ definitions:
     xml:
       name: NewSucursal_Bodega
       
-  Bodega:
+
+  Sucursal:
     type: object
     properties:
-      Sucursal:
+      Nombre:
+        type: string
+      Codigo:
+        type: number
+      Contacto:
         type: object
         properties:
-          Nombre:
-            type: string
-          Codigo:
-            type: number
-          Contacto:
+          Direccion:
             type: object
             properties:
-              Direccion:
-                type: object
-                properties:
-                  Departamento:
-                    type: string
-                  Municipio:
-                    type: string
-                  Descripcion:
-                    type: string
-              
-              Telefono: 
+              Departamento:
                 type: string
-              Correo: 
+              Municipio:
                 type: string
-          Estado:
-            type: boolean
-      NumeroBodega:
-        type: number
-      Estanterias:
-        type: number
-      Largo:
-        type: number
-      Ancho:
-        type: number
+              Descripcion:
+                type: string  
+          Telefono: 
+            type: string
+          Correo: 
+            type: string
       Estado:
         type: boolean
-        
+      Bodega:
+        type : array
+        items:
+          type: Schema
+          minItems: 1
     xml:
-      name: Bodega
+      name: Sucursal
       
       
-host: api-multibodegas-eqipo.azurewebsites.net/
-basePath: api
+host: localhost:3000
+basePath: /api
 schemes:
  - http
- - https

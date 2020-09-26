@@ -3,7 +3,6 @@ const {sucursalSchema} = require('../GestionSucursales/Sucursales');
 
 const bodegaSchema = mongoose.Schema(
     {
-    Sucursal: sucursalSchema,
     NumeroBodega: {
         type : Number,
         unique: true,
