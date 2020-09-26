@@ -315,6 +315,31 @@ paths:
             items:
               $ref : '#/definitions/Sucursal'
 
+  /Sucursales/actualizar:
+    put:
+      tags:
+      - Sucursales
+      summary: Actualizar datos sucursal
+      description: Actualizar datos unicamente de una sucursal no de sus bodegas
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Proveedores
+        description: Items de sucursal a actualizar
+        schema:
+          $ref: '#/definitions/UpdateSucursal'
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Sucursal'
+
 definitions:
   user_login:
     type: object
@@ -537,6 +562,28 @@ definitions:
           minItems: 1
     xml:
       name: Sucursal
+  
+  UpdateSucursal:
+    type: object
+    properties:
+      id:
+        type: object
+      Nombre:
+        type: string
+      Codigo:
+        type: number
+      Departamento:
+        type: string
+      Municipio:
+        type: string
+      Descripcion:
+        type: string
+      Telefono:
+        type: string
+      Correo:
+        type: string
+    xml:
+      name: NewSucursal_Bodega
       
       
 host: localhost:3000

@@ -75,4 +75,38 @@ const listar = async(req, res)=>{
     });
 }
 
-module.exports = {crear, listar};
+//PUT
+const actualizar = async(req, res)=>{
+    
+    const{id, Nombre, Codigo, Correo, Telefono,
+    Departamento, Municipio, Descripcion} = req.body;
+
+    const Direccion = ({
+        Departamento,
+        Municipio,
+        Descripcion
+    })
+    const Contacto =({
+        Direccion,
+        Telefono,
+        Correo
+    })
+    
+    Sucursales.findOneAndUpdate({_id : id},
+        {Nombre : Nombre, Codigo : Codigo, Contacto : Contacto},
+        (error, data)=>{
+            if(error){
+                res.json({
+                    mensaje : "Error al actualizar datos de sucursal",
+                    error
+                });
+            }else{
+                res.status(200).json({
+                    mensaje : "Datos de sucursal actualizada exitosamente",
+                    data
+                });
+            }
+        });
+}
+
+module.exports = {crear, listar, actualizar};
