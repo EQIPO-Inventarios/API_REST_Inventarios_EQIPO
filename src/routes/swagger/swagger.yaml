@@ -339,6 +339,27 @@ paths:
             type : array
             items:
               $ref : '#/definitions/Sucursal'
+      
+  /Sucursales/eliminar/{_id}:
+    delete:
+      tags:
+      - Sucursales
+      summary: Eliminar una sucursal
+      description: Eliminar o dar de baja a una sucursal
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: _id
+        in: path
+        description: ID de la sucursal a eliminar
+        required: true
+        type: string
+      
+      responses:
+        200:
+          description: OK
 
 definitions:
   user_login:
