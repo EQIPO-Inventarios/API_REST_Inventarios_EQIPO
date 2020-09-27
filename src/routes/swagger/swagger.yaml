@@ -17,6 +17,8 @@ tags:
 - name: Niveles
 - name: Departamentos
 - name: Proveedores
+- name: Sucursales
+- name: Bodegas
 
 
 
@@ -361,6 +363,31 @@ paths:
         200:
           description: OK
 
+  /Bodegas/crear:
+    put:
+      tags:
+      - Bodegas
+      summary: Agregar una nueva bodega a una sucursal
+      description: Agregar una nueva bodega a una sucursal ya existente
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Sucursales
+        description: Items de bodega a agregar
+        schema:
+          $ref: '#/definitions/NewBodega'
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Bodega'
+
 definitions:
   user_login:
     type: object
@@ -605,6 +632,22 @@ definitions:
         type: string
     xml:
       name: NewSucursal_Bodega
+
+  NewBodega:
+    type: object
+    properties:
+      id:
+        type: object
+      NumeroBodega:
+        type: number
+      Estanterias:
+        type: number
+      Largo:
+        type: number
+      Ancho:
+        type: number
+    xml:
+      name: NewProveedores
       
       
 host: localhost:3000

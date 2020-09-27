@@ -10,6 +10,7 @@ const Niveles = require("../controllers/Niveles");
 const Departamentos = require("../controllers/Deparatamentos");
 const Proveedores = require("../controllers/Proveedores");
 const Sucursales = require('../controllers/Sucursales');
+const Bodegas = require("../controllers/Bodegas");
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
@@ -40,5 +41,7 @@ app.get("/Sucursales/listar", Sucursales.listar);
 app.put("/Sucursales/actualizar", Sucursales.actualizar);
 app.delete("/Sucursales/eliminar/:_id", Sucursales.eliminar);
 
+//Bodegas
+app.put("/Bodegas/crear", Bodegas.crear);
 
 module.exports = app;
