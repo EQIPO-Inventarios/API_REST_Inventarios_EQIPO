@@ -43,5 +43,6 @@ app.delete("/Sucursales/eliminar/:_id", Sucursales.eliminar);
 
 //Bodegas
 app.put("/Bodegas/crear", Bodegas.crear);
+app.get("/Bodegas/listar/:_id", Bodegas.listar);
 
 module.exports = app;

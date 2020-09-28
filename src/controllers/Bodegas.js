@@ -38,9 +38,29 @@ const crear = async(req, res)=>{
             message : "Sucursal no encontrada"
         })
     }
-
-    
-    
 }
 
-module.exports = {crear};
+const listar = async(req, res)=>{
+    const _id = req.params;
+    await Sucursales.findOne({_id : _id},(error, data)=>{
+        if(error){
+            res.json({
+                mensaje : "Error al lista las bodegas",
+                error
+            });
+        }else{
+            if(data){
+                res.status(200).json(
+                    data.Bodega
+                );
+            }else{
+                res.json({
+                    mensaje : "Error no se ha encontrado la sucursal"
+                })
+            }
+        }
+    });
+
+}
+
+module.exports = {crear, listar};

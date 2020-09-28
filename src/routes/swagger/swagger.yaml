@@ -387,6 +387,31 @@ paths:
             type : array
             items:
               $ref : '#/definitions/Bodega'
+  
+  /Bodegas/listar/{_id}:
+    get:
+      tags:
+      - Bodegas
+      summary: Listar bodegas de una sucursal
+      description: Listar las bodegas que contenga una sucursal
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: _id
+        in: path
+        description: ID de la sucursal a listar sus bodegas
+        required: true
+        type: string
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Bodega'
 
 definitions:
   user_login:
@@ -648,6 +673,22 @@ definitions:
         type: number
     xml:
       name: NewProveedores
+  
+  Bodega:
+  type: array
+  properties:
+    id:
+      type: object
+    NumeroBodega:
+      type: number
+    Estanterias: 
+      type: number
+    Largo:
+      type: number
+    Ancho: 
+      type: number
+  xml:
+    name: Bodega
       
       
 host: localhost:3000
