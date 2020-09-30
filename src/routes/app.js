@@ -42,6 +42,10 @@ app.delete("/Proveedores/eliminar/:_id", tokenValidator.rutasProtegidas , Provee
 app.post("/Sucursales/crear", tokenValidator.rutasProtegidas , Sucursales.crear);
 
 
+app.get("/token", (req, res)=>{
+   res.send(tokenValidator.generateToken('usuario de prueba'))
+})
+
 
 
 
