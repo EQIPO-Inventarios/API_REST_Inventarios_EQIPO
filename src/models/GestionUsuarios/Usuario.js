@@ -1,7 +1,4 @@
 const mongoose = require('mongoose')
-const validator = require('validator')
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
 const {nivelesSchema} = require("./Niveles");
 const {personalSchema} = require('./Personal');
 
@@ -18,12 +15,14 @@ const userSchema = mongoose.Schema({
       required: true,
       minLength: 7
    },nivel : nivelesSchema,
-   token: {
-      type: String,
-      required: true
-   },
+   
+   /**
+    * Estado = 1 = usuario sin ingresar
+    * Estado = 2 = usuario habilitado
+    * Estado = 0 = usuario bloqueado
+    */
    estado:{
-      type : Boolean,
+      type : Number,
       required: true
    }
 })

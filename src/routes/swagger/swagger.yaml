@@ -33,6 +33,9 @@ paths:
         Al hacer la peticion sin parametros se devolvera una lista de objetos de usuarios
       produces:
       - application/json
+
+      security:
+      - api_key: []
       
       responses:
         200:
@@ -85,7 +88,10 @@ paths:
         description: Item de nivel a agregar
         schema:
           $ref: '#/definitions/NewNivel'
-      
+
+      security:
+      - api_key: []
+
       responses:
         200:
           description: OK
@@ -110,6 +116,9 @@ paths:
         description: ID del nivel a eliminar
         required: true
         type: string
+      
+      security:
+      - api_key: []
         
       
       responses:
@@ -132,6 +141,8 @@ paths:
         description: Item de nivel a actualizar
         schema:
           $ref: '#/definitions/NewNivel'
+      security:
+      - api_key: []
       
       responses:
         200:
@@ -151,7 +162,8 @@ paths:
       - application/json
       produces:
       - application/json
-      
+      security:
+      - api_key: []
       responses:
         200:
           description: OK
@@ -174,6 +186,9 @@ paths:
       produces:
       - application/json
       
+      security:
+      - api_key: []
+      
       responses:
         200:
           description: OK
@@ -192,6 +207,10 @@ paths:
       - application/json
       produces:
       - application/json
+
+      security:
+      - api_key: []
+    
       
       responses:
         200:
@@ -217,6 +236,8 @@ paths:
         description: Items de proveedor a agregar
         schema:
           $ref: '#/definitions/NewProveedor'
+      security:
+      - api_key: []
       
       responses:
         200:
@@ -243,6 +264,9 @@ paths:
         schema:
           $ref: '#/definitions/UpdateProveedor'
       
+      security:
+      - api_key: []
+
       responses:
         200:
           description: OK
@@ -267,7 +291,8 @@ paths:
         description: ID del proveedor a eliminar
         required: true
         type: string
-        
+      security:
+      - api_key: []
       
       responses:
         200:
@@ -289,7 +314,8 @@ paths:
         description: Items de sucursal con bodega a agregar
         schema:
           $ref: '#/definitions/NewSucursal_Bodega'
-      
+      security:
+      - api_key: []
       responses:
         200:
           description: OK
@@ -412,6 +438,14 @@ paths:
             type : array
             items:
               $ref : '#/definitions/Bodega'
+
+
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "access-token"
+    in: "header"
+
 
 definitions:
   user_login:
