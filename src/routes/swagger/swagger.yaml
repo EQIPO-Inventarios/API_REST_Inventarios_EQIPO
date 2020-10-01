@@ -13,6 +13,7 @@ info:
 
 # tags are used for organizing operations
 tags:
+- name: development
 - name: Usuarios
 - name: Niveles
 - name: Departamentos
@@ -22,7 +23,18 @@ tags:
 
 
 
+
 paths:
+  /token:
+    get:
+      tags:
+      - development
+      summary : Genera token por 24 horas
+      operationId: generarToken
+      description: |
+        Al hacer la peticion se genera un token temporal por 24 horas
+      
+
   /Usuarios/listar:
     get:
       tags:
@@ -87,6 +99,9 @@ paths:
         description: Items de usuario a crear
         schema:
           $ref: '#/definitions/NewUser'
+      
+      security:
+      - api_key: []
       
       responses:
         200:
@@ -359,6 +374,9 @@ paths:
       - application/json
       produces:
       - application/json
+
+      security:
+      - api_key: []
       
       responses:
         200:
@@ -384,6 +402,9 @@ paths:
         description: Items de sucursal a actualizar
         schema:
           $ref: '#/definitions/UpdateSucursal'
+        
+      security:
+      - api_key: []
       
       responses:
         200:
@@ -409,6 +430,9 @@ paths:
         description: ID de la sucursal a eliminar
         required: true
         type: string
+
+      security:
+      - api_key: []
       
       responses:
         200:
@@ -430,6 +454,9 @@ paths:
         description: Items de bodega a agregar
         schema:
           $ref: '#/definitions/NewBodega'
+
+      security:
+      - api_key: []
       
       responses:
         200:
@@ -455,6 +482,9 @@ paths:
         description: ID de la sucursal a listar sus bodegas
         required: true
         type: string
+
+      security:
+      - api_key: []
       
       responses:
         200:

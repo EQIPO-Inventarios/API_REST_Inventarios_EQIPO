@@ -22,7 +22,7 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // usuarios
 app.get("/Usuarios/listar", tokenValidator.rutasProtegidas ,Usuarios.listarUsuarios);
 app.post("/Usuarios/login", Usuarios.login);
-app.post("/Usuarios/crear", Usuarios.crear);
+app.post("/Usuarios/crear",tokenValidator.rutasProtegidas , Usuarios.crear);
 
 // niveles de usuario.
 app.post("/Niveles/crear", tokenValidator.rutasProtegidas , Niveles.crear);
@@ -42,10 +42,10 @@ app.put("/Proveedores/actualizar", tokenValidator.rutasProtegidas , Proveedores.
 app.delete("/Proveedores/eliminar/:_id", tokenValidator.rutasProtegidas , Proveedores.eliminar);
 
 //Sucursales
-app.post("/Sucursales/crear", Sucursales.crear);
-app.get("/Sucursales/listar", Sucursales.listar);
-app.put("/Sucursales/actualizar", Sucursales.actualizar);
-app.delete("/Sucursales/eliminar/:_id", Sucursales.eliminar);
+app.post("/Sucursales/crear",tokenValidator.rutasProtegidas , Sucursales.crear);
+app.get("/Sucursales/listar",tokenValidator.rutasProtegidas , Sucursales.listar);
+app.put("/Sucursales/actualizar",tokenValidator.rutasProtegidas , Sucursales.actualizar);
+app.delete("/Sucursales/eliminar/:_id",tokenValidator.rutasProtegidas , Sucursales.eliminar);
 
 //Bodegas
 app.put("/Bodegas/crear", Bodegas.crear);
