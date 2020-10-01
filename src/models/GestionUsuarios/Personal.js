@@ -31,8 +31,11 @@ const personalSchema = mongoose.Schema({
         require : true  
     },
     Estado_Civil : estadosCivilesSchema,
-    ContactoUsuario : contactoSchema,
-    Sucursal : sucursalSchema,
+    Contacto : contactoSchema,
+    idSucursal : {
+        type: String,
+        require: true
+    },
     Estado : {
         type: Boolean,
         default : true

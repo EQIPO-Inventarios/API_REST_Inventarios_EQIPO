@@ -1,12 +1,12 @@
 const mongoose = require('mongoose')
 
 const nivelesSchema = mongoose.Schema({
-  Tipo: {
+  TipoNivel: {
     type : String,
     require : true,
     trim : true
   },
-  Numero : {
+  NumeroNivel : {
     type : Number,
     require : true,
   },
