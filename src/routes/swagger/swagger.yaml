@@ -70,6 +70,31 @@ paths:
      
         404:
           description: invalid input, object invalid
+  
+  /Usuarios/crear:
+    put:
+      tags:
+      - Usuarios
+      summary: Agregar un nuevo usuario
+      description: Agregar un nuevo usuario
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Usuario
+        description: Items de usuario a crear
+        schema:
+          $ref: '#/definitions/NewUser'
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Usuario'
           
           
   /Niveles/crear:
@@ -489,7 +514,102 @@ definitions:
       
     xml:
       name: User
-      
+  
+  NewUser:
+    type: object
+    properties:
+      Nombres:
+        type: string
+      Apellidos:
+        type: string
+      Fecha_Nacimiento:
+        type: Date
+      DUI:
+        type: string
+      NIT:
+        type: string
+      TipoEstadoCivil:
+        type: string
+      NumeroEstadoCivil:
+        type: number
+      Departamento:
+        type: string
+      Municipio:
+        type: string
+      Descripcion:
+        type: string
+      Correo:
+        type: string
+      Telefono:
+        type: string
+      idSucursal:
+        type: string
+      NombreUsuario:
+        type: string
+      Password:
+        type: string
+      TipoNivel:
+        type: string
+      NumeroNivel:
+        type: string
+    xml:
+      name: NewUser
+  
+  Usuario:
+    type: object
+    properties:
+      personal:
+        type: object
+        properties:
+          Nombres:
+            type: string
+          Apellidos:
+            type: string
+          Fecha_Nacimiento:
+            type: Date
+          DUI:
+            type: string
+          NIT:
+            type: string
+          EstadO_Civil:
+            type: object
+            properties:
+              TipoEstadoCivil:
+                type: string
+              NumeroEstadoCivil:
+                type: number
+          Contacto:
+            type: object
+            properties:
+              Direccion:
+                type: object
+                properties:
+                  Departamento:
+                    type: string
+                  Municipio:
+                    type: string
+                  Descripcion:
+                    type: string
+              Correo:
+                type: string
+              Telefono:
+                type: string
+          idSucursal:
+            type: string
+      NombreUsuario:
+        type: string
+      Password:
+        type: string
+      Nivel:
+        type: object
+        properties:
+          TipoNivel:
+            type: string
+          NumeroNivel:
+            type: string
+    xml:
+      name: Usuario
+
   NivelItem:
     type: object
     properties:
