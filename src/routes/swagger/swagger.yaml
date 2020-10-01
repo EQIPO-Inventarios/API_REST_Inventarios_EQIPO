@@ -829,7 +829,9 @@ definitions:
       name: NewProveedores
       
       
-host: localhost:3000
+host: api-multibodegas-eqipo.azurewebsites.net
 basePath: /api
 schemes:
+ - https
  - http
+ 
