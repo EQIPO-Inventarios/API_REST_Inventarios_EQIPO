@@ -827,22 +827,6 @@ definitions:
         type: number
     xml:
       name: NewProveedores
-  
-  Bodega:
-  type: array
-  properties:
-    id:
-      type: object
-    NumeroBodega:
-      type: number
-    Estanterias: 
-      type: number
-    Largo:
-      type: number
-    Ancho: 
-      type: number
-  xml:
-    name: Bodega
       
       
 host: localhost:3000
