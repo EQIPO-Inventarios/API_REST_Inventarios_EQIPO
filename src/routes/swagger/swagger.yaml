@@ -72,7 +72,7 @@ paths:
           description: invalid input, object invalid
   
   /Usuarios/crear:
-    put:
+    post:
       tags:
       - Usuarios
       summary: Agregar un nuevo usuario
