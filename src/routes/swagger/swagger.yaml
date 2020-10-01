@@ -72,7 +72,7 @@ paths:
           description: invalid input, object invalid
   
   /Usuarios/crear:
-    put:
+    post:
       tags:
       - Usuarios
       summary: Agregar un nuevo usuario
@@ -87,6 +87,33 @@ paths:
         description: Items de usuario a crear
         schema:
           $ref: '#/definitions/NewUser'
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Usuario'
+  
+  /Usuarios/actualizar:
+    put:
+      tags:
+      - Usuarios
+      summary: Actualiza un usuario
+      description: Actualizar datos de un usuario
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Usuario
+        description: Items de usuario a actualizar
+        schema:
+          $ref: '#/definitions/ActualizarUser'
+      security:
+      - api_key: []
       
       responses:
         200:
@@ -544,9 +571,9 @@ definitions:
         type: string
       idSucursal:
         type: string
-      NombreUsuario:
+      usuario:
         type: string
-      Password:
+      password:
         type: string
       TipoNivel:
         type: string
@@ -555,6 +582,48 @@ definitions:
     xml:
       name: NewUser
   
+  ActualizarUser:
+    type: object
+    properties:
+      id:
+        type: object
+      Nombres:
+        type: string
+      Apellidos:
+        type: string
+      Fecha_Nacimiento:
+        type: Date
+      DUI:
+        type: string
+      NIT:
+        type: string
+      TipoEstadoCivil:
+        type: string
+      NumeroEstadoCivil:
+        type: number
+      Departamento:
+        type: string
+      Municipio:
+        type: string
+      Descripcion:
+        type: string
+      Correo:
+        type: string
+      Telefono:
+        type: string
+      idSucursal:
+        type: string
+      usuario:
+        type: string
+      password:
+        type: string
+      TipoNivel:
+        type: string
+      NumeroNivel:
+        type: string
+    xml:
+      name: ActualizarUser
+
   Usuario:
     type: object
     properties:

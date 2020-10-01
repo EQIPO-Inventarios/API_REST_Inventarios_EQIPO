@@ -125,4 +125,58 @@ const crear = async(req, res)=>{
   }
 }
 
-  module.exports ={listarUsuarios,login, crear}
+//PUT
+const actualizar = async(req, res)=>{
+  const {Nombres, Apellidos, Fecha_Nacimiento, DUI, NIT,
+        Tipo, Numero, Departamento,
+        Municipio, Descripcion, Correo, Telefono, idSucursal, usuario,
+        password, TipoNivel, NumeroNivel, id} = req.body;
+
+    const Direccion = ({
+    Departamento,
+    Municipio,
+    Descripcion
+    })
+    const Contacto = ({
+    Direccion,
+    Telefono,
+    Correo
+    })
+    const Estado_Civil =({
+    Tipo,
+    Numero
+    })
+    const personal =({
+    Nombres,
+    Apellidos,
+    Fecha_Nacimiento,
+    DUI,
+    NIT,
+    Estado_Civil,
+    Contacto,
+    idSucursal
+    })
+
+    const nivel = ({
+    TipoNivel,
+    NumeroNivel
+    })
+
+    Usuario.findOneAndUpdate({_id : id},
+      {personal : personal, usuario : usuario,
+      password : password, nivel : nivel}, (error, data)=>{
+        if(error){
+          res.json({
+            mensaje : "Error al actualizar datos de usuario",
+            error
+          });
+        }else{
+          res.status(200).json({
+            mensaje : "Datos de usuario actualizados exitosamente",
+            data
+          });
+        }
+    });
+}
+
+  module.exports ={listarUsuarios,login, crear, actualizar}

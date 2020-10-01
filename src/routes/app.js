@@ -22,6 +22,7 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.get("/Usuarios/listar", tokenValidator.rutasProtegidas ,Usuarios.listarUsuarios);
 app.post("/Usuarios/login", Usuarios.login);
 app.post("/Usuarios/crear", Usuarios.crear);
+app.put("/Usuarios/actualizar", tokenValidator.rutasProtegidas, Usuarios.actualizar);
 
 // niveles de usuario.
 app.post("/Niveles/crear", tokenValidator.rutasProtegidas , Niveles.crear);
