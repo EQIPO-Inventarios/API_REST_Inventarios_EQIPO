@@ -17,6 +17,8 @@ tags:
 - name: Niveles
 - name: Departamentos
 - name: Proveedores
+- name: Sucursales
+- name: Bodegas
 
 
 
@@ -68,6 +70,31 @@ paths:
      
         404:
           description: invalid input, object invalid
+  
+  /Usuarios/crear:
+    put:
+      tags:
+      - Usuarios
+      summary: Agregar un nuevo usuario
+      description: Agregar un nuevo usuario
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Usuario
+        description: Items de usuario a crear
+        schema:
+          $ref: '#/definitions/NewUser'
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Usuario'
           
           
   /Niveles/crear:
@@ -320,6 +347,121 @@ paths:
           schema :
             type : array
             items:
+              $ref : '#/definitions/Sucursal'
+
+  /Sucursales/listar:
+    get:
+      tags:
+      - Sucursales
+      summary: Listar todas las sucursales
+      description: Listar todos las sucursales existentes
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Sucursal'
+
+  /Sucursales/actualizar:
+    put:
+      tags:
+      - Sucursales
+      summary: Actualizar datos sucursal
+      description: Actualizar datos unicamente de una sucursal no de sus bodegas
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Proveedores
+        description: Items de sucursal a actualizar
+        schema:
+          $ref: '#/definitions/UpdateSucursal'
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Sucursal'
+      
+  /Sucursales/eliminar/{_id}:
+    delete:
+      tags:
+      - Sucursales
+      summary: Eliminar una sucursal
+      description: Eliminar o dar de baja a una sucursal
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: _id
+        in: path
+        description: ID de la sucursal a eliminar
+        required: true
+        type: string
+      
+      responses:
+        200:
+          description: OK
+
+  /Bodegas/crear:
+    put:
+      tags:
+      - Bodegas
+      summary: Agregar una nueva bodega a una sucursal
+      description: Agregar una nueva bodega a una sucursal ya existente
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Sucursales
+        description: Items de bodega a agregar
+        schema:
+          $ref: '#/definitions/NewBodega'
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Bodega'
+  
+  /Bodegas/listar/{_id}:
+    get:
+      tags:
+      - Bodegas
+      summary: Listar bodegas de una sucursal
+      description: Listar las bodegas que contenga una sucursal
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: _id
+        in: path
+        description: ID de la sucursal a listar sus bodegas
+        required: true
+        type: string
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
               $ref : '#/definitions/Bodega'
 
 
@@ -372,7 +514,102 @@ definitions:
       
     xml:
       name: User
-      
+  
+  NewUser:
+    type: object
+    properties:
+      Nombres:
+        type: string
+      Apellidos:
+        type: string
+      Fecha_Nacimiento:
+        type: Date
+      DUI:
+        type: string
+      NIT:
+        type: string
+      TipoEstadoCivil:
+        type: string
+      NumeroEstadoCivil:
+        type: number
+      Departamento:
+        type: string
+      Municipio:
+        type: string
+      Descripcion:
+        type: string
+      Correo:
+        type: string
+      Telefono:
+        type: string
+      idSucursal:
+        type: string
+      NombreUsuario:
+        type: string
+      Password:
+        type: string
+      TipoNivel:
+        type: string
+      NumeroNivel:
+        type: string
+    xml:
+      name: NewUser
+  
+  Usuario:
+    type: object
+    properties:
+      personal:
+        type: object
+        properties:
+          Nombres:
+            type: string
+          Apellidos:
+            type: string
+          Fecha_Nacimiento:
+            type: Date
+          DUI:
+            type: string
+          NIT:
+            type: string
+          EstadO_Civil:
+            type: object
+            properties:
+              TipoEstadoCivil:
+                type: string
+              NumeroEstadoCivil:
+                type: number
+          Contacto:
+            type: object
+            properties:
+              Direccion:
+                type: object
+                properties:
+                  Departamento:
+                    type: string
+                  Municipio:
+                    type: string
+                  Descripcion:
+                    type: string
+              Correo:
+                type: string
+              Telefono:
+                type: string
+          idSucursal:
+            type: string
+      NombreUsuario:
+        type: string
+      Password:
+        type: string
+      Nivel:
+        type: object
+        properties:
+          TipoNivel:
+            type: string
+          NumeroNivel:
+            type: string
+    xml:
+      name: Usuario
+
   NivelItem:
     type: object
     properties:
@@ -507,6 +744,8 @@ definitions:
         type: string
       Correo:
         type: string
+      NumeroBodega:
+        type: number
       Largo:
         type: number
       Ancho:
@@ -517,35 +756,67 @@ definitions:
     xml:
       name: NewSucursal_Bodega
       
-  Bodega:
+
+  Sucursal:
     type: object
     properties:
-      Sucursal:
+      Nombre:
+        type: string
+      Codigo:
+        type: number
+      Contacto:
         type: object
         properties:
-          Nombre:
-            type: string
-          Codigo:
-            type: number
-          Contacto:
+          Direccion:
             type: object
             properties:
-              Direccion:
-                type: object
-                properties:
-                  Departamento:
-                    type: string
-                  Municipio:
-                    type: string
-                  Descripcion:
-                    type: string
-              
-              Telefono: 
+              Departamento:
                 type: string
-              Correo: 
+              Municipio:
                 type: string
-          Estado:
-            type: boolean
+              Descripcion:
+                type: string  
+          Telefono: 
+            type: string
+          Correo: 
+            type: string
+      Estado:
+        type: boolean
+      Bodega:
+        type : array
+        items:
+          type: Schema
+          minItems: 1
+    xml:
+      name: Sucursal
+  
+  UpdateSucursal:
+    type: object
+    properties:
+      id:
+        type: object
+      Nombre:
+        type: string
+      Codigo:
+        type: number
+      Departamento:
+        type: string
+      Municipio:
+        type: string
+      Descripcion:
+        type: string
+      Telefono:
+        type: string
+      Correo:
+        type: string
+    xml:
+      name: NewSucursal_Bodega
+
+  NewBodega:
+    type: object
+    properties:
+      id:
+        type: object
       NumeroBodega:
         type: number
       Estanterias:
@@ -554,15 +825,27 @@ definitions:
         type: number
       Ancho:
         type: number
-      Estado:
-        type: boolean
-        
     xml:
-      name: Bodega
+      name: NewProveedores
+  
+  Bodega:
+  type: array
+  properties:
+    id:
+      type: object
+    NumeroBodega:
+      type: number
+    Estanterias: 
+      type: number
+    Largo:
+      type: number
+    Ancho: 
+      type: number
+  xml:
+    name: Bodega
       
       
 host: localhost:3000
 basePath: /api
 schemes:
  - http
- - https

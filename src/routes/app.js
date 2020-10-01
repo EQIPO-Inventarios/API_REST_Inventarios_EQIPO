@@ -11,6 +11,7 @@ const Niveles = require("../controllers/Niveles");
 const Departamentos = require("../controllers/Deparatamentos");
 const Proveedores = require("../controllers/Proveedores");
 const Sucursales = require('../controllers/Sucursales');
+const Bodegas = require("../controllers/Bodegas");
 const tokenValidator = require("../middleware/tokenValidator");
 
 
@@ -20,6 +21,7 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // usuarios
 app.get("/Usuarios/listar", tokenValidator.rutasProtegidas ,Usuarios.listarUsuarios);
 app.post("/Usuarios/login", Usuarios.login);
+app.post("/Usuarios/crear", Usuarios.crear);
 
 // niveles de usuario.
 app.post("/Niveles/crear", tokenValidator.rutasProtegidas , Niveles.crear);
@@ -39,8 +41,14 @@ app.put("/Proveedores/actualizar", tokenValidator.rutasProtegidas , Proveedores.
 app.delete("/Proveedores/eliminar/:_id", tokenValidator.rutasProtegidas , Proveedores.eliminar);
 
 //Sucursales
+app.get("/Sucursales/listar", Sucursales.listar);
+app.put("/Sucursales/actualizar", Sucursales.actualizar);
+app.delete("/Sucursales/eliminar/:_id", Sucursales.eliminar);
 app.post("/Sucursales/crear", tokenValidator.rutasProtegidas , Sucursales.crear);
 
+//Bodegas
+app.put("/Bodegas/crear", Bodegas.crear);
+app.get("/Bodegas/listar/:_id", Bodegas.listar);
 
 app.get("/token", (req, res)=>{
    res.send(tokenValidator.generateToken('usuario de prueba'))
