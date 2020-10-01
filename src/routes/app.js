@@ -13,7 +13,7 @@ const Proveedores = require("../controllers/Proveedores");
 const Sucursales = require('../controllers/Sucursales');
 const Bodegas = require("../controllers/Bodegas");
 const tokenValidator = require("../middleware/tokenValidator");
-const Bodegas = require("../controllers/Bodegas");
+
 
 
 
