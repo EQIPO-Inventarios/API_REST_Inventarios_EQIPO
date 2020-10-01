@@ -1,7 +1,8 @@
 const pool = require("../settings/db");
 //Modelo BD
 const Usuario  = require("../models/GestionUsuarios/Usuario");
-
+const encrypt = require("../middleware/encrypt")
+const tokenGen = require("../middleware/tokenValidator")
 
 const listarUsuarios = async (req, res) =>{
     const model = await Usuario.find()
@@ -28,10 +29,10 @@ const listarUsuarios = async (req, res) =>{
     })   
     const model = await Usuario.findOne({usuario: objUser.usuario})
     if(model){      
-      if(model.password == password){
+      if(encrypt.comparePassword(password, model.password)){
         if(model.estado == true){
           res.status(200).json({           
-            token : model.token        
+            token : tokenGen.generateToken(model.usuario)
           })
         }else{
           res.json({

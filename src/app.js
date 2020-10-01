@@ -1,10 +1,12 @@
 const express = require("express"),
         morgan = require("morgan"),
         path = require("path"),
-        bodyParser = require("body-parser");
+        bodyParser = require("body-parser"),
+        config = require("./settings/config");
 
 const app = express();
 
+app.set('key', config.key);
 app.set("port", process.env.PORT || 3000);
 
 //middleware
