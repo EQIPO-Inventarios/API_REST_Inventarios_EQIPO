@@ -23,6 +23,7 @@ app.get("/Usuarios/listar", tokenValidator.rutasProtegidas ,Usuarios.listarUsuar
 app.post("/Usuarios/login", Usuarios.login);
 app.post("/Usuarios/crear", Usuarios.crear);
 app.put("/Usuarios/actualizar", tokenValidator.rutasProtegidas, Usuarios.actualizar);
+app.delete("/Usuarios/eliminar/:_id", tokenValidator.rutasProtegidas, Usuarios.eliminar);
 
 // niveles de usuario.
 app.post("/Niveles/crear", tokenValidator.rutasProtegidas , Niveles.crear);

@@ -122,6 +122,27 @@ paths:
             type : array
             items:
               $ref : '#/definitions/Usuario'
+
+  /Usuarios/eliminar/{_id}:
+    delete:
+      tags:
+      - Usuarios
+      summary: Eliminar un usuario
+      description: Eliminar o dar de baja a un usuario
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: _id
+        in: path
+        description: ID de la sucursal a eliminar
+        required: true
+        type: string
+      
+      responses:
+        200:
+          description: OK
           
           
   /Niveles/crear:

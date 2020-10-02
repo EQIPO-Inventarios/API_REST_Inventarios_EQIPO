@@ -6,6 +6,7 @@ const {direccionesSchema} = require("../models/GestionUsuarios/Direcciones");
 const {estadosCivilesSchema} = require("../models/GestionUsuarios/Estados_Civiles");
 const {personalSchema} = require("../models/GestionUsuarios/Personal");
 const {nivelesSchema} = require("../models/GestionUsuarios/Niveles");
+const Sucursales = require("../models/GestionSucursales/Sucursales");
 
 const listarUsuarios = async (req, res) =>{
     const model = await Usuario.find()
@@ -179,4 +180,24 @@ const actualizar = async(req, res)=>{
     });
 }
 
-  module.exports ={listarUsuarios,login, crear, actualizar}
+//DELETE
+const eliminar = async(req, res)=>{
+  const id = req.params;
+
+  await Usuario.findOneAndUpdate({_id : id},
+    {estado : false}, (error, data)=>{
+      if(error){
+        res.json({
+          mensaje : "Error al tratar de dar baja a usuario",
+          error
+        });
+      }else{
+        res.status(200).json({
+          mensaje : "Usuario dado de baja exitosamente",
+          data
+        });
+      }
+    });
+}
+
+  module.exports ={listarUsuarios,login, crear, actualizar, eliminar}
