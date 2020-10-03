@@ -33,6 +33,9 @@ paths:
       operationId: generarToken
       description: |
         Al hacer la peticion se genera un token temporal por 24 horas
+      responses:
+        200:
+          description: Devuelve apiKey para peticiones 
       
 
   /Usuarios/listar:
