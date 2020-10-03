@@ -34,7 +34,8 @@ const listarUsuarios = async (req, res) =>{
           res.status(200).json({           
               token : tokenValidator.generateToken(model.usuario),
               nivel : model.nivel.TipoNivel,
-              Numeronivel : model.nivel.NumeroNivel
+              Numeronivel : model.nivel.NumeroNivel,
+              Nombre :  model.personal.Nombres +' '+ model.personal.Apellidos
 
           })
         }else{
