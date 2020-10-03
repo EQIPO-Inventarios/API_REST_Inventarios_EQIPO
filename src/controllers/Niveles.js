@@ -6,8 +6,8 @@ const {Nivel}  = require("../models/GestionUsuarios/Niveles");
 const crear = async (req, res) =>{
     const {Tipo, Numero} = req.body;
     const nivel = new Nivel({
-        Tipo,
-        Numero        
+        TipoNivel: Tipo,
+        NumeroNivel : Numero     
     });
 
     nivel.save((error, data)=>{

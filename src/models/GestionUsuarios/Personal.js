@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const {estadosCivilesSchema} = require("./Estados_Civiles");
 const {contactoSchema} = require("./Contactos")
-const {sucursalSchema} = require("../GestionSucursales/Sucursales")
+
 
 const personalSchema = mongoose.Schema({
     Nombres : {
@@ -15,7 +15,7 @@ const personalSchema = mongoose.Schema({
         trim : true
     },
     Fecha_Nacimiento : {
-        type : Date,
+        type : String,
         require : true  
     },
     DUI :{

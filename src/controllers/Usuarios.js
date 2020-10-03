@@ -1,11 +1,7 @@
 const pool = require("../settings/db");
 //Modelo BD
 const {Usuario}  = require("../models/GestionUsuarios/Usuario");
-const {contactoSchema} = require("../models/GestionUsuarios/Contactos");
-const {direccionesSchema} = require("../models/GestionUsuarios/Direcciones");
-const {estadosCivilesSchema} = require("../models/GestionUsuarios/Estados_Civiles");
-const {personalSchema} = require("../models/GestionUsuarios/Personal");
-const {nivelesSchema} = require("../models/GestionUsuarios/Niveles");
+
 
 const listarUsuarios = async (req, res) =>{
     const model = await Usuario.find()
@@ -62,8 +58,8 @@ const listarUsuarios = async (req, res) =>{
 const crear = async(req, res)=>{
   const {Nombres, Apellidos, Fecha_Nacimiento, DUI, NIT,
         Tipo, Numero, Departamento,
-        Municipio, Descripcion, Correo, Telefono, idSucursal, usuario,
-        password, TipoNivel, NumeroNivel} = req.body;
+        Municipio, Descripcion, Correo, Telefono, idSucursal, NombreUsuario,
+        Password, TipoNivel, NumeroNivel} = req.body;
   
   const Direccion = ({
     Departamento,
@@ -96,13 +92,14 @@ const crear = async(req, res)=>{
   })
 
   const usuarios = new Usuario({
-    personal,
-    usuario,
-    password,
-    nivel
+    personal : personal,
+    usuario : NombreUsuario,
+    password : Password,
+    nivel : nivel,
+    estado : true
   })
 
-  const model = await Usuario.findOne({Usuario : usuario});
+  const model = await Usuario.findOne({Usuario : NombreUsuario});
   if(model){
     res.json({
       status : 412,

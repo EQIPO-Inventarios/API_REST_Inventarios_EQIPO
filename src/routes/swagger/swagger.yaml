@@ -556,7 +556,7 @@ definitions:
       Apellidos:
         type: string
       Fecha_Nacimiento:
-        type: Date
+        type: string
       DUI:
         type: string
       NIT:
@@ -862,9 +862,8 @@ definitions:
       name: NewProveedores
       
       
-host: api-multibodegas-eqipo.azurewebsites.net
+host: localhost:3000
 basePath: /api
 schemes:
- - https
  - http
  
