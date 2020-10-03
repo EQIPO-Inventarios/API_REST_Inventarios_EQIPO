@@ -1,8 +1,8 @@
 const pool = require("../settings/db");
 //Modelo BD
 const {Usuario}  = require("../models/GestionUsuarios/Usuario");
-
-
+const encryp = require("../middleware/encrypt")
+const tokenValidator = require ("../middleware/tokenValidator")
 const listarUsuarios = async (req, res) =>{
     const model = await Usuario.find()
     Usuario.countDocuments({}, (err, total ) =>{
@@ -22,16 +22,20 @@ const listarUsuarios = async (req, res) =>{
   let login = async(req, res)  =>{
     const   {usuario, password} = req.body;
     
-    const objUser = new Usuario({
-      usuario,
-      password
-    })   
-    const model = await Usuario.findOne({usuario: objUser.usuario})
-    if(model){      
-      if(model.password == password){
+    
+    
+
+    
+    const model = await Usuario.findOne({usuario: usuario})
+    if(model){  
+      console.log(model)    
+      if(encryp.comparePassword(String(password), model.password)){
         if(model.estado == true){
           res.status(200).json({           
-              
+              token : tokenValidator.generateToken(model.usuario),
+              nivel : model.nivel.TipoNivel,
+              Numeronivel : model.nivel.NumeroNivel
+
           })
         }else{
           res.json({
@@ -94,7 +98,7 @@ const crear = async(req, res)=>{
   const usuarios = new Usuario({
     personal : personal,
     usuario : NombreUsuario,
-    password : Password,
+    password : encryp.encrypt(Password),
     nivel : nivel,
     estado : true
   })
