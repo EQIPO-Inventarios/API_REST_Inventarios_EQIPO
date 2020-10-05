@@ -113,6 +113,54 @@ paths:
             type : array
             items:
               $ref : '#/definitions/Usuario'
+
+  /Usuarios/actualizar:
+    put:
+      tags:
+      - Usuarios
+      summary: Actualiza un usuario
+      description: Actualizar datos de un usuario
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Usuario
+        description: Items de usuario a actualizar
+        schema:
+          $ref: '#/definitions/ActualizarUser'
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Usuario'
+
+  /Usuarios/eliminar/{_id}:
+    delete:
+      tags:
+      - Usuarios
+      summary: Eliminar un usuario
+      description: Eliminar o dar de baja a un usuario
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: _id
+        in: path
+        description: ID de la sucursal a eliminar
+        required: true
+        type: string
+      
+      responses:
+        200:
+          description: OK
           
           
   /Niveles/crear:
@@ -607,9 +655,9 @@ definitions:
           EstadO_Civil:
             type: object
             properties:
-              TipoEstadoCivil:
+              Tipo:
                 type: string
-              NumeroEstadoCivil:
+              Numero:
                 type: number
           Contacto:
             type: object
@@ -629,9 +677,9 @@ definitions:
                 type: string
           idSucursal:
             type: string
-      NombreUsuario:
+      usuario:
         type: string
-      Password:
+      password:
         type: string
       Nivel:
         type: object
@@ -642,6 +690,48 @@ definitions:
             type: string
     xml:
       name: Usuario
+
+  ActualizarUser:
+    type: object
+    properties:
+      id:
+        type: object
+      Nombres:
+        type: string
+      Apellidos:
+        type: string
+      Fecha_Nacimiento:
+        type: Date
+      DUI:
+        type: string
+      NIT:
+        type: string
+      Tipo:
+        type: string
+      Numero:
+        type: number
+      Departamento:
+        type: string
+      Municipio:
+        type: string
+      Descripcion:
+        type: string
+      Correo:
+        type: string
+      Telefono:
+        type: string
+      idSucursal:
+        type: string
+      usuario:
+        type: string
+      password:
+        type: string
+      TipoNivel:
+        type: string
+      NumeroNivel:
+        type: string
+    xml:
+      name: ActualizarUser
 
   NivelItem:
     type: object
