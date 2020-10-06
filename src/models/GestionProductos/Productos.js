@@ -1,15 +1,14 @@
 const mongoose = require('mongoose');
 const {proveedorSchema} = require('../GestionProveedores/Proveedores');
-const {ubicacion_bodegaSchema} = require('../GestionarBodegas/UbicacionBodega');
 
 const productoSchema = mongoose.Schema(
   {
-    Codigo: {
+    CodigoProducto: {
       type : String,
       required : true,
       trim : true,
     },
-    Nombre: {
+    NombreProducto: {
       type : String,
       required : true,
       trim : true,
@@ -34,7 +33,6 @@ const productoSchema = mongoose.Schema(
       type : Number,
       required : true
     },
-    Ubicacion_Bodega: ubicacion_bodegaSchema,
     Estado: {
       type: Boolean,
       default: true
