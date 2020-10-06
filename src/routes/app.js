@@ -12,6 +12,7 @@ const Departamentos = require("../controllers/Deparatamentos");
 const Proveedores = require("../controllers/Proveedores");
 const Sucursales = require('../controllers/Sucursales');
 const Bodegas = require("../controllers/Bodegas");
+const Productos = require("../controllers/Productos");
 const tokenValidator = require("../middleware/tokenValidator");
 
 
@@ -52,9 +53,13 @@ app.delete("/Sucursales/eliminar/:_id",tokenValidator.rutasProtegidas , Sucursal
 //Bodegas
 app.put("/Bodegas/crear", Bodegas.crear);
 
+//Productos
+app.post("/Productos/crear", Productos.crear);
+
 app.get("/token", (req, res)=>{
    res.send(tokenValidator.generateToken('usuario de prueba'))
 })
+
 
 
 

@@ -20,6 +20,7 @@ tags:
 - name: Proveedores
 - name: Sucursales
 - name: Bodegas
+- name: Productos
 
 
 
@@ -545,6 +546,33 @@ paths:
             items:
               $ref : '#/definitions/Bodega'
 
+  /Productos/crear:
+    post:
+      tags:
+      - Productos
+      summary: Agregar un nuevo producto
+      description: Agregar un nuevo producto
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Productos
+        description: Items de producto a agregar
+        schema:
+          $ref: '#/definitions/NewProducto'
+      security:
+      - api_key: []
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Producto'
+
+
 
 securityDefinitions:
   api_key:
@@ -950,6 +978,81 @@ definitions:
         type: number
     xml:
       name: NewProveedores
+
+  NewProducto:
+    type: object
+    properties:
+      CodigoProducto:
+        type: string
+      NombreProducto:
+        type: string
+      Material:
+        type: string
+      Caracteristicas:
+        type: string
+      Existencias:
+        type: number
+      Precio_Unitario:
+        type: number
+      Nombre:
+        type: string
+      Razon_Social:
+        type: string
+      Departamente:
+        type: string
+      Municipio:
+        type: string
+      Descripcion:
+        type: string
+      Telefono: 
+        type: string
+      Correo:
+        type: string
+    xml:
+      name: NewProducto
+
+  Producto:
+    type: object
+    properties:
+      CodigoProducto:
+        type: string
+      NombreProducto:
+        type: string
+      Material:
+        type: string
+      Caracteristicas:
+        type: string
+      Existencias:
+        type: number
+      Proveedor:
+        type: object
+        properties:
+          Nombre:
+            type: string
+          Razon_Social:
+            type: string
+          Contacto:
+            type: object
+            properties:
+              Direccion:
+                type: object
+                properties:
+                  Departamente:
+                    type: string
+                  Municipio:
+                    type: string
+                  Descripcion:
+                    type: string
+              Telefono: 
+                type: string
+              Correo:
+                type: string
+      Precio_Unitario:
+        type: number
+    xml:
+      name: Producto
+
+
       
       
 host: api-multibodegas-eqipo.azurewebsites.net
