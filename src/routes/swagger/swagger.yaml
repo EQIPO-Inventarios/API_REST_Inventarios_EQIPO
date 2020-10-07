@@ -158,6 +158,8 @@ paths:
         description: ID de la sucursal a eliminar
         required: true
         type: string
+      security:
+      - api_key: []
       
       responses:
         200:
