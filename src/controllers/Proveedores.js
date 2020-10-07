@@ -1,14 +1,14 @@
 //Conexion BD
 const pool = require("../settings/db");
 //Modelo BD
-const Proveedores = require("../models/GestionProveedores/Proveedores");
+const {Proveedores} = require("../models/GestionProveedores/Proveedores");
 const {direccionesSchema, direccion} = require("../models/GestionUsuarios/Direcciones");
 const {contactoSchema, contacto} = require("../models/GestionUsuarios/Contactos");
 
 
 //GET
 const listar = async(req, res) =>{
-    await Proveedores.find({}, (error, data) =>{
+    await Proveedores.find({Estado : true}, (error, data) =>{
         if(error){
             res.json({
                 mensaje : "Error al listar los provedores",
