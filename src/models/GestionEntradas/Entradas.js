@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const {productoSchema} = require('../GestionProductos/Productos');
 const {sucursalSchema} = require('../GestionSucursales/Sucursales');
+const {ubicacion_bodegaSchema} = require('../GestionarBodegas/UbicacionBodega');
 
 const entradaSchema = mongoose.Schema(
     {
@@ -22,7 +23,8 @@ const entradaSchema = mongoose.Schema(
         type : Number,
         required : true
     },
-    Sucursal: sucursalSchema
+    Sucursal: sucursalSchema,
+    Ubicacion_Bodega: ubicacion_bodegaSchema
 
 });
 

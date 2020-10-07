@@ -12,6 +12,7 @@ const Departamentos = require("../controllers/Deparatamentos");
 const Proveedores = require("../controllers/Proveedores");
 const Sucursales = require('../controllers/Sucursales');
 const Bodegas = require("../controllers/Bodegas");
+const Productos = require("../controllers/Productos");
 const tokenValidator = require("../middleware/tokenValidator");
 
 
@@ -23,6 +24,8 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.get("/Usuarios/listar", tokenValidator.rutasProtegidas ,Usuarios.listarUsuarios);
 app.post("/Usuarios/login", Usuarios.login);
 app.post("/Usuarios/crear",tokenValidator.rutasProtegidas , Usuarios.crear);
+app.put("/Usuarios/actualizar", tokenValidator.rutasProtegidas, Usuarios.actualizar);
+app.delete("/Usuarios/eliminar/:_id", tokenValidator.rutasProtegidas, Usuarios.eliminar);
 
 // niveles de usuario.
 app.post("/Niveles/crear", tokenValidator.rutasProtegidas , Niveles.crear);
@@ -50,9 +53,13 @@ app.delete("/Sucursales/eliminar/:_id",tokenValidator.rutasProtegidas , Sucursal
 //Bodegas
 app.put("/Bodegas/crear", Bodegas.crear);
 
+//Productos
+app.post("/Productos/crear", Productos.crear);
+
 app.get("/token", (req, res)=>{
    res.send(tokenValidator.generateToken('usuario de prueba'))
 })
+
 
 
 
