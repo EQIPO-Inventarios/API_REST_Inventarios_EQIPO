@@ -4,7 +4,7 @@ const {Usuario}  = require("../models/GestionUsuarios/Usuario");
 const encryp = require("../middleware/encrypt")
 const tokenValidator = require ("../middleware/tokenValidator")
 const listarUsuarios = async (req, res) =>{
-    const model = await Usuario.find()
+    const model = await Usuario.find({estado : true})
     Usuario.countDocuments({}, (err, total ) =>{
       if (err) {
         return res.json({

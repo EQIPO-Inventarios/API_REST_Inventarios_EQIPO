@@ -63,7 +63,7 @@ const crear = async(req, res) =>{
 
 //GET
 const listar = async(req, res)=>{
-    await Sucursales.find({}, (error, data)=>{
+    await Sucursales.find({Estado : true}, (error, data)=>{
         if(error){
             res.json({
                 mensaje : "Erro al listar proveedores",
