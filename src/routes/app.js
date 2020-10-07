@@ -54,7 +54,8 @@ app.delete("/Sucursales/eliminar/:_id",tokenValidator.rutasProtegidas , Sucursal
 app.put("/Bodegas/crear", Bodegas.crear);
 
 //Productos
-app.post("/Productos/crear", Productos.crear);
+app.post("/Productos/crear", tokenValidator.rutasProtegidas, Productos.crear);
+app.get("/Productos/listar", tokenValidator.rutasProtegidas, Productos.listar);
 
 app.get("/token", (req, res)=>{
    res.send(tokenValidator.generateToken('usuario de prueba'))

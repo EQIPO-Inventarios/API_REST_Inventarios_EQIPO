@@ -65,5 +65,21 @@ const crear = async(req, res)=>{
     }
 }
 
+//GET
+const listar = async(req, res)=>{
+    await Productos.find({Estado : true}, (error, data)=>{
+        if(error){
+            res.json({
+                mensaje : "Error al listar productos",
+                error
+            })
+        }else{
+            res.status(200).json(
+                data
+            )
+        }
+    });
+}
 
-module.exports = {crear}
+
+module.exports = {crear, listar}

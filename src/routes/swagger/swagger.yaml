@@ -572,6 +572,28 @@ paths:
             items:
               $ref : '#/definitions/Producto'
 
+  /Productos/listar:
+    get:
+      tags:
+      - Productos
+      summary: Listar todos los productos
+      description: Listar todos los productos existentes
+      consumes:
+      - application/json
+      produces:
+      - application/json
+
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Producto'
+
 
 
 securityDefinitions:
@@ -1055,7 +1077,7 @@ definitions:
 
       
       
-host: api-multibodegas-eqipo.azurewebsites.net
+host: api-multibodegas-eqipo.azurewebsites.net/
 basePath: /api
 schemes:
  - https
