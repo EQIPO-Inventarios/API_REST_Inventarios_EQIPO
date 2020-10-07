@@ -1,7 +1,7 @@
 //Conexion BD
 const pool = require("../settings/db");
 //Modelo BD
-const Proveedores = require("../models/GestionProveedores/Proveedores");
+const {Proveedores} = require("../models/GestionProveedores/Proveedores");
 const {direccionesSchema, direccion} = require("../models/GestionUsuarios/Direcciones");
 const {contactoSchema, contacto} = require("../models/GestionUsuarios/Contactos");
 

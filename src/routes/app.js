@@ -52,6 +52,7 @@ app.delete("/Sucursales/eliminar/:_id",tokenValidator.rutasProtegidas , Sucursal
 
 //Bodegas
 app.put("/Bodegas/crear", Bodegas.crear);
+app.get("/Bodegas/listar/:_id", Bodegas.listar);
 
 //Productos
 app.post("/Productos/crear", Productos.crear);
