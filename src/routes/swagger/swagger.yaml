@@ -594,6 +594,34 @@ paths:
             items:
               $ref : '#/definitions/Producto'
 
+  /Productos/actualizar:
+    put:
+      tags:
+      - Productos
+      summary: Actualizar datos producto
+      description: Actualizar datos de los productos
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Productos
+        description: Items de producto a actualizar
+        schema:
+          $ref: '#/definitions/UpdateProducto'
+        
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Producto'
+
 
 
 securityDefinitions:
@@ -1073,6 +1101,40 @@ definitions:
         type: number
     xml:
       name: Producto
+
+  UpdateProducto:
+    type: object
+    properties:
+      id:
+        type : object
+      CodigoProducto:
+        type: string
+      NombreProducto:
+        type: string
+      Material:
+        type: string
+      Caracteristicas:
+        type: string
+      Existencias:
+        type: number
+      Precio_Unitario:
+        type: number
+      Nombre:
+        type: string
+      Razon_Social:
+        type: string
+      Departamente:
+        type: string
+      Municipio:
+        type: string
+      Descripcion:
+        type: string
+      Telefono: 
+        type: string
+      Correo:
+        type: string
+    xml:
+      name: UpdateProducto
 
 
       
