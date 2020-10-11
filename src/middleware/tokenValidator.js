@@ -28,7 +28,7 @@ rutasProtegidas.use((req, res, next) => {
         user : usuario
        };
        const token = jwt.sign(payload, String(rutasProtegidas.get('key')), {
-        expiresIn: 1440 //24horas
+        expiresIn: '24h' //24horas        
        });       
 
        return  token
