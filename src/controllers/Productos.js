@@ -126,4 +126,24 @@ const actualizar = async(req, res)=>{
 
 }
 
-module.exports = {crear, listar, actualizar}
+//DELETE
+const eliminar = async(req, res)=>{
+    const id = req.params;
+
+    await Productos.findOneAndUpdate({_id : id},
+        {Estado : false}, (error, data)=>{
+            if(error){
+                res.json({
+                    mensaje : "Error al tratar de dar de baja a producto",
+                    error
+                });
+            }else{
+                res.status(200).json({
+                    mensaje : "Producto dado de baja exitosamente",
+                    data
+                });
+            }
+        });
+}
+
+module.exports = {crear, listar, actualizar, eliminar}

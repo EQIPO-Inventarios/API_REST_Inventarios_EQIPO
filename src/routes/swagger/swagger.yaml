@@ -622,6 +622,30 @@ paths:
             items:
               $ref : '#/definitions/Producto'
 
+  /Productos/eliminar/{_id}:
+    delete:
+      tags:
+      - Productos
+      summary: Eliminar un producto
+      description: Eliminar o dar de baja a un producto
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: _id
+        in: path
+        description: ID del producto a eliminar
+        required: true
+        type: string
+
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+
 
 
 securityDefinitions:
