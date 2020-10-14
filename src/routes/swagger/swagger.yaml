@@ -21,6 +21,7 @@ tags:
 - name: Sucursales
 - name: Bodegas
 - name: Productos
+- name: Entradas
 
 
 
@@ -646,7 +647,53 @@ paths:
         200:
           description: OK
 
+  /Entradas/crear:
+    post:
+      tags:
+      - Entradas
+      summary: Agregar una nueva entrada
+      description: Agregar una nueva entrada
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Productos
+        description: Items de entrada a agregar
+        schema:
+          $ref: '#/definitions/NewEntrada'
+      security:
+      - api_key: []
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Entrada'
 
+  /Entradas/listar:
+    get:
+      tags:
+      - Entradas
+      summary: Listar todas las entradas
+      description: Listar todos las entradas existentes
+      consumes:
+      - application/json
+      produces:
+      - application/json
+
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Entrada'
 
 securityDefinitions:
   api_key:
@@ -1160,6 +1207,75 @@ definitions:
     xml:
       name: UpdateProducto
 
+  NewEntrada:
+    type: object
+    properties:
+      Fecha:
+        type: Date
+      Detalle:
+        type: string
+      idProducto:
+        type: string
+      Cantidad:
+        type: number
+      Monto:
+        type: number
+      idSucursal:
+        type: string
+      NumeroBodega:
+        type: number
+      Estanterias:
+        type: number
+      Largo:
+        type: number
+      Ancho:
+        type: number
+      Estanteria:
+        type: number
+      X:
+        type: number
+      Y:
+        type: number
+    xml:
+      name: NewEntrada
+
+  Entrada:
+    type: object
+    properties:
+      Fecha:
+        type: Date
+      Detalle:
+        type: string
+      idProducto:
+        type: string
+      Cantidad:
+        type: number
+      Monto:
+        type: number
+      idSucursal:
+        type: string
+      Ubicacion_Bodega:
+        type: object
+        properties:
+          Bodega:
+            type: object
+            properties:
+              NumeroBodega:
+                type: number
+              Estanterias:
+                type: number
+              Largo:
+                type: number
+              Ancho:
+                type: number
+          Estanteria:
+            type: number
+          X:
+            type: number
+          Y:
+            type: number
+    xml:
+      name: Entrada
 
       
       

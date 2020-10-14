@@ -14,7 +14,11 @@ const entradaSchema = mongoose.Schema(
         trim : true,
         required : true
     },
-    Producto: productoSchema,
+    idProducto: {
+        type : String,
+        trim : true,
+        required : true
+    },
     Cantidad: {
         type : Number,
         required : true
@@ -23,7 +27,11 @@ const entradaSchema = mongoose.Schema(
         type : Number,
         required : true
     },
-    Sucursal: sucursalSchema,
+    idSucursal: {
+        type : String,
+        trim : true,
+        required : true
+    },
     Ubicacion_Bodega: ubicacion_bodegaSchema
 
 });
@@ -31,4 +39,4 @@ const entradaSchema = mongoose.Schema(
 
 const Entradas = mongoose.model('Entradas', entradaSchema)
 
-module.exports = Entradas
+module.exports = {Entradas, entradaSchema}
