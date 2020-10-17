@@ -760,9 +760,9 @@ definitions:
         type: string
       NIT:
         type: string
-      TipoEstadoCivil:
+      Tipo:
         type: string
-      NumeroEstadoCivil:
+      Numero:
         type: number
       Departamento:
         type: string
