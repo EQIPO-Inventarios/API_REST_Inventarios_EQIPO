@@ -3,6 +3,8 @@ const pool = require("../settings/db");
 const {Usuario}  = require("../models/GestionUsuarios/Usuario");
 const encryp = require("../middleware/encrypt")
 const tokenValidator = require ("../middleware/tokenValidator")
+
+
 const listarUsuarios = async (req, res) =>{
     const model = await Usuario.find({estado : true})
     Usuario.countDocuments({}, (err, total ) =>{
@@ -18,14 +20,17 @@ const listarUsuarios = async (req, res) =>{
     });
 }
 
+const buscar = async (req, res) =>{
+  const id = req.params.id;
+  await Usuario.findById(id)
+  .exec()
+  .then (x => { res.status(200).send(x) })
+}
+
+
 //POST
   let login = async(req, res)  =>{
-    const   {usuario, password} = req.body;
-    
-    
-    
-
-    
+    const   {usuario, password} = req.body;    
     const model = await Usuario.findOne({usuario: usuario})
     if(model){  
       console.log(model)    
@@ -201,4 +206,4 @@ const eliminar = async(req, res)=>{
     });
 }
 
-  module.exports ={listarUsuarios,login, crear, actualizar, eliminar}
+  module.exports ={listarUsuarios,login, crear, actualizar, eliminar, buscar}
