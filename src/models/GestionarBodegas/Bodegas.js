@@ -5,7 +5,6 @@ const bodegaSchema = mongoose.Schema(
     {
     NumeroBodega: {
         type : Number,
-        unique: true,
         default: 1
     },
     Estanterias: {
