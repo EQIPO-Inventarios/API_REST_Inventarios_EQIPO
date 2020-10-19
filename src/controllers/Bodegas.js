@@ -6,17 +6,19 @@ const {Sucursales} = require('../models/GestionSucursales/Sucursales');
 
 //POST
 const crear = async(req, res)=>{
-    const {id, NumeroBodega, Largo, Ancho, Estanterias} = req.body;
-    const bodega = ({
-        NumeroBodega,
-        Estanterias,
-        Largo,
-        Ancho
-    });
+    const {id, Largo, Ancho, Estanterias} = req.body;
+    let NumeroBodega = 0;
 
     let sucursal = await Sucursales.findOne({_id : id});
     
     if(sucursal){
+        NumeroBodega = sucursal.Bodega.length + 1;
+        const bodega = ({
+            NumeroBodega,
+            Estanterias,
+            Largo,
+            Ancho
+        });
         sucursal.Bodega.push(bodega);
 
         sucursal.save((error, data)=>{
