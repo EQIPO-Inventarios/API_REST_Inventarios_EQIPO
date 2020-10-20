@@ -517,7 +517,7 @@ paths:
           schema :
             type : array
             items:
-              $ref : '#/definitions/Bodega'
+              $ref : '#/definitions/NewBodega'
   
   /Bodegas/listar/{_id}:
     get:
@@ -1096,7 +1096,23 @@ definitions:
       Ancho:
         type: number
     xml:
-      name: NewProveedores
+      name: NewBodega
+
+    Bodega:
+    type: object
+    properties:
+      id:
+        type: object
+      NumeroBodega:
+        type: number
+      Estanterias:
+        type: number
+      Largo:
+        type: number
+      Ancho:
+        type: number
+    xml:
+      name: Bodega
 
   NewProducto:
     type: object
