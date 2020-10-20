@@ -52,7 +52,7 @@ app.put("/Sucursales/actualizar",tokenValidator.rutasProtegidas , Sucursales.act
 app.delete("/Sucursales/eliminar/:_id",tokenValidator.rutasProtegidas , Sucursales.eliminar);
 
 //Bodegas
-app.put("/Bodegas/crear", Bodegas.crear);
+app.put("/Bodegas/crear", tokenValidator.rutasProtegidas ,Bodegas.crear);
 app.get("/Bodegas/listar/:_id", Bodegas.listar);
 
 //Productos

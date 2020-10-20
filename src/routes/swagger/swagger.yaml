@@ -1091,8 +1091,6 @@ definitions:
     properties:
       id:
         type: object
-      NumeroBodega:
-        type: number
       Estanterias:
         type: number
       Largo:
