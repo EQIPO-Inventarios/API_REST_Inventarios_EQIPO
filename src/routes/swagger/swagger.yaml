@@ -63,6 +63,30 @@ paths:
               $ref: '#/definitions/User'
         400:
           description: bad input parameter
+  
+  /Usuarios/buscar/{id}:
+    get:
+      tags:
+      - Usuarios
+      summary: Buscar un usuario
+      description: Buscar a un usuario por id
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: ID del usuario a buscar
+        required: true
+        type: string
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+
           
   /Usuarios/login:
     post:
@@ -314,6 +338,28 @@ paths:
             type : array
             items:
               $ref : '#/definitions/Proveedores'
+
+  /Proveedores/buscar/{id}:
+    get:
+      tags:
+      - Proveedores
+      summary: Buscar un proveedor
+      description: Buscar a un proveedor por id
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: ID del proveedor a buscar
+        required: true
+        type: string
+      security:
+      - api_key: []      
+      responses:
+        200:
+          description: OK
   
   /Proveedores/crear:
     post:
@@ -440,6 +486,28 @@ paths:
             type : array
             items:
               $ref : '#/definitions/Sucursal'
+
+  /Sucursales/buscar/{id}:
+    get:
+      tags:
+      - Sucursales
+      summary: Buscar una Sucursal
+      description: Buscar a una sucursal por id
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: ID de la sucursal a buscar
+        required: true
+        type: string
+      security:
+      - api_key: []      
+      responses:
+        200:
+          description: OK
 
   /Sucursales/actualizar:
     put:

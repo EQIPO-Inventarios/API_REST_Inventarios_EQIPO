@@ -76,6 +76,13 @@ const listar = async(req, res)=>{
     });
 }
 
+const buscar = async (req, res) =>{
+    const id = req.params.id;
+    await Sucursales.findById(id)
+    .exec()
+    .then (x => { res.status(200).send(x) })
+}
+
 //PUT
 const actualizar = async(req, res)=>{
     
@@ -130,4 +137,4 @@ const eliminar = async(req, res)=>{
         });
 }
 
-module.exports = {crear, listar, actualizar, eliminar};
+module.exports = {crear, listar, actualizar, eliminar, buscar};

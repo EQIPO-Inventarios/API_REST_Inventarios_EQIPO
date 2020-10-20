@@ -22,6 +22,13 @@ const listar = async(req, res) =>{
     });
 }
 
+const buscar = async (req, res) =>{
+    const id = req.params.id;
+    await Proveedores.findById(id)
+    .exec()
+    .then (x => { res.status(200).send(x) })
+}
+
 //POST
 const crear = async(req, res) =>{
     const {Nombre, Razon_Social, Correo, Telefono, Departamento, Municipio, Descripcion} = req.body;
@@ -126,4 +133,4 @@ const eliminar = async (req, res) =>{
     });
 }
 
-module.exports = {listar, crear, actualizar, eliminar} 
+module.exports = {listar, crear, actualizar, eliminar, buscar} 
