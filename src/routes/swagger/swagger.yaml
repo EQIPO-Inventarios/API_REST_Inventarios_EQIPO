@@ -1377,7 +1377,7 @@ definitions:
 
       
       
-host: api-multibodegas-eqipo.azurewebsites.net/
+host: apiinventarios.azurewebsites.net
 basePath: /api
 schemes:
  - https
