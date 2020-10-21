@@ -46,7 +46,7 @@ const crear = async(req, res)=>{
         //PRIMERA CONSULTA GUARDAR LA ENTRADA
         const A = await entrada.save();
         //SEGUNDA CONSULTA OBTENER EL VALOR DE EXISTENCIAS DE PRODUCTO
-        const B = await Productos.findOne((error, data) =>{
+        const B = await Productos.findOne({_id : idProducto}, (error, data) =>{
             //SUMAR LAS EXISTENCIAS Y LA CANTIDAD DE ENTRADA
             Total = data.Existencias + Cantidad;
         });
@@ -86,6 +86,9 @@ const listar = async(req, res) =>{
         }
     });
 }
+
+
+//PUT
 
 
 module.exports = {crear, listar}
