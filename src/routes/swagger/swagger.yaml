@@ -765,6 +765,54 @@ paths:
             items:
               $ref : '#/definitions/Entrada'
 
+  /Salidas/crear:
+    post:
+      tags:
+      - Salidas
+      summary: Agregar una nueva salida
+      description: Agregar una nueva salida
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Productos
+        description: Items de entrada a agregar
+        schema:
+          $ref: '#/definitions/NewSalida'
+      security:
+      - api_key: []
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Salida'
+
+  /Salidas/listar:
+    get:
+      tags:
+      - Salidas
+      summary: Listar todas las salidas
+      description: Listar todos las salidas existentes
+      consumes:
+      - application/json
+      produces:
+      - application/json
+
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Salida'
+
 securityDefinitions:
   api_key:
     type: "apiKey"
@@ -1360,6 +1408,42 @@ definitions:
             type: number
     xml:
       name: Entrada
+
+  NewSalida:
+    type: object
+    properties:
+      Fecha:
+        type: Date
+      Detalle:
+        type: string
+      idProducto:
+        type: string
+      Cantidad:
+        type: number
+      Monto:
+        type: number
+      idSucursal:
+        type: string
+    xml:
+      name: NewSalida
+
+  Salida:
+    type: object
+    properties:
+      Fecha:
+        type: Date
+      Detalle:
+        type: string
+      idProducto:
+        type: string
+      Cantidad:
+        type: number
+      Monto:
+        type: number
+      idSucursal:
+        type: string
+    xml:
+      name: Salida
 
       
       

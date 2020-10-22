@@ -1,54 +1,36 @@
 //Conexion BD
 const pool = require("../settings/db");
 //Modelo BD
-const {ubicacion_bodegaSchema} = require('../models/GestionarBodegas/UbicacionBodega');
-const {bodegaSchema} = require('../models/GestionarBodegas/Bodegas');
-const {Entradas} = require ('../models/GestionEntradas/Entradas');
+const {Salidas} = require("../models/GestionaSalidas/Salidas");
 const {Productos} = require('../models/GestionProductos/Productos');
 
 //POST
 const crear = async(req, res)=>{
     const {Fecha, Detalle, Cantidad, Monto, idProducto,
-    idSucursal, NumeroBodega, Estanterias, Largo, Ancho,
-    Estanteria, X, Y} = req.body;
+    idSucursal} = req.body;
 
-    let Total;
-
-    const Bodega = {
-        NumeroBodega,
-        Estanterias,
-        Largo,
-        Ancho
-    }
-
-    const Ubicacion_Bodega = {
-        Bodega,
-        Estanteria,
-        X,
-        Y
-    }
-
-    const entrada = new Entradas({
+    const salida = new Salidas({
         Fecha,
         Detalle,
         idProducto,
         Cantidad,
         Monto,
-        idSucursal,
-        Ubicacion_Bodega
-    })
+        idSucursal
+    });
+
+    let Total;
 
     //SESION PARA QUE SE EJECUTEN TODAS LAS CONSULTAS
-    const session = await Entradas.startSession();
+    const session = await Salidas.startSession();
     session.startTransaction();
     try {
         const opts = { session };
         //PRIMERA CONSULTA GUARDAR LA ENTRADA
-        const A = await entrada.save();
+        const A = await salida.save();
         //SEGUNDA CONSULTA OBTENER EL VALOR DE EXISTENCIAS DE PRODUCTO
         const B = await Productos.findOne({_id : idProducto}, (error, data) =>{
             //SUMAR LAS EXISTENCIAS Y LA CANTIDAD DE ENTRADA
-            Total = data.Existencias + Cantidad;
+            Total = data.Existencias - Cantidad;
         });
         //HACER LA ACTUALIZACION DE EXISTENCIAS EN PRODUCTO
         const C = await Productos.findOneAndUpdate({_id : idProducto},
@@ -69,11 +51,9 @@ const crear = async(req, res)=>{
 
 }
 
-
-
 //GET
 const listar = async(req, res) =>{
-    await Entradas.find({}, (error, data) =>{
+    await Salidas.find({}, (error, data) =>{
         if(error){
             res.json({
                 mensaje : "Error al listar las entradas",
@@ -86,9 +66,5 @@ const listar = async(req, res) =>{
         }
     });
 }
-
-
-//PUT
-
 
 module.exports = {crear, listar}
