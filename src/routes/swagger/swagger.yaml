@@ -1447,7 +1447,7 @@ definitions:
 
       
       
-host: apirest-inventarios.herokuapp.com
+host: apiinventarios.azurewebsites.net
 basePath: /api
 schemes:
  - https
