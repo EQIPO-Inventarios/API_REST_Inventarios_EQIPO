@@ -22,6 +22,7 @@ tags:
 - name: Bodegas
 - name: Productos
 - name: Entradas
+- name: Salidas
 
 
 
@@ -659,7 +660,7 @@ paths:
       - application/json
       parameters:
       - in: body
-        name: Productos
+        name: Entradas
         description: Items de entrada a agregar
         schema:
           $ref: '#/definitions/NewEntrada'
@@ -684,6 +685,34 @@ paths:
       produces:
       - application/json
 
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Entrada'
+
+  /Entradas/actualizar:
+    put:
+      tags:
+      - Entradas
+      summary: Actualizar datos de una entrada y existencias
+      description: Actualizar datos de una entrada y existencias
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Entradas
+        description: Items de entrada a actualizar
+        schema:
+          $ref: '#/definitions/UpdateEntrada'
+        
       security:
       - api_key: []
       
@@ -732,6 +761,34 @@ paths:
       produces:
       - application/json
 
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Salida'
+
+  /Salidas/actualizar:
+    put:
+      tags:
+      - Salidas
+      summary: Actualizar datos de una salida y existencias
+      description: Actualizar datos de una salida y existencias
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Entradas
+        description: Items de salida a actualizar
+        schema:
+          $ref: '#/definitions/UpdateSalida'
+        
       security:
       - api_key: []
       
@@ -1339,6 +1396,22 @@ definitions:
     xml:
       name: Entrada
 
+  UpdateEntrada:
+    type: object
+    properties:
+      id:
+        type: object
+      Detalle:
+        type: string
+      Cantidad:
+        type: number
+      Monto:
+        type: number
+      idProducto:
+        type: string
+    xml:
+      name: UpdateEntrada
+
   NewSalida:
     type: object
     properties:
@@ -1374,6 +1447,22 @@ definitions:
         type: string
     xml:
       name: Salida
+
+  UpdateSalida:
+    type: object
+    properties:
+      id:
+        type: object
+      Detalle:
+        type: string
+      Cantidad:
+        type: number
+      Monto:
+        type: number
+      idProducto:
+        type: string
+    xml:
+      name: UpdateSalida
 
       
       

@@ -64,10 +64,12 @@ app.delete("/Productos/eliminar/:_id",tokenValidator.rutasProtegidas , Productos
 //Entradas
 app.post("/Entradas/crear", tokenValidator.rutasProtegidas, Entradas.crear);
 app.get("/Entradas/listar", tokenValidator.rutasProtegidas, Entradas.listar);
+app.put("/Entradas/actualizar", tokenValidator.rutasProtegidas, Entradas.actualizar);
 
 //Salidas
 app.post("/Salidas/crear", tokenValidator.rutasProtegidas, Salidas.crear);
 app.get("/Salidas/listar", tokenValidator.rutasProtegidas, Salidas.listar);
+app.put("/Salidas/actualizar", tokenValidator.rutasProtegidas, Salidas.actualizar);
 
 app.get("/token", (req, res)=>{
    res.send(tokenValidator.generateToken('usuario de prueba'))
