@@ -23,7 +23,7 @@ tags:
 - name: Productos
 - name: Entradas
 - name: Salidas
-
+- name: PeticionEntradas
 
 
 
@@ -736,8 +736,8 @@ paths:
       - application/json
       parameters:
       - in: body
-        name: Productos
-        description: Items de entrada a agregar
+        name: Salidas
+        description: Items de salida a agregar
         schema:
           $ref: '#/definitions/NewSalida'
       security:
@@ -784,7 +784,7 @@ paths:
       - application/json
       parameters:
       - in: body
-        name: Entradas
+        name: Salidas
         description: Items de salida a actualizar
         schema:
           $ref: '#/definitions/UpdateSalida'
@@ -799,6 +799,32 @@ paths:
             type : array
             items:
               $ref : '#/definitions/Salida'
+
+  /PeticionEntradas/crear:
+    post:
+      tags:
+      - PeticionEntradas
+      summary: Agregar una nueva peticion de entrada
+      description: Agregar una nueva peticion de entrada
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: PeticionEntradas
+        description: Items de peticion de entrada a agregar
+        schema:
+          $ref: '#/definitions/NewPeticionEntradas'
+      security:
+      - api_key: []
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/PeticionEntradas'
 
 securityDefinitions:
   api_key:
@@ -1464,7 +1490,39 @@ definitions:
     xml:
       name: UpdateSalida
 
-      
+  NewPeticionEntradas:
+    type: object
+    properties:
+      Fecha:
+        type: date
+      Detalle:
+        type: string
+      idProducto:
+        type: string
+      Cantidad:
+        type: number
+      idSucursal:
+        type: string
+    xml:
+      name: NewPeticionEntradas
+
+  PeticionEntradas:
+    type: object
+    properties:
+      Fecha:
+        type: date
+      Detalle:
+        type: string
+      idProducto:
+        type: string
+      Cantidad:
+        type: number
+      idSucursal:
+        type: string
+      EstadoPeticion:
+        type: number
+    xml:
+      name: NewPeticionEntradas
       
 host: apiinventarios.azurewebsites.net
 basePath: /api
