@@ -826,6 +826,28 @@ paths:
             items:
               $ref : '#/definitions/PeticionEntradas'
 
+  /PeticionEntradas/listar:
+    get:
+      tags:
+      - PeticionEntradas
+      summary: Listar todas las Peticion de Entradas
+      description: Listar todos las Peticion de Entradas existentes
+      consumes:
+      - application/json
+      produces:
+      - application/json
+
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/PeticionEntradas'
+
 securityDefinitions:
   api_key:
     type: "apiKey"
