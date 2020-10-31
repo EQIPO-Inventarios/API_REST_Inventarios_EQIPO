@@ -10,8 +10,7 @@ const sucursalSchema = mongoose.Schema({
     },
     Codigo : {
         type : Number,
-        required : true,
-        unique : true
+        required : true
     },
     Contacto : contactoSchema,
     Bodega: [bodegaSchema],
