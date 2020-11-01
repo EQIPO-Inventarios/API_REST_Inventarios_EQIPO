@@ -151,4 +151,4 @@ const listarPorNombre = async(req, res)=>{
 }
 
 
-module.exports = {listar, crear, actualizar, eliminar, listarPorNombre} 
+module.exports = {listar, crear, actualizar, eliminar, listarPorNombre, buscar} 
