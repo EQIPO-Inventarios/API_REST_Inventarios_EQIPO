@@ -126,4 +126,22 @@ const eliminar = async (req, res) =>{
     });
 }
 
-module.exports = {listar, crear, actualizar, eliminar} 
+//GET
+const listarPorNombre = async(req, res)=>{
+    let regex = new RegExp(req.params.Nombre, "i")
+    await Proveedores.find({Nombre : regex, Estado : true}, (error, data)=>{
+        if(error){
+            res.json({
+                mensaje : "Error al listar proveedores",
+                error
+            })
+        }else{
+            res.status(200).json(
+                data
+            )
+        }
+    });
+}
+
+
+module.exports = {listar, crear, actualizar, eliminar, listarPorNombre} 

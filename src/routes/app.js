@@ -43,6 +43,7 @@ app.get("/Departamentos/listar", tokenValidator.rutasProtegidas ,Departamentos.l
 //Proveedores
 
 app.get("/Proveedores/listar", tokenValidator.rutasProtegidas ,  Proveedores.listar);
+app.get("/Proveedores/listarPorNombre/:Nombre", tokenValidator.rutasProtegidas, Proveedores.listarPorNombre);
 app.post("/Proveedores/crear", tokenValidator.rutasProtegidas , Proveedores.crear);
 app.put("/Proveedores/actualizar", tokenValidator.rutasProtegidas , Proveedores.actualizar);
 app.delete("/Proveedores/eliminar/:_id", tokenValidator.rutasProtegidas , Proveedores.eliminar);
