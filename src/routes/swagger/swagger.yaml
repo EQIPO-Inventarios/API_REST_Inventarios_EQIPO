@@ -22,7 +22,8 @@ tags:
 - name: Bodegas
 - name: Productos
 - name: Entradas
-
+- name: Salidas
+- name: PeticionEntradas
 
 
 
@@ -360,6 +361,33 @@ paths:
       responses:
         200:
           description: OK
+
+  /Proveedores/listarPorNombre/{Nombre}:
+    get:
+      tags:
+      - Proveedores
+      summary: Listar proveedores por coincidencias en su nombre
+      description: Listar proveedores por coincidencias en su nombre
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Nombre
+        in: path
+        description: Nombre del proveedor a eliminar
+        required: true
+        type: string
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Proveedores'
   
   /Proveedores/crear:
     post:
@@ -729,7 +757,7 @@ paths:
       - application/json
       parameters:
       - in: body
-        name: Productos
+        name: Entradas
         description: Items de entrada a agregar
         schema:
           $ref: '#/definitions/NewEntrada'
@@ -765,6 +793,34 @@ paths:
             items:
               $ref : '#/definitions/Entrada'
 
+  /Entradas/actualizar:
+    put:
+      tags:
+      - Entradas
+      summary: Actualizar datos de una entrada y existencias
+      description: Actualizar datos de una entrada y existencias
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Entradas
+        description: Items de entrada a actualizar
+        schema:
+          $ref: '#/definitions/UpdateEntrada'
+        
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Entrada'
+
   /Salidas/crear:
     post:
       tags:
@@ -777,8 +833,8 @@ paths:
       - application/json
       parameters:
       - in: body
-        name: Productos
-        description: Items de entrada a agregar
+        name: Salidas
+        description: Items de salida a agregar
         schema:
           $ref: '#/definitions/NewSalida'
       security:
@@ -812,6 +868,82 @@ paths:
             type : array
             items:
               $ref : '#/definitions/Salida'
+
+  /Salidas/actualizar:
+    put:
+      tags:
+      - Salidas
+      summary: Actualizar datos de una salida y existencias
+      description: Actualizar datos de una salida y existencias
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Salidas
+        description: Items de salida a actualizar
+        schema:
+          $ref: '#/definitions/UpdateSalida'
+        
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Salida'
+
+  /PeticionEntradas/crear:
+    post:
+      tags:
+      - PeticionEntradas
+      summary: Agregar una nueva peticion de entrada
+      description: Agregar una nueva peticion de entrada
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: PeticionEntradas
+        description: Items de peticion de entrada a agregar
+        schema:
+          $ref: '#/definitions/NewPeticionEntradas'
+      security:
+      - api_key: []
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/PeticionEntradas'
+
+  /PeticionEntradas/listar:
+    get:
+      tags:
+      - PeticionEntradas
+      summary: Listar todas las Peticion de Entradas
+      description: Listar todos las Peticion de Entradas existentes
+      consumes:
+      - application/json
+      produces:
+      - application/json
+
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/PeticionEntradas'
 
 securityDefinitions:
   api_key:
@@ -1409,6 +1541,22 @@ definitions:
     xml:
       name: Entrada
 
+  UpdateEntrada:
+    type: object
+    properties:
+      id:
+        type: object
+      Detalle:
+        type: string
+      Cantidad:
+        type: number
+      Monto:
+        type: number
+      idProducto:
+        type: string
+    xml:
+      name: UpdateEntrada
+
   NewSalida:
     type: object
     properties:
@@ -1445,7 +1593,55 @@ definitions:
     xml:
       name: Salida
 
-      
+  UpdateSalida:
+    type: object
+    properties:
+      id:
+        type: object
+      Detalle:
+        type: string
+      Cantidad:
+        type: number
+      Monto:
+        type: number
+      idProducto:
+        type: string
+    xml:
+      name: UpdateSalida
+
+  NewPeticionEntradas:
+    type: object
+    properties:
+      Fecha:
+        type: date
+      Detalle:
+        type: string
+      idProducto:
+        type: string
+      Cantidad:
+        type: number
+      idSucursal:
+        type: string
+    xml:
+      name: NewPeticionEntradas
+
+  PeticionEntradas:
+    type: object
+    properties:
+      Fecha:
+        type: date
+      Detalle:
+        type: string
+      idProducto:
+        type: string
+      Cantidad:
+        type: number
+      idSucursal:
+        type: string
+      EstadoPeticion:
+        type: number
+    xml:
+      name: NewPeticionEntradas
       
 host: apiinventarios.azurewebsites.net
 basePath: /api

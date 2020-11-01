@@ -3,10 +3,12 @@ const pool = require("../settings/db");
 const {Usuario}  = require("../models/GestionUsuarios/Usuario");
 const encryp = require("../middleware/encrypt")
 const tokenValidator = require ("../middleware/tokenValidator")
+const {Sucursales} = require("../models/GestionSucursales/Sucursales"); 
 
-
+//GET
 const listarUsuarios = async (req, res) =>{
-    const model = await Usuario.find({estado : true})
+
+  let model = await Usuario.find({estado : true})
     Usuario.countDocuments({}, (err, total ) =>{
       if (err) {
         return res.json({
@@ -16,8 +18,24 @@ const listarUsuarios = async (req, res) =>{
 
         })
       }
-      res.json(model);       
-    });
+           
+    })
+
+    for (x in model) {
+        //console.log(x.personal.idSucursal);
+        await Sucursales.findById({_id : model[x].personal.idSucursal}, 
+          (error, data)=>{
+            if(error){
+
+            }
+            else{
+              model[x].personal.idSucursal = data.Nombre;
+            }
+            //console.log(model[x].personal.idSucursal);
+          })
+    }
+    res.json(model);
+
 }
 
 const buscar = async (req, res) =>{
@@ -30,7 +48,8 @@ const buscar = async (req, res) =>{
 
 //POST
   let login = async(req, res)  =>{
-    const   {usuario, password} = req.body;    
+    const   {usuario, password} = req.body;
+    
     const model = await Usuario.findOne({usuario: usuario})
     if(model){  
       console.log(model)    
@@ -171,7 +190,7 @@ const actualizar = async(req, res)=>{
 
     Usuario.findOneAndUpdate({_id : id},
       {personal : personal, usuario : usuario,
-      password : password, nivel : nivel}, (error, data)=>{
+      password : encryp.encrypt(password), nivel : nivel}, (error, data)=>{
         if(error){
           res.json({
             mensaje : "Error al actualizar datos de usuario",
