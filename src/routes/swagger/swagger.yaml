@@ -327,7 +327,7 @@ paths:
       parameters:
       - name: Nombre
         in: path
-        description: Nombre del proveedor a eliminar
+        description: Nombre del proveedor a buscar
         required: true
         type: string
       security:
@@ -456,6 +456,33 @@ paths:
       produces:
       - application/json
 
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Sucursal'
+
+  /Sucursales/listarPorNombre/{Nombre}:
+    get:
+      tags:
+      - Sucursales
+      summary: Listar Sucursales por coincidencias en su nombre
+      description: Listar Sucursales por coincidencias en su nombre
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Nombre
+        in: path
+        description: Nombre de la Sucursal a buscar
+        required: true
+        type: string
       security:
       - api_key: []
       
@@ -1573,7 +1600,7 @@ definitions:
     xml:
       name: NewPeticionEntradas
       
-host: apiinventarios.azurewebsites.net
+host: localhost:3000
 basePath: /api
 schemes:
  - https

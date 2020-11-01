@@ -51,6 +51,7 @@ app.delete("/Proveedores/eliminar/:_id", tokenValidator.rutasProtegidas , Provee
 //Sucursales
 app.post("/Sucursales/crear",tokenValidator.rutasProtegidas , Sucursales.crear);
 app.get("/Sucursales/listar",tokenValidator.rutasProtegidas , Sucursales.listar);
+app.get("/Sucursales/listarPorNombre/:Nombre", tokenValidator.rutasProtegidas, Sucursales.listarPorNombre);
 app.put("/Sucursales/actualizar",tokenValidator.rutasProtegidas , Sucursales.actualizar);
 app.delete("/Sucursales/eliminar/:_id",tokenValidator.rutasProtegidas , Sucursales.eliminar);
 
