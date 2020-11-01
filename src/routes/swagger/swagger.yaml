@@ -1643,7 +1643,7 @@ definitions:
     xml:
       name: NewPeticionEntradas
       
-host: apiinventarios.azurewebsites.net
+host: apirest-inventarios.herokuapp.com/
 basePath: /api
 schemes:
  - https
