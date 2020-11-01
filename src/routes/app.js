@@ -61,6 +61,7 @@ app.put("/Bodegas/crear", tokenValidator.rutasProtegidas ,Bodegas.crear);
 //Productos
 app.post("/Productos/crear", tokenValidator.rutasProtegidas, Productos.crear);
 app.get("/Productos/listar", tokenValidator.rutasProtegidas, Productos.listar);
+app.get("/Productos/listarPorNombre/:Nombre", tokenValidator.rutasProtegidas, Productos.listarPorNombre);
 app.put("/Productos/actualizar", tokenValidator.rutasProtegidas, Productos.actualizar);
 app.delete("/Productos/eliminar/:_id",tokenValidator.rutasProtegidas , Productos.eliminar);
 
