@@ -965,6 +965,35 @@ paths:
             items:
               $ref : '#/definitions/PeticionEntradas'
 
+  /PeticionEntradas/aceptar:
+    put:
+      tags:
+      - PeticionEntradas
+      summary: Aceptar una peticion de entrada
+      description: Aceptar una peticion de entrada
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: PeticionEntradas
+        description: Items de peticion de entrada a actualizar
+        schema:
+          $ref: '#/definitions/AceptarPeticionEntrada'
+        
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/PeticionEntradas'
+
+
   /PeticionEntradas/eliminar:
     delete:
       tags:
@@ -1722,6 +1751,24 @@ definitions:
         type: number
     xml:
       name: DeletePeticionEntrada
+
+  AceptarPeticionEntrada:
+    type: object
+    properties:
+      _id:
+        type: string
+      Fecha:
+        type: date
+      Detalle:
+        type: string
+      idProducto:
+        type: string
+      Cantidad:
+        type: number
+      idSucursal:
+        type: string
+    xml:
+      name: AceptarPeticionEntrada
 
 host: localhost:3000
 basePath: /api

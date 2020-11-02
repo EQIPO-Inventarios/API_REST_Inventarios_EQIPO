@@ -137,17 +137,18 @@ const eliminar = async (req, res) =>{
     session.startTransaction();
     try {
         const opts = { session };
-        //PRIMERA CONSULTA PARA ELIMINAR LA PETICION
-        const A = await PeticionEntradas.findOneAndDelete({_id : _id});
 
-        //SEGUNDA CONSULTA OBTENER LAS EXISTENCIAS Y SUMARLE LO QUE SE HABIA EXTRAIDO
+        //PRIMERA CONSULTA OBTENER LAS EXISTENCIAS Y SUMARLE LO QUE SE HABIA EXTRAIDO
         const B = await Productos.findOne({_id : idProducto}, (error, data)=>{
             Total = data.Existencias + Cantidad;
         });
 
-        //TERCERA CONSULTA HACER LA ACTUALIZACION DE EXISTENCIAS EN PRODUCTO
+        //SEGUNDA CONSULTA HACER LA ACTUALIZACION DE EXISTENCIAS EN PRODUCTO
         const D = await Productos.findOneAndUpdate({_id : idProducto},
             {Existencias : Total});
+
+        //TERCERA CONSULTA PARA ELIMINAR LA PETICION
+        const A = await PeticionEntradas.findOneAndDelete({_id : _id});
 
         await session.commitTransaction();
         session.endSession();
@@ -163,5 +164,51 @@ const eliminar = async (req, res) =>{
     }
 }
 
+//PUT ACEPTAR PETICION
+const aceptar = async(req, res)=>{
+    const {_id, Fecha, Detalle, Cantidad, idProducto, idSucursal} = req.body;
 
-module.exports = {crear, listar, actualizar, eliminar}
+    let Monto = 0;
+
+    //SESION PARA QUE SE EJECUTEN TODAS LAS CONSULTAS
+    const session = await PeticionEntradas.startSession();
+    session.startTransaction();
+    try {
+        const opts = { session };
+        //PRIMERA CONSULTA PARA OBTENER EL PRECIO DEL PRODUCTO
+        const A = await Productos.findOne({_id : idProducto}, (error, data)=>{
+            //Sacando el monto
+            Monto = data.Precio_Unitario * Cantidad;
+        });
+
+        const salida = new Salidas({
+            Fecha : Fecha,
+            Detalle : Detalle,
+            idProducto : idProducto,
+            Cantidad : Cantidad,
+            Monto : Monto,
+            idSucursal : idSucursal
+        })
+
+        //SEGUNDA CONSULTA GUARDAR LA SALIDA
+        const B = await salida.save();
+        
+        //TERCERA CONSULTA OBTENER EL VALOR DE EXISTENCIAS DE PRODUCTO
+        const C = await PeticionEntradas.findOneAndUpdate({_id : _id},
+            {EstadoPeticion : 2});
+
+        await session.commitTransaction();
+        session.endSession();
+        return res.status(200).json({
+            mensaje : "Peticion de Entrada aceptada"
+        });
+    } catch (error) {
+        // If an error occurred, abort the whole transaction and
+        // undo any changes that might have happened
+        await session.abortTransaction();
+        session.endSession();
+        throw error; 
+    }
+}
+
+module.exports = {crear, listar, actualizar, eliminar, aceptar}
