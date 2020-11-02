@@ -908,16 +908,52 @@ paths:
               $ref : '#/definitions/PeticionEntradas'
 
   /PeticionEntradas/listar:
-    get:
+    post:
       tags:
       - PeticionEntradas
-      summary: Listar todas las Peticion de Entradas
-      description: Listar todos las Peticion de Entradas existentes
+      summary: Listar todas las Peticion de Entrada
+      description: Listar todos las Peticion de Entradas existentes segun su estado
       consumes:
       - application/json
       produces:
       - application/json
+      
+      parameters:
+      - name: EstadoPeticion
+        in: body
+        name: PeticionEntradas
+        description: Items de peticion de entrada a listar (Estados de peticion[1- Pendientes, 2- Aceptadas, 3- Entregadas] y el id de la sucursal)
+        schema:
+          $ref: '#/definitions/ListarPeticionEntradas'
 
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/PeticionEntradas'
+
+  /PeticionEntradas/actualizar:
+    put:
+      tags:
+      - PeticionEntradas
+      summary: Actualizar datos de una petcion de entrada y existencias
+      description: Actualizar datos de una peticion de entrada y existencias
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: PeticionEntradas
+        description: Items de peticion de entrada a actualizar
+        schema:
+          $ref: '#/definitions/UpdatePeticionEntrada'
+        
       security:
       - api_key: []
       
@@ -1626,7 +1662,31 @@ definitions:
         type: number
     xml:
       name: NewPeticionEntradas
-      
+
+  ListarPeticionEntradas:
+    type: object
+    properties:
+      idSucursal:
+        type: string
+      EstadoPeticion:
+        type: number
+    xml:
+      name: ListarPeticionEntradas
+
+  UpdatePeticionEntrada:
+    type: object
+    properties:
+      id:
+        type: object
+      Detalle:
+        type: string
+      Cantidad:
+        type: number
+      idProducto:
+        type: string
+    xml:
+      name: UpdatePeticionEntrada
+
 host: localhost:3000
 basePath: /api
 schemes:

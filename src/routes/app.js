@@ -77,7 +77,8 @@ app.put("/Salidas/actualizar", tokenValidator.rutasProtegidas, Salidas.actualiza
 
 //Peticiones de entrada
 app.post("/PeticionEntradas/crear", tokenValidator.rutasProtegidas, PeticionEntradas.crear);
-app.get("/PeticionEntradas/listar", tokenValidator.rutasProtegidas, PeticionEntradas.listar);
+app.post("/PeticionEntradas/listar", tokenValidator.rutasProtegidas, PeticionEntradas.listar);
+app.put("/PeticionEntradas/actualizar", tokenValidator.rutasProtegidas, PeticionEntradas.actualizar);
 
 app.get("/token", (req, res)=>{
    res.send(tokenValidator.generateToken('usuario de prueba'))
