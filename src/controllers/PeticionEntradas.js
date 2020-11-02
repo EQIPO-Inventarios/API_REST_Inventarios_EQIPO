@@ -4,6 +4,7 @@ const pool = require("../settings/db");
 const {PeticionEntradas} = require("../models/GestionarPeticionEntrada/PeticionEntrada");
 const {Salidas} = require("../models/GestionaSalidas/Salidas");
 const {Productos} = require('../models/GestionProductos/Productos');
+const PeticionEntrada = require("../models/GestionarPeticionEntrada/PeticionEntrada");
 
 /*
     LOS ESTADOS DE PETICION SERA:
@@ -116,7 +117,7 @@ const actualizar = async(req, res)=>{
         await session.commitTransaction();
         session.endSession();
         return res.status(200).json({
-            mensaje : "Salida actualizada exitosamente"
+            mensaje : "Peticion de entrada actualizada exitosamente"
         });
     } catch (error) {
         // If an error occurred, abort the whole transaction and
@@ -127,4 +128,40 @@ const actualizar = async(req, res)=>{
     }
 }
 
-module.exports = {crear, listar, actualizar}
+//DELETE
+const eliminar = async (req, res) =>{
+    const {_id, idProducto, Cantidad} = req.body;
+    let Total = 0;
+    //SESION PARA QUE SE EJECUTEN TODAS LAS CONSULTAS
+    const session = await PeticionEntradas.startSession();
+    session.startTransaction();
+    try {
+        const opts = { session };
+        //PRIMERA CONSULTA PARA ELIMINAR LA PETICION
+        const A = await PeticionEntradas.findOneAndDelete({_id : _id});
+
+        //SEGUNDA CONSULTA OBTENER LAS EXISTENCIAS Y SUMARLE LO QUE SE HABIA EXTRAIDO
+        const B = await Productos.findOne({_id : idProducto}, (error, data)=>{
+            Total = data.Existencias + Cantidad;
+        });
+
+        //TERCERA CONSULTA HACER LA ACTUALIZACION DE EXISTENCIAS EN PRODUCTO
+        const D = await Productos.findOneAndUpdate({_id : idProducto},
+            {Existencias : Total});
+
+        await session.commitTransaction();
+        session.endSession();
+        return res.status(200).json({
+            mensaje : "Peticion de Entrada eliminada exitosamente"
+        });
+    } catch (error) {
+        // If an error occurred, abort the whole transaction and
+        // undo any changes that might have happened
+        await session.abortTransaction();
+        session.endSession();
+        throw error; 
+    }
+}
+
+
+module.exports = {crear, listar, actualizar, eliminar}

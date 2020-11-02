@@ -965,6 +965,30 @@ paths:
             items:
               $ref : '#/definitions/PeticionEntradas'
 
+  /PeticionEntradas/eliminar:
+    delete:
+      tags:
+      - PeticionEntradas
+      summary: Eliminar una Peticion de Entrada
+      description: Eliminar una Peticion de Entrada
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: PeticionEntradas
+        description: Items de peticion de entrada a eliminar
+        schema:
+          $ref: '#/definitions/DeletePeticionEntrada'
+
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+
 securityDefinitions:
   api_key:
     type: "apiKey"
@@ -1661,7 +1685,7 @@ definitions:
       EstadoPeticion:
         type: number
     xml:
-      name: NewPeticionEntradas
+      name: PeticionEntradas
 
   ListarPeticionEntradas:
     type: object
@@ -1686,6 +1710,18 @@ definitions:
         type: string
     xml:
       name: UpdatePeticionEntrada
+
+  DeletePeticionEntrada:
+    type: object
+    properties:
+      _id:
+        type: string
+      idProducto:
+        type: string
+      Cantidad:
+        type: number
+    xml:
+      name: DeletePeticionEntrada
 
 host: localhost:3000
 basePath: /api
