@@ -7,7 +7,7 @@ const {Productos} = require('../models/GestionProductos/Productos');
 //POST
 const crear = async(req, res)=>{
     const {Fecha, Detalle, Cantidad, Monto, idProducto,
-    idSucursal} = req.body;
+    idSucursal, idSucursalDestino} = req.body;
 
     const salida = new Salidas({
         Fecha,
@@ -15,7 +15,8 @@ const crear = async(req, res)=>{
         idProducto,
         Cantidad,
         Monto,
-        idSucursal
+        idSucursal,
+        idSucursalDestino
     });
 
     let Total;

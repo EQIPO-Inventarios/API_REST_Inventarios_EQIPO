@@ -166,7 +166,7 @@ const eliminar = async (req, res) =>{
 
 //PUT ACEPTAR PETICION
 const aceptar = async(req, res)=>{
-    const {_id, Fecha, Detalle, Cantidad, idProducto, idSucursal} = req.body;
+    const {_id, Fecha, Detalle, Cantidad, idProducto, idSucursal, idSucursalDestino} = req.body;
 
     let Monto = 0;
 
@@ -187,7 +187,8 @@ const aceptar = async(req, res)=>{
             idProducto : idProducto,
             Cantidad : Cantidad,
             Monto : Monto,
-            idSucursal : idSucursal
+            idSucursal : idSucursal,
+            idSucursalDestino : idSucursalDestino
         })
 
         //SEGUNDA CONSULTA GUARDAR LA SALIDA

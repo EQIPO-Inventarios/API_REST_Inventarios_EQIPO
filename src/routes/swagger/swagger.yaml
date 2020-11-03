@@ -1645,12 +1645,16 @@ definitions:
         type: number
       idSucursal:
         type: string
+      idSucursalDestino:
+        type: string
     xml:
       name: NewSalida
 
   Salida:
     type: object
     properties:
+      _id:
+        type: object
       Fecha:
         type: Date
       Detalle:
@@ -1662,6 +1666,8 @@ definitions:
       Monto:
         type: number
       idSucursal:
+        type: string
+      idSucursalDestino:
         type: string
     xml:
       name: Salida
@@ -1710,6 +1716,8 @@ definitions:
       Cantidad:
         type: number
       idSucursal:
+        type: string
+      idSucursalDestion:
         type: string
       EstadoPeticion:
         type: number
@@ -1766,6 +1774,8 @@ definitions:
       Cantidad:
         type: number
       idSucursal:
+        type: string
+      idSucursalDestion:
         type: string
     xml:
       name: AceptarPeticionEntrada
