@@ -375,7 +375,7 @@ paths:
       parameters:
       - name: Nombre
         in: path
-        description: Nombre del proveedor a eliminar
+        description: Nombre del proveedor a buscar
         required: true
         type: string
       security:
@@ -537,6 +537,33 @@ paths:
         200:
           description: OK
 
+  /Sucursales/listarPorNombre/{Nombre}:
+    get:
+      tags:
+      - Sucursales
+      summary: Listar Sucursales por coincidencias en su nombre
+      description: Listar Sucursales por coincidencias en su nombre
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Nombre
+        in: path
+        description: Nombre de la Sucursal a buscar
+        required: true
+        type: string
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Sucursal'
+
   /Sucursales/actualizar:
     put:
       tags:
@@ -682,6 +709,33 @@ paths:
       produces:
       - application/json
 
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Producto'
+
+  /Productos/listarPorNombre/{Nombre}:
+    get:
+      tags:
+      - Productos
+      summary: Listar Productos por coincidencias en su nombre
+      description: Listar Productos por coincidencias en su nombre
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Nombre
+        in: path
+        description: Nombre del Producto a buscar
+        required: true
+        type: string
       security:
       - api_key: []
       
@@ -924,15 +978,23 @@ paths:
               $ref : '#/definitions/PeticionEntradas'
 
   /PeticionEntradas/listar:
-    get:
+    post:
       tags:
       - PeticionEntradas
-      summary: Listar todas las Peticion de Entradas
-      description: Listar todos las Peticion de Entradas existentes
+      summary: Listar todas las Peticion de Entrada
+      description: Listar todos las Peticion de Entradas existentes segun su estado
       consumes:
       - application/json
       produces:
       - application/json
+      
+      parameters:
+      - name: EstadoPeticion
+        in: body
+        name: PeticionEntradas
+        description: Items de peticion de entrada a listar (Estados de peticion[1- Pendientes, 2- Aceptadas, 3- Entregadas] y el id de la sucursal)
+        schema:
+          $ref: '#/definitions/ListarPeticionEntradas'
 
       security:
       - api_key: []
@@ -944,6 +1006,87 @@ paths:
             type : array
             items:
               $ref : '#/definitions/PeticionEntradas'
+
+  /PeticionEntradas/actualizar:
+    put:
+      tags:
+      - PeticionEntradas
+      summary: Actualizar datos de una petcion de entrada y existencias
+      description: Actualizar datos de una peticion de entrada y existencias
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: PeticionEntradas
+        description: Items de peticion de entrada a actualizar
+        schema:
+          $ref: '#/definitions/UpdatePeticionEntrada'
+        
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/PeticionEntradas'
+
+  /PeticionEntradas/aceptar:
+    put:
+      tags:
+      - PeticionEntradas
+      summary: Aceptar una peticion de entrada
+      description: Aceptar una peticion de entrada
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: PeticionEntradas
+        description: Items de peticion de entrada a actualizar
+        schema:
+          $ref: '#/definitions/AceptarPeticionEntrada'
+        
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/PeticionEntradas'
+
+
+  /PeticionEntradas/eliminar:
+    delete:
+      tags:
+      - PeticionEntradas
+      summary: Eliminar una Peticion de Entrada
+      description: Eliminar una Peticion de Entrada
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: PeticionEntradas
+        description: Items de peticion de entrada a eliminar
+        schema:
+          $ref: '#/definitions/DeletePeticionEntrada'
+
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
 
 securityDefinitions:
   api_key:
@@ -1572,12 +1715,16 @@ definitions:
         type: number
       idSucursal:
         type: string
+      idSucursalDestino:
+        type: string
     xml:
       name: NewSalida
 
   Salida:
     type: object
     properties:
+      _id:
+        type: object
       Fecha:
         type: Date
       Detalle:
@@ -1589,6 +1736,8 @@ definitions:
       Monto:
         type: number
       idSucursal:
+        type: string
+      idSucursalDestino:
         type: string
     xml:
       name: Salida
@@ -1638,11 +1787,69 @@ definitions:
         type: number
       idSucursal:
         type: string
+      idSucursalDestion:
+        type: string
       EstadoPeticion:
         type: number
     xml:
-      name: NewPeticionEntradas
-      
+      name: PeticionEntradas
+
+  ListarPeticionEntradas:
+    type: object
+    properties:
+      idSucursal:
+        type: string
+      EstadoPeticion:
+        type: number
+    xml:
+      name: ListarPeticionEntradas
+
+  UpdatePeticionEntrada:
+    type: object
+    properties:
+      id:
+        type: object
+      Detalle:
+        type: string
+      Cantidad:
+        type: number
+      idProducto:
+        type: string
+    xml:
+      name: UpdatePeticionEntrada
+
+  DeletePeticionEntrada:
+    type: object
+    properties:
+      _id:
+        type: string
+      idProducto:
+        type: string
+      Cantidad:
+        type: number
+    xml:
+      name: DeletePeticionEntrada
+
+  AceptarPeticionEntrada:
+    type: object
+    properties:
+      _id:
+        type: string
+      Fecha:
+        type: date
+      Detalle:
+        type: string
+      idProducto:
+        type: string
+      Cantidad:
+        type: number
+      idSucursal:
+        type: string
+      idSucursalDestion:
+        type: string
+    xml:
+      name: AceptarPeticionEntrada
+
 host: apirest-inventarios.herokuapp.com
 basePath: /api
 schemes:

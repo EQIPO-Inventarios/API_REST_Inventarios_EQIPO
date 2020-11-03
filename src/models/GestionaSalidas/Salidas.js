@@ -30,6 +30,11 @@ const salidaSchema = mongoose.Schema(
         type : String,
         trim : true,
         required : true
+    },
+    idSucursalDestino: {
+        type : String,
+        trim : true,
+        required : true
     }
     
 });

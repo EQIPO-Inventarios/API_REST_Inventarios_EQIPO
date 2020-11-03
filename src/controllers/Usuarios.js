@@ -52,15 +52,18 @@ const buscar = async (req, res) =>{
     
     const model = await Usuario.findOne({usuario: usuario})
     if(model){  
-      console.log(model)    
+      console.log(model)
+      const model2 = await Sucursales.findById({_id : "5f72768d6eae103fb49e1953"});  
       if(encryp.comparePassword(String(password), model.password)){
         if(model.estado == true){
           res.status(200).json({           
               token : tokenValidator.generateToken(model.usuario),
               nivel : model.nivel.TipoNivel,
               Numeronivel : model.nivel.NumeroNivel,
-              Nombre :  model.personal.Nombres +' '+ model.personal.Apellidos
-
+              Nombre :  model.personal.Nombres +' '+ model.personal.Apellidos,
+              NombreSucursal : model2.Nombre,
+              CodigoSucursal : model2.Codigo,
+              idSucursal : model2._id 
           })
         }else{
           res.json({

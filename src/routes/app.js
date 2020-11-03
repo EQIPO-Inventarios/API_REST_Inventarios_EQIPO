@@ -53,6 +53,7 @@ app.delete("/Proveedores/eliminar/:_id", tokenValidator.rutasProtegidas , Provee
 //Sucursales
 app.post("/Sucursales/crear",tokenValidator.rutasProtegidas , Sucursales.crear);
 app.get("/Sucursales/listar",tokenValidator.rutasProtegidas , Sucursales.listar);
+app.get("/Sucursales/listarPorNombre/:Nombre", tokenValidator.rutasProtegidas, Sucursales.listarPorNombre);
 app.get("/Sucursales/buscar/:id",tokenValidator.rutasProtegidas , Sucursales.buscar);
 app.put("/Sucursales/actualizar",tokenValidator.rutasProtegidas , Sucursales.actualizar);
 app.delete("/Sucursales/eliminar/:_id",tokenValidator.rutasProtegidas , Sucursales.eliminar);
@@ -64,6 +65,7 @@ app.get("/Bodegas/listar/:_id", Bodegas.listar);
 //Productos
 app.post("/Productos/crear", tokenValidator.rutasProtegidas, Productos.crear);
 app.get("/Productos/listar", tokenValidator.rutasProtegidas, Productos.listar);
+app.get("/Productos/listarPorNombre/:Nombre", tokenValidator.rutasProtegidas, Productos.listarPorNombre);
 app.put("/Productos/actualizar", tokenValidator.rutasProtegidas, Productos.actualizar);
 app.delete("/Productos/eliminar/:_id",tokenValidator.rutasProtegidas , Productos.eliminar);
 
@@ -79,7 +81,10 @@ app.put("/Salidas/actualizar", tokenValidator.rutasProtegidas, Salidas.actualiza
 
 //Peticiones de entrada
 app.post("/PeticionEntradas/crear", tokenValidator.rutasProtegidas, PeticionEntradas.crear);
-app.get("/PeticionEntradas/listar", tokenValidator.rutasProtegidas, PeticionEntradas.listar);
+app.post("/PeticionEntradas/listar", tokenValidator.rutasProtegidas, PeticionEntradas.listar);
+app.put("/PeticionEntradas/actualizar", tokenValidator.rutasProtegidas, PeticionEntradas.actualizar);
+app.put("/PeticionEntradas/aceptar", tokenValidator.rutasProtegidas, PeticionEntradas.aceptar);
+app.delete("/PeticionEntradas/eliminar", tokenValidator.rutasProtegidas, PeticionEntradas.eliminar);
 
 app.get("/token", (req, res)=>{
    res.send(tokenValidator.generateToken('usuario de prueba'))
