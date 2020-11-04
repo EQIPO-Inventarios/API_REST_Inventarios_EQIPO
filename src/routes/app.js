@@ -16,6 +16,7 @@ const Productos = require("../controllers/Productos");
 const Entradas = require("../controllers/Entradas");
 const Salidas = require("../controllers/Salidas");
 const PeticionEntradas = require("../controllers/PeticionEntradas");
+const ProductoSucursales = require("../controllers/ProductoSucursales");
 const tokenValidator = require("../middleware/tokenValidator");
 
 
@@ -64,6 +65,13 @@ app.get("/Productos/listar", tokenValidator.rutasProtegidas, Productos.listar);
 app.get("/Productos/listarPorNombre/:Nombre", tokenValidator.rutasProtegidas, Productos.listarPorNombre);
 app.put("/Productos/actualizar", tokenValidator.rutasProtegidas, Productos.actualizar);
 app.delete("/Productos/eliminar/:_id",tokenValidator.rutasProtegidas , Productos.eliminar);
+
+//Productos Sucursales
+app.post("/ProductoSucursales/crear", tokenValidator.rutasProtegidas, ProductoSucursales.crear);
+app.get("/ProductoSucursales/listar/:id_sucursal", tokenValidator.rutasProtegidas, ProductoSucursales.listar);
+app.post("/ProductoSucursales/listarPorNombre", tokenValidator.rutasProtegidas, ProductoSucursales.listarPorNombre);
+app.put("/ProductoSucursales/actualizar", tokenValidator.rutasProtegidas, ProductoSucursales.actualizar);
+app.delete("/ProductoSucursales/eliminar/:_id",tokenValidator.rutasProtegidas , ProductoSucursales.eliminar);
 
 //Entradas
 app.post("/Entradas/crear", tokenValidator.rutasProtegidas, Entradas.crear);

@@ -47,3 +47,5 @@ const productoSucursalesSchema = mongoose.Schema(
 
 
 const ProductoSucursales = mongoose.model('ProductoSucursales', productoSucursalesSchema)
+
+module.exports = {ProductoSucursales, productoSucursalesSchema};

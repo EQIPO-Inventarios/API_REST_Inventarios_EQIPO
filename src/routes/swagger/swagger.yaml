@@ -21,6 +21,7 @@ tags:
 - name: Sucursales
 - name: Bodegas
 - name: Productos
+- name: ProductoSucursales
 - name: Entradas
 - name: Salidas
 - name: PeticionEntradas
@@ -728,6 +729,139 @@ paths:
       responses:
         200:
           description: OK
+
+  /ProductoSucursales/crear:
+    post:
+      tags:
+      - ProductoSucursales
+      summary: Agregar un nuevo Producto para Sucursales
+      description: Agregar un nuevo Producto para Sucursales
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Productos
+        description: Items de producto para sucursal a agregar
+        schema:
+          $ref: '#/definitions/NewProductoSucursales'
+      security:
+      - api_key: []
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/ProductoSucursales'
+
+  /ProductoSucursales/listar/{id_sucursal}:
+    get:
+      tags:
+      - ProductoSucursales
+      summary: Listar todos los Productos de una Sucursal
+      description: Listar todos los productos existentes de una sucursal
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id_sucursal
+        in: path
+        description: ID de la sucursal para listar unicamente sus productos
+        required: true
+        type: string
+
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/ProductoSucursales'
+
+  /ProductoSucursales/actualizar:
+    put:
+      tags:
+      - ProductoSucursales
+      summary: Actualizar datos producto
+      description: Actualizar datos de los productos
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: ProductosSucursales
+        description: Items de producto a actualizar
+        schema:
+          $ref: '#/definitions/UpdateProductoSucursales'
+        
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/ProductoSucursales'
+
+  /ProductoSucursales/eliminar/{_id}:
+    delete:
+      tags:
+      - ProductoSucursales
+      summary: Eliminar un producto
+      description: Eliminar o dar de baja a un producto
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: _id
+        in: path
+        description: ID del producto a eliminar
+        required: true
+        type: string
+
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+
+  /ProductoSucursales/listarPorNombre:
+    post:
+      tags:
+      - ProductoSucursales
+      summary: Listar Productos por coincidencias en su nombre
+      description: Listar Productos por coincidencias en su nombre
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: ProductosSucursales
+        description: Items de producto a actualizar
+        schema:
+          $ref: '#/definitions/DatosProductoSucursales'
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/ProductoSucursales'
 
   /Entradas/crear:
     post:
@@ -1543,6 +1677,129 @@ definitions:
         type: string
     xml:
       name: UpdateProducto
+
+  NewProductoSucursales:
+    type: object
+    properties:
+      idSucursal:
+        type: string
+      CodigoProducto:
+        type: string
+      NombreProducto:
+        type: string
+      Material:
+        type: string
+      Caracteristicas:
+        type: string
+      Existencias:
+        type: number
+      Precio_Unitario:
+        type: number
+      Nombre:
+        type: string
+      Razon_Social:
+        type: string
+      Departamente:
+        type: string
+      Municipio:
+        type: string
+      Descripcion:
+        type: string
+      Telefono: 
+        type: string
+      Correo:
+        type: string
+    xml:
+      name: NewProductoSucursales
+
+  ProductoSucursales:
+    type: object
+    properties:
+      idSucursal:
+        type: string
+      CodigoProducto:
+        type: string
+      NombreProducto:
+        type: string
+      Material:
+        type: string
+      Caracteristicas:
+        type: string
+      Existencias:
+        type: number
+      Proveedor:
+        type: object
+        properties:
+          Nombre:
+            type: string
+          Razon_Social:
+            type: string
+          Contacto:
+            type: object
+            properties:
+              Direccion:
+                type: object
+                properties:
+                  Departamente:
+                    type: string
+                  Municipio:
+                    type: string
+                  Descripcion:
+                    type: string
+              Telefono: 
+                type: string
+              Correo:
+                type: string
+      Precio_Unitario:
+        type: number
+    xml:
+      name: ProductoSucursales
+
+  UpdateProductoSucursales:
+    type: object
+    properties:
+      id:
+        type : object
+      idSucursal:
+        type: string
+      CodigoProducto:
+        type: string
+      NombreProducto:
+        type: string
+      Material:
+        type: string
+      Caracteristicas:
+        type: string
+      Existencias:
+        type: number
+      Precio_Unitario:
+        type: number
+      Nombre:
+        type: string
+      Razon_Social:
+        type: string
+      Departamente:
+        type: string
+      Municipio:
+        type: string
+      Descripcion:
+        type: string
+      Telefono: 
+        type: string
+      Correo:
+        type: string
+    xml:
+      name: UpdateProductoSucursales
+
+  DatosProductoSucursales:
+    type: object
+    properties:
+      Nombre:
+        type : string
+      idSucursal:
+        type: string
+    xml:
+      name: DatosProductoSucursales
 
   NewEntrada:
     type: object
