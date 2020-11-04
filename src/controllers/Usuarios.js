@@ -52,8 +52,9 @@ const buscar = async (req, res) =>{
     
     const model = await Usuario.findOne({usuario: usuario})
     if(model){  
-      console.log(model)
-      const model2 = await Sucursales.findById({_id : "5f72768d6eae103fb49e1953"});  
+        const idSucursal_model =model.personal.idSucursal
+      const model2 = await Sucursales.findById({_id : idSucursal_model});  
+      console.log(model2);
       if(encryp.comparePassword(String(password), model.password)){
         if(model.estado == true){
           res.status(200).json({           
