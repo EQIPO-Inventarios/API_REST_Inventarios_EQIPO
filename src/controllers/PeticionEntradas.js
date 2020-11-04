@@ -3,9 +3,12 @@ const pool = require("../settings/db");
 //Modelo BD
 const {PeticionEntradas} = require("../models/GestionarPeticionEntrada/PeticionEntrada");
 const {Salidas} = require("../models/GestionaSalidas/Salidas");
+const {Entradas} = require("../models/GestionEntradas/Entradas");
 const {Productos} = require('../models/GestionProductos/Productos');
+const {ProductoSucursales} = require("../models/GestionProductos/ProductoSucursales");
 const PeticionEntrada = require("../models/GestionarPeticionEntrada/PeticionEntrada");
-
+const {bodegaSchema} = require("../models/GestionarBodegas/Bodegas");
+const {ubicacion_bodegaSchema} = require("../models/GestionarBodegas/UbicacionBodega");
 /*
     LOS ESTADOS DE PETICION SERA:
     1: PENDIENTE
@@ -212,4 +215,74 @@ const aceptar = async(req, res)=>{
     }
 }
 
-module.exports = {crear, listar, actualizar, eliminar, aceptar}
+//PUT PETICION ENTREGADA
+const entregada = async(req, res)=>{
+    const {_id, Fecha, Detalle, Cantidad, idProducto,
+        idSucursal, NumeroBodega, Estanterias, Largo, Ancho,
+        Estanteria, X, Y} = req.body;
+
+    const Bodega = {
+        NumeroBodega,
+        Estanterias,
+        Largo,
+        Ancho
+    }
+    
+    const Ubicacion_Bodega = {
+        Bodega,
+        Estanteria,
+        X,
+        Y
+    }
+
+    let Monto = 0;
+    let Total = 0;
+
+    //SESION PARA QUE SE EJECUTEN TODAS LAS CONSULTAS
+    const session = await PeticionEntradas.startSession();
+    session.startTransaction();
+    try {
+        const opts = { session };
+        //PRIMERA CONSULTA PARA OBTENER EL PRECIO DEL PRODUCTO
+        const A = await ProductoSucursales.findOne({_id : idProducto, idSucursal : idSucursal}, (error, data)=>{
+            //Sacando el monto
+            Monto = data.Precio_Unitario * Cantidad;
+            Total = data.Existencias + Cantidad 
+        });
+
+        const entrada =  await new Entradas({
+            Fecha,
+            Detalle,
+            idProducto,
+            Cantidad,
+            Monto,
+            idSucursal,
+            Ubicacion_Bodega
+        })
+
+        //SEGUNDA CONSULTA GUARDAR LA SALIDA
+        const B = await entrada.save();
+        
+        //TERCERA CONSULTA OBTENER EL VALOR DE EXISTENCIAS DE PRODUCTO
+        const C = await PeticionEntradas.findOneAndUpdate({_id : _id},
+            {EstadoPeticion : 3});
+
+        //CUARTA CONSULTA SUMAR LA ENTRADA AL MODELO PRODUCTOSUCURSALES
+        const D = await ProductoSucursales.findOneAndUpdate({_id : idProducto, idSucursal : idSucursal},
+            {Existencias : Total});
+
+        await session.commitTransaction();
+        session.endSession();
+        return res.status(200).json({
+            mensaje : "Peticion de Entrada aceptada"
+        });
+    } catch (error) {
+        // If an error occurred, abort the whole transaction and
+        // undo any changes that might have happened
+        await session.abortTransaction();
+        session.endSession();
+        throw error; 
+    }
+}
+
+module.exports = {crear, listar, actualizar, eliminar, aceptar, entregada}

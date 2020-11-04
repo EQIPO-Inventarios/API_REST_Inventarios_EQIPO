@@ -1127,6 +1127,33 @@ paths:
             items:
               $ref : '#/definitions/PeticionEntradas'
 
+  /PeticionEntradas/entregada:
+    put:
+      tags:
+      - PeticionEntradas
+      summary: Confirmar la entrga de una peticion de entrada
+      description: Confirmar la entrega de una peticion de entrada
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: PeticionEntradas
+        description: Items de peticion de entrada a actualizar
+        schema:
+          $ref: '#/definitions/EntregadaPeticionEntrada'
+        
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/PeticionEntradas'
 
   /PeticionEntradas/eliminar:
     delete:
@@ -2036,6 +2063,39 @@ definitions:
         type: string
     xml:
       name: AceptarPeticionEntrada
+
+  EntregadaPeticionEntrada:
+    type: object
+    properties:
+      _id:
+        type: string
+      Fecha:
+        type: date
+      Cantidad:
+        type: number
+      Detalle:
+        type: string
+      idProducto:
+        type: string
+      idSucursal:
+        type: string
+      NumeroBodega:
+        type: number
+      Estanterias:
+        type: number
+      Largo:
+        type: number
+      Ancho:
+        type: number
+      Estanteria:
+        type: number
+      X:
+        type: number
+      Y:
+        type: number
+    xml:
+      name: EntregadaPeticionEntrada
+      
 
 host: localhost:3000
 basePath: /api
