@@ -72,12 +72,29 @@ const listar = async(req, res) =>{
                 mensaje : "Error al listar las entradas",
                 error
             });
-        }else{
-            res.status(200).json(
-                data
-            );
         }
-    });
+    })
+
+    let model2 = [];
+
+    model.forEach(element =>{
+
+        let fecha = element.Fecha
+        let fechaArreglada = format(fecha, "dd-mm-yyyy");
+        let model3 = {_id : element._id,
+            Fecha : fechaArreglada,
+            Detalle: element.Detalle,
+            idProducto: element.idProducto,
+            Cantidad: element.Cantidad,
+            idSucursal: element.idSucursal,
+            EstadoPeticion : element.EstadoPeticion}
+
+         model2.push(model3)    
+        
+    })
+
+    res.json(model2);
+
 }
 
 //GET LISTAR TODAS LAS PETICIONES PENDIENTES
@@ -90,12 +107,29 @@ const listarTodas = async(req, res) =>{
                 mensaje : "Error al listar las peticiones pendientes",
                 error
             });
-        }else{
-            res.status(200).json(
-                data
-            );
         }
-    });
+    })
+    
+    let model2 = [];
+
+    model.forEach(element =>{
+
+        let fecha = element.Fecha
+        let fechaArreglada = format(fecha, "dd-mm-yyyy");
+        let model3 = {_id : element._id,
+            Fecha : fechaArreglada,
+            Detalle: element.Detalle,
+            idProducto: element.idProducto,
+            Cantidad: element.Cantidad,
+            idSucursal: element.idSucursal,
+            EstadoPeticion : element.EstadoPeticion}
+
+         model2.push(model3)    
+        
+    })
+
+    res.json(model2);
+
 }
 //PUT
 const actualizar = async(req, res)=>{
