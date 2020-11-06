@@ -19,7 +19,6 @@ tags:
 - name: Departamentos
 - name: Proveedores
 - name: Sucursales
-- name: Bodegas
 - name: Productos
 - name: ProductoSucursales
 - name: Entradas
@@ -41,7 +40,6 @@ paths:
         200:
           description: Devuelve apiKey para peticiones 
       
-
   /Usuarios/listar:
     get:
       tags:
@@ -166,7 +164,6 @@ paths:
         200:
           description: OK
           
-          
   /Niveles/crear:
     post:
       tags:
@@ -267,9 +264,6 @@ paths:
             items:
               $ref : '#/definitions/NivelItem'
           
-    
-    
-    
   /Departamentos/listar:
     get:
       tags:
@@ -435,7 +429,7 @@ paths:
         name: Sucursales
         description: Items de sucursal con bodega a agregar
         schema:
-          $ref: '#/definitions/NewSucursal_Bodega'
+          $ref: '#/definitions/NewSucursal'
       security:
       - api_key: []
       responses:
@@ -546,62 +540,6 @@ paths:
       responses:
         200:
           description: OK
-
-  /Bodegas/crear:
-    put:
-      tags:
-      - Bodegas
-      summary: Agregar una nueva bodega a una sucursal
-      description: Agregar una nueva bodega a una sucursal ya existente
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - in: body
-        name: Sucursales
-        description: Items de bodega a agregar
-        schema:
-          $ref: '#/definitions/NewBodega'
-
-      security:
-      - api_key: []
-      
-      responses:
-        200:
-          description: OK
-          schema :
-            type : array
-            items:
-              $ref : '#/definitions/NewBodega'
-  
-  /Bodegas/listar/{_id}:
-    get:
-      tags:
-      - Bodegas
-      summary: Listar bodegas de una sucursal
-      description: Listar las bodegas que contenga una sucursal
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: _id
-        in: path
-        description: ID de la sucursal a listar sus bodegas
-        required: true
-        type: string
-
-      security:
-      - api_key: []
-      
-      responses:
-        200:
-          description: OK
-          schema :
-            type : array
-            items:
-              $ref : '#/definitions/Bodega'
 
   /Productos/crear:
     post:
@@ -1379,8 +1317,7 @@ definitions:
         type: number
     xml:
       name: Nivel
-    
-    
+     
   NewNivel:
     type: object
     properties:
@@ -1403,14 +1340,9 @@ definitions:
         items:
           type: string
           minItems: 5
-            
-            
-          
-          
     xml:
       name: Departamentos
 
-  
   Proveedores:
     type: object
     properties:
@@ -1483,7 +1415,7 @@ definitions:
     xml:
       name: UpdateProveedor
   
-  NewSucursal_Bodega:
+  NewSucursal:
     type: object
     properties:
       Nombre:
@@ -1500,18 +1432,8 @@ definitions:
         type: string
       Correo:
         type: string
-      NumeroBodega:
-        type: number
-      Largo:
-        type: number
-      Ancho:
-        type: number
-      Estanterias:
-        type: number
-    
     xml:
-      name: NewSucursal_Bodega
-      
+      name: NewSucursal
 
   Sucursal:
     type: object
@@ -1538,11 +1460,6 @@ definitions:
             type: string
       Estado:
         type: boolean
-      Bodega:
-        type : array
-        items:
-          type: Schema
-          minItems: 1
     xml:
       name: Sucursal
   
@@ -1566,37 +1483,7 @@ definitions:
       Correo:
         type: string
     xml:
-      name: NewSucursal_Bodega
-
-  NewBodega:
-    type: object
-    properties:
-      id:
-        type: object
-      Estanterias:
-        type: number
-      Largo:
-        type: number
-      Ancho:
-        type: number
-    xml:
-      name: NewBodega
-
-    Bodega:
-    type: object
-    properties:
-      id:
-        type: object
-      NumeroBodega:
-        type: number
-      Estanterias:
-        type: number
-      Largo:
-        type: number
-      Ancho:
-        type: number
-    xml:
-      name: Bodega
+      name: UpdateSucursal
 
   NewProducto:
     type: object
@@ -1843,20 +1730,6 @@ definitions:
         type: number
       idSucursal:
         type: string
-      NumeroBodega:
-        type: number
-      Estanterias:
-        type: number
-      Largo:
-        type: number
-      Ancho:
-        type: number
-      Estanteria:
-        type: number
-      X:
-        type: number
-      Y:
-        type: number
     xml:
       name: NewEntrada
 
@@ -1875,26 +1748,6 @@ definitions:
         type: number
       idSucursal:
         type: string
-      Ubicacion_Bodega:
-        type: object
-        properties:
-          Bodega:
-            type: object
-            properties:
-              NumeroBodega:
-                type: number
-              Estanterias:
-                type: number
-              Largo:
-                type: number
-              Ancho:
-                type: number
-          Estanteria:
-            type: number
-          X:
-            type: number
-          Y:
-            type: number
     xml:
       name: Entrada
 
@@ -2079,20 +1932,6 @@ definitions:
         type: string
       idSucursal:
         type: string
-      NumeroBodega:
-        type: number
-      Estanterias:
-        type: number
-      Largo:
-        type: number
-      Ancho:
-        type: number
-      Estanteria:
-        type: number
-      X:
-        type: number
-      Y:
-        type: number
     xml:
       name: EntregadaPeticionEntrada
       

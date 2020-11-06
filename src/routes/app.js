@@ -11,13 +11,13 @@ const Niveles = require("../controllers/Niveles");
 const Departamentos = require("../controllers/Deparatamentos");
 const Proveedores = require("../controllers/Proveedores");
 const Sucursales = require('../controllers/Sucursales');
-const Bodegas = require("../controllers/Bodegas");
 const Productos = require("../controllers/Productos");
 const Entradas = require("../controllers/Entradas");
 const Salidas = require("../controllers/Salidas");
 const PeticionEntradas = require("../controllers/PeticionEntradas");
 const ProductoSucursales = require("../controllers/ProductoSucursales");
 const tokenValidator = require("../middleware/tokenValidator");
+const { token } = require("morgan");
 
 
 
@@ -55,9 +55,6 @@ app.get("/Sucursales/listar",tokenValidator.rutasProtegidas , Sucursales.listar)
 app.get("/Sucursales/listarPorNombre/:Nombre", tokenValidator.rutasProtegidas, Sucursales.listarPorNombre);
 app.put("/Sucursales/actualizar",tokenValidator.rutasProtegidas , Sucursales.actualizar);
 app.delete("/Sucursales/eliminar/:_id",tokenValidator.rutasProtegidas , Sucursales.eliminar);
-
-//Bodegas
-app.put("/Bodegas/crear", tokenValidator.rutasProtegidas ,Bodegas.crear);
 
 //Productos
 app.post("/Productos/crear", tokenValidator.rutasProtegidas, Productos.crear);

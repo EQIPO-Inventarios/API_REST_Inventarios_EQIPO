@@ -7,8 +7,6 @@ const {Entradas} = require("../models/GestionEntradas/Entradas");
 const {Productos} = require('../models/GestionProductos/Productos');
 const {ProductoSucursales} = require("../models/GestionProductos/ProductoSucursales");
 const PeticionEntrada = require("../models/GestionarPeticionEntrada/PeticionEntrada");
-const {bodegaSchema} = require("../models/GestionarBodegas/Bodegas");
-const {ubicacion_bodegaSchema} = require("../models/GestionarBodegas/UbicacionBodega");
 /*
     LOS ESTADOS DE PETICION SERA:
     1: PENDIENTE
@@ -218,22 +216,7 @@ const aceptar = async(req, res)=>{
 //PUT PETICION ENTREGADA
 const entregada = async(req, res)=>{
     const {_id, Fecha, Detalle, Cantidad, idProducto,
-        idSucursal, NumeroBodega, Estanterias, Largo, Ancho,
-        Estanteria, X, Y} = req.body;
-
-    const Bodega = {
-        NumeroBodega,
-        Estanterias,
-        Largo,
-        Ancho
-    }
-    
-    const Ubicacion_Bodega = {
-        Bodega,
-        Estanteria,
-        X,
-        Y
-    }
+        idSucursal} = req.body;
 
     let Monto = 0;
     let Total = 0;
@@ -256,8 +239,7 @@ const entregada = async(req, res)=>{
             idProducto,
             Cantidad,
             Monto,
-            idSucursal,
-            Ubicacion_Bodega
+            idSucursal
         })
 
         //SEGUNDA CONSULTA GUARDAR LA SALIDA

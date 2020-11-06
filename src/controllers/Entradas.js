@@ -1,32 +1,15 @@
 //Conexion BD
 const pool = require("../settings/db");
 //Modelo BD
-const {ubicacion_bodegaSchema} = require('../models/GestionarBodegas/UbicacionBodega');
-const {bodegaSchema} = require('../models/GestionarBodegas/Bodegas');
 const {Entradas} = require ('../models/GestionEntradas/Entradas');
 const {Productos} = require('../models/GestionProductos/Productos');
 
 //POST
 const crear = async(req, res)=>{
     const {Fecha, Detalle, Cantidad, Monto, idProducto,
-    idSucursal, NumeroBodega, Estanterias, Largo, Ancho,
-    Estanteria, X, Y} = req.body;
+    idSucursal} = req.body;
 
     let Total;
-
-    const Bodega = {
-        NumeroBodega,
-        Estanterias,
-        Largo,
-        Ancho
-    }
-
-    const Ubicacion_Bodega = {
-        Bodega,
-        Estanteria,
-        X,
-        Y
-    }
 
     const entrada = new Entradas({
         Fecha,
@@ -34,8 +17,7 @@ const crear = async(req, res)=>{
         idProducto,
         Cantidad,
         Monto,
-        idSucursal,
-        Ubicacion_Bodega
+        idSucursal
     })
 
     //SESION PARA QUE SE EJECUTEN TODAS LAS CONSULTAS
