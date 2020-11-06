@@ -63,7 +63,7 @@ paths:
               $ref: '#/definitions/User'
         400:
           description: bad input parameter
-          
+
   /Usuarios/login:
     post:
       tags:
@@ -163,6 +163,36 @@ paths:
       responses:
         200:
           description: OK
+
+  /Usuarios/buscarUsuarios/{Usuario}:
+    get:
+      tags:
+      - Usuarios
+      summary: Buscar usuarios
+      operationId: buscarUsuarios
+      description: |
+        Al hacer la peticion con parametros se devolvera una lista de objetos de usuarios
+      produces:
+      - application/json
+      parameters:
+      - name: Usuario
+        in: path
+        description: Nombre de Usuario de la sucursal a buscar
+        required: true
+        type: string
+
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: Devuelve array de usuarios activos
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        400:
+          description: bad input parameter
           
   /Niveles/crear:
     post:

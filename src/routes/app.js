@@ -18,6 +18,7 @@ const PeticionEntradas = require("../controllers/PeticionEntradas");
 const ProductoSucursales = require("../controllers/ProductoSucursales");
 const tokenValidator = require("../middleware/tokenValidator");
 const { token } = require("morgan");
+const { rutasProtegidas } = require("../middleware/tokenValidator");
 
 
 
@@ -26,6 +27,7 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // usuarios
 app.get("/Usuarios/listar", tokenValidator.rutasProtegidas ,Usuarios.listarUsuarios);
+app.get("/Usuarios/buscarUsuarios/:Usuario", tokenValidator.rutasProtegidas, Usuarios.buscarUsuarios);
 app.post("/Usuarios/login", Usuarios.login);
 app.post("/Usuarios/crear",tokenValidator.rutasProtegidas , Usuarios.crear);
 app.put("/Usuarios/actualizar", tokenValidator.rutasProtegidas, Usuarios.actualizar);
