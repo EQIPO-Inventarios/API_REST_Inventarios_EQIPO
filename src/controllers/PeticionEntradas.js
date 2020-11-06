@@ -80,6 +80,23 @@ const listar = async(req, res) =>{
     });
 }
 
+//GET LISTAR TODAS LAS PETICIONES PENDIENTES
+const listarTodas = async(req, res) =>{
+
+    await PeticionEntradas.find({EstadoPeticion : 1},
+        (error, data) =>{
+        if(error){
+            res.json({
+                mensaje : "Error al listar las peticiones pendientes",
+                error
+            });
+        }else{
+            res.status(200).json(
+                data
+            );
+        }
+    });
+}
 //PUT
 const actualizar = async(req, res)=>{
 
@@ -267,4 +284,4 @@ const entregada = async(req, res)=>{
     }
 }
 
-module.exports = {crear, listar, actualizar, eliminar, aceptar, entregada}
+module.exports = {crear, listar, actualizar, eliminar, aceptar, entregada, listarTodas}

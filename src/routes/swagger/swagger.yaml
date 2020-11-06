@@ -1117,6 +1117,28 @@ paths:
         200:
           description: OK
 
+  /PeticionEntradas/listarTodas:
+    get:
+      tags:
+      - PeticionEntradas
+      summary: Listar todas las Peticion de Entrada
+      description: Listar todos las Peticion de Entradas pendientes
+      consumes:
+      - application/json
+      produces:
+      - application/json
+
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/PeticionEntradas'
+
 securityDefinitions:
   api_key:
     type: "apiKey"

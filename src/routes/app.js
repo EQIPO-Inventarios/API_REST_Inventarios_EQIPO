@@ -83,6 +83,7 @@ app.put("/Salidas/actualizar", tokenValidator.rutasProtegidas, Salidas.actualiza
 //Peticiones de entrada
 app.post("/PeticionEntradas/crear", tokenValidator.rutasProtegidas, PeticionEntradas.crear);
 app.post("/PeticionEntradas/listar", tokenValidator.rutasProtegidas, PeticionEntradas.listar);
+app.get("/PeticionEntradas/listarTodas", tokenValidator.rutasProtegidas, PeticionEntradas.listarTodas);
 app.put("/PeticionEntradas/actualizar", tokenValidator.rutasProtegidas, PeticionEntradas.actualizar);
 app.put("/PeticionEntradas/aceptar", tokenValidator.rutasProtegidas, PeticionEntradas.aceptar);
 app.put("/PeticionEntradas/entregada", tokenValidator.rutasProtegidas, PeticionEntradas.entregada);
