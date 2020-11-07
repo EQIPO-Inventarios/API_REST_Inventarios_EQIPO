@@ -20,6 +20,34 @@ const buscar = async (req, res) =>{
   .then (x => { res.status(200).send(x) })
 }
 
+//GET
+const buscarUsuarios = async (req, res) =>{
+  let regex = new RegExp(req.params.Usuario, "i")
+
+  let model = await Usuario.find({usuario : regex, estado : true}, (error, data)=>{
+    if(error){
+      res.json({
+        mensaje : "Error al listar usuarios",
+        error
+      })
+    }
+  })
+
+  for (x in model) {
+    await Sucursales.findById({_id : model[x].personal.idSucursal}, 
+      (error, data)=>{
+        if(error){
+
+        }
+        else{
+          model[x].personal.idSucursal = data.Nombre;
+        }
+        //console.log(model[x].personal.idSucursal);
+      })
+  }
+  res.json(model);
+
+}
 
 //POST
   let login = async(req, res)  =>{
@@ -204,4 +232,4 @@ const eliminar = async(req, res)=>{
     });
 }
 
-  module.exports ={listarUsuarios,login, crear, actualizar, eliminar, buscar}
+  module.exports ={listarUsuarios,login, crear, actualizar, eliminar, buscarUsuarios}

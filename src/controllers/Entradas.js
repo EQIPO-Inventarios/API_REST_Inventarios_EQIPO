@@ -1,32 +1,16 @@
 //Conexion BD
 const pool = require("../settings/db");
 //Modelo BD
-const {ubicacion_bodegaSchema} = require('../models/GestionarBodegas/UbicacionBodega');
-const {bodegaSchema} = require('../models/GestionarBodegas/Bodegas');
 const {Entradas} = require ('../models/GestionEntradas/Entradas');
 const {Productos} = require('../models/GestionProductos/Productos');
+const format = require('dateformat');
 
 //POST
 const crear = async(req, res)=>{
     const {Fecha, Detalle, Cantidad, Monto, idProducto,
-    idSucursal, NumeroBodega, Estanterias, Largo, Ancho,
-    Estanteria, X, Y} = req.body;
+    idSucursal} = req.body;
 
     let Total;
-
-    const Bodega = {
-        NumeroBodega,
-        Estanterias,
-        Largo,
-        Ancho
-    }
-
-    const Ubicacion_Bodega = {
-        Bodega,
-        Estanteria,
-        X,
-        Y
-    }
 
     const entrada = new Entradas({
         Fecha,
@@ -34,8 +18,7 @@ const crear = async(req, res)=>{
         idProducto,
         Cantidad,
         Monto,
-        idSucursal,
-        Ubicacion_Bodega
+        idSucursal
     })
 
     //SESION PARA QUE SE EJECUTEN TODAS LAS CONSULTAS
@@ -73,18 +56,34 @@ const crear = async(req, res)=>{
 
 //GET
 const listar = async(req, res) =>{
-    await Entradas.find({}, (error, data) =>{
+    let model =await Entradas.find({}, (error, data) =>{
         if(error){
             res.json({
                 mensaje : "Error al listar las entradas",
                 error
             });
-        }else{
-            res.status(200).json(
-                data
-            );
         }
-    });
+    })
+    
+    let model2 = [];
+
+    model.forEach(element =>{
+
+        let fecha = element.Fecha
+        let fechaArreglada = format(fecha, "dd-mm-yyyy");
+        let model3 = {_id : element._id,
+            Fecha : fechaArreglada,
+            Detalle: element.Detalle,
+            idProducto: element.idProducto,
+            Cantidad: element.Cantidad,
+            Monto: element.Monto,
+            idSucursal: element.idSucursal}
+
+         model2.push(model3)    
+        
+    })
+
+    res.json(model2);
 }
 
 

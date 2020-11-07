@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 const {productoSchema} = require('../GestionProductos/Productos');
-const {sucursalSchema} = require('../GestionSucursales/Sucursales');
-const {ubicacion_bodegaSchema} = require('../GestionarBodegas/UbicacionBodega');
 
 const entradaSchema = mongoose.Schema(
     {
@@ -31,9 +29,7 @@ const entradaSchema = mongoose.Schema(
         type : String,
         trim : true,
         required : true
-    },
-    Ubicacion_Bodega: ubicacion_bodegaSchema
-
+    }
 });
 
 

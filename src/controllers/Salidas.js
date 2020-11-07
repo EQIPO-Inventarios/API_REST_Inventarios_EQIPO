@@ -54,18 +54,35 @@ const crear = async(req, res)=>{
 
 //GET
 const listar = async(req, res) =>{
-    await Salidas.find({}, (error, data) =>{
+    let model = await Salidas.find({}, (error, data) =>{
         if(error){
             res.json({
                 mensaje : "Error al listar las entradas",
                 error
             });
-        }else{
-            res.status(200).json(
-                data
-            );
         }
     });
+
+    let model2 = [];
+
+    model.forEach(element =>{
+
+        let fecha = element.Fecha
+        let fechaArreglada = format(fecha, "dd-mm-yyyy");
+        let model3 = {_id : element._id,
+            Fecha : fechaArreglada,
+            Detalle: element.Detalle,
+            idProducto: element.idProducto,
+            Cantidad: element.Cantidad,
+            Monto: element.Monto,
+            idSucursal: element.idSucursal,
+            idSucursalDestino : element.idSucursalDestino}
+
+         model2.push(model3)    
+        
+    })
+
+    res.json(model2);
 }
 
 //PUT

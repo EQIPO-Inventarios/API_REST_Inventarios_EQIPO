@@ -3,9 +3,10 @@ const pool = require("../settings/db");
 //Modelo BD
 const {PeticionEntradas} = require("../models/GestionarPeticionEntrada/PeticionEntrada");
 const {Salidas} = require("../models/GestionaSalidas/Salidas");
+const {Entradas} = require("../models/GestionEntradas/Entradas");
 const {Productos} = require('../models/GestionProductos/Productos');
+const {ProductoSucursales} = require("../models/GestionProductos/ProductoSucursales");
 const PeticionEntrada = require("../models/GestionarPeticionEntrada/PeticionEntrada");
-
 /*
     LOS ESTADOS DE PETICION SERA:
     1: PENDIENTE
@@ -71,14 +72,65 @@ const listar = async(req, res) =>{
                 mensaje : "Error al listar las entradas",
                 error
             });
-        }else{
-            res.status(200).json(
-                data
-            );
         }
-    });
+    })
+
+    let model2 = [];
+
+    model.forEach(element =>{
+
+        let fecha = element.Fecha
+        let fechaArreglada = format(fecha, "dd-mm-yyyy");
+        let model3 = {_id : element._id,
+            Fecha : fechaArreglada,
+            Detalle: element.Detalle,
+            idProducto: element.idProducto,
+            Cantidad: element.Cantidad,
+            idSucursal: element.idSucursal,
+            EstadoPeticion : element.EstadoPeticion}
+
+         model2.push(model3)    
+        
+    })
+
+    res.json(model2);
+
 }
 
+//GET LISTAR TODAS LAS PETICIONES PENDIENTES
+const listarTodas = async(req, res) =>{
+
+    await PeticionEntradas.find({EstadoPeticion : 1},
+        (error, data) =>{
+        if(error){
+            res.json({
+                mensaje : "Error al listar las peticiones pendientes",
+                error
+            });
+        }
+    })
+    
+    let model2 = [];
+
+    model.forEach(element =>{
+
+        let fecha = element.Fecha
+        let fechaArreglada = format(fecha, "dd-mm-yyyy");
+        let model3 = {_id : element._id,
+            Fecha : fechaArreglada,
+            Detalle: element.Detalle,
+            idProducto: element.idProducto,
+            Cantidad: element.Cantidad,
+            idSucursal: element.idSucursal,
+            EstadoPeticion : element.EstadoPeticion}
+
+         model2.push(model3)    
+        
+    })
+
+    res.json(model2);
+
+}
 //PUT
 const actualizar = async(req, res)=>{
 
@@ -212,4 +264,58 @@ const aceptar = async(req, res)=>{
     }
 }
 
-module.exports = {crear, listar, actualizar, eliminar, aceptar}
+//PUT PETICION ENTREGADA
+const entregada = async(req, res)=>{
+    const {_id, Fecha, Detalle, Cantidad, idProducto,
+        idSucursal} = req.body;
+
+    let Monto = 0;
+    let Total = 0;
+
+    //SESION PARA QUE SE EJECUTEN TODAS LAS CONSULTAS
+    const session = await PeticionEntradas.startSession();
+    session.startTransaction();
+    try {
+        const opts = { session };
+        //PRIMERA CONSULTA PARA OBTENER EL PRECIO DEL PRODUCTO
+        const A = await ProductoSucursales.findOne({_id : idProducto, idSucursal : idSucursal}, (error, data)=>{
+            //Sacando el monto
+            Monto = data.Precio_Unitario * Cantidad;
+            Total = data.Existencias + Cantidad 
+        });
+
+        const entrada =  await new Entradas({
+            Fecha,
+            Detalle,
+            idProducto,
+            Cantidad,
+            Monto,
+            idSucursal
+        })
+
+        //SEGUNDA CONSULTA GUARDAR LA SALIDA
+        const B = await entrada.save();
+        
+        //TERCERA CONSULTA OBTENER EL VALOR DE EXISTENCIAS DE PRODUCTO
+        const C = await PeticionEntradas.findOneAndUpdate({_id : _id},
+            {EstadoPeticion : 3});
+
+        //CUARTA CONSULTA SUMAR LA ENTRADA AL MODELO PRODUCTOSUCURSALES
+        const D = await ProductoSucursales.findOneAndUpdate({_id : idProducto, idSucursal : idSucursal},
+            {Existencias : Total});
+
+        await session.commitTransaction();
+        session.endSession();
+        return res.status(200).json({
+            mensaje : "Peticion de Entrada aceptada"
+        });
+    } catch (error) {
+        // If an error occurred, abort the whole transaction and
+        // undo any changes that might have happened
+        await session.abortTransaction();
+        session.endSession();
+        throw error; 
+    }
+}
+
+module.exports = {crear, listar, actualizar, eliminar, aceptar, entregada, listarTodas}
