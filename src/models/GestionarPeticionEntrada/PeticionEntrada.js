@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const {estado_peticion_entradaSchema} = require('./EstadosPeticion');
 const {productoSchema} = require('../GestionProductos/Productos');
 const {sucursalSchema} = require('../GestionSucursales/Sucursales');
 
@@ -14,17 +13,28 @@ const peticion_entradaSchema = mongoose.Schema(
         trim : true,
         required : true
     },
-    Producto: productoSchema,
+    idProducto: {
+        type : String,
+        trim : true,
+        required : true
+    },
     Cantidad: {
         type : Number,
         required : true
     },
-    Sucursal: sucursalSchema,
-    EstadoPeticion: estado_peticion_entradaSchema
+    idSucursal: {
+        type : String,
+        trim : true,
+        required : true
+    },
+    EstadoPeticion: {
+        type : Number,
+        required : true
+    }
     
 });
 
 
-const PeticionEntrada = mongoose.model('Peticiones_Entradas', peticion_entradaSchema)
+const PeticionEntradas = mongoose.model('PeticionEntradas', peticion_entradaSchema)
 
-module.exports = PeticionEntrada
+module.exports = {PeticionEntradas, peticion_entradaSchema}

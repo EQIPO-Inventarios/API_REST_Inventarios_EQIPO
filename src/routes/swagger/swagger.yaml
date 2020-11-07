@@ -19,10 +19,11 @@ tags:
 - name: Departamentos
 - name: Proveedores
 - name: Sucursales
-- name: Bodegas
 - name: Productos
+- name: ProductoSucursales
 - name: Entradas
-
+- name: Salidas
+- name: PeticionEntradas
 
 
 
@@ -39,7 +40,6 @@ paths:
         200:
           description: Devuelve apiKey para peticiones 
       
-
   /Usuarios/listar:
     get:
       tags:
@@ -63,6 +63,7 @@ paths:
               $ref: '#/definitions/User'
         400:
           description: bad input parameter
+<<<<<<< HEAD
   
   /Usuarios/buscar/{id}:
     get:
@@ -88,6 +89,9 @@ paths:
           description: OK
 
           
+=======
+
+>>>>>>> ControladoresRestantesEmanuel
   /Usuarios/login:
     post:
       tags:
@@ -189,7 +193,36 @@ paths:
       responses:
         200:
           description: OK
-          
+
+  /Usuarios/buscarUsuarios/{Usuario}:
+    get:
+      tags:
+      - Usuarios
+      summary: Buscar usuarios
+      operationId: buscarUsuarios
+      description: |
+        Al hacer la peticion con parametros se devolvera una lista de objetos de usuarios
+      produces:
+      - application/json
+      parameters:
+      - name: Usuario
+        in: path
+        description: Nombre de Usuario de la sucursal a buscar
+        required: true
+        type: string
+
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: Devuelve array de usuarios activos
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        400:
+          description: bad input parameter
           
   /Niveles/crear:
     post:
@@ -291,9 +324,6 @@ paths:
             items:
               $ref : '#/definitions/NivelItem'
           
-    
-    
-    
   /Departamentos/listar:
     get:
       tags:
@@ -339,17 +369,27 @@ paths:
             items:
               $ref : '#/definitions/Proveedores'
 
+<<<<<<< HEAD
   /Proveedores/buscar/{id}:
     get:
       tags:
       - Proveedores
       summary: Buscar un proveedor
       description: Buscar a un proveedor por id
+=======
+  /Proveedores/listarPorNombre/{Nombre}:
+    get:
+      tags:
+      - Proveedores
+      summary: Listar proveedores por coincidencias en su nombre
+      description: Listar proveedores por coincidencias en su nombre
+>>>>>>> ControladoresRestantesEmanuel
       consumes:
       - application/json
       produces:
       - application/json
       parameters:
+<<<<<<< HEAD
       - name: id
         in: path
         description: ID del proveedor a buscar
@@ -360,6 +400,23 @@ paths:
       responses:
         200:
           description: OK
+=======
+      - name: Nombre
+        in: path
+        description: Nombre del proveedor a buscar
+        required: true
+        type: string
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Proveedores'
+>>>>>>> ControladoresRestantesEmanuel
   
   /Proveedores/crear:
     post:
@@ -454,7 +511,7 @@ paths:
         name: Sucursales
         description: Items de sucursal con bodega a agregar
         schema:
-          $ref: '#/definitions/NewSucursal_Bodega'
+          $ref: '#/definitions/NewSucursal'
       security:
       - api_key: []
       responses:
@@ -487,17 +544,27 @@ paths:
             items:
               $ref : '#/definitions/Sucursal'
 
+<<<<<<< HEAD
   /Sucursales/buscar/{id}:
     get:
       tags:
       - Sucursales
       summary: Buscar una Sucursal
       description: Buscar a una sucursal por id
+=======
+  /Sucursales/listarPorNombre/{Nombre}:
+    get:
+      tags:
+      - Sucursales
+      summary: Listar Sucursales por coincidencias en su nombre
+      description: Listar Sucursales por coincidencias en su nombre
+>>>>>>> ControladoresRestantesEmanuel
       consumes:
       - application/json
       produces:
       - application/json
       parameters:
+<<<<<<< HEAD
       - name: id
         in: path
         description: ID de la sucursal a buscar
@@ -508,6 +575,23 @@ paths:
       responses:
         200:
           description: OK
+=======
+      - name: Nombre
+        in: path
+        description: Nombre de la Sucursal a buscar
+        required: true
+        type: string
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Sucursal'
+>>>>>>> ControladoresRestantesEmanuel
 
   /Sucursales/actualizar:
     put:
@@ -561,62 +645,6 @@ paths:
         200:
           description: OK
 
-  /Bodegas/crear:
-    put:
-      tags:
-      - Bodegas
-      summary: Agregar una nueva bodega a una sucursal
-      description: Agregar una nueva bodega a una sucursal ya existente
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - in: body
-        name: Sucursales
-        description: Items de bodega a agregar
-        schema:
-          $ref: '#/definitions/NewBodega'
-
-      security:
-      - api_key: []
-      
-      responses:
-        200:
-          description: OK
-          schema :
-            type : array
-            items:
-              $ref : '#/definitions/Bodega'
-  
-  /Bodegas/listar/{_id}:
-    get:
-      tags:
-      - Bodegas
-      summary: Listar bodegas de una sucursal
-      description: Listar las bodegas que contenga una sucursal
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: _id
-        in: path
-        description: ID de la sucursal a listar sus bodegas
-        required: true
-        type: string
-
-      security:
-      - api_key: []
-      
-      responses:
-        200:
-          description: OK
-          schema :
-            type : array
-            items:
-              $ref : '#/definitions/Bodega'
-
   /Productos/crear:
     post:
       tags:
@@ -654,6 +682,33 @@ paths:
       produces:
       - application/json
 
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Producto'
+
+  /Productos/listarPorNombre/{Nombre}:
+    get:
+      tags:
+      - Productos
+      summary: Listar Productos por coincidencias en su nombre
+      description: Listar Productos por coincidencias en su nombre
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Nombre
+        in: path
+        description: Nombre del Producto a buscar
+        required: true
+        type: string
       security:
       - api_key: []
       
@@ -717,6 +772,139 @@ paths:
         200:
           description: OK
 
+  /ProductoSucursales/crear:
+    post:
+      tags:
+      - ProductoSucursales
+      summary: Agregar un nuevo Producto para Sucursales
+      description: Agregar un nuevo Producto para Sucursales
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Productos
+        description: Items de producto para sucursal a agregar
+        schema:
+          $ref: '#/definitions/NewProductoSucursales'
+      security:
+      - api_key: []
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/ProductoSucursales'
+
+  /ProductoSucursales/listar/{id_sucursal}:
+    get:
+      tags:
+      - ProductoSucursales
+      summary: Listar todos los Productos de una Sucursal
+      description: Listar todos los productos existentes de una sucursal
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id_sucursal
+        in: path
+        description: ID de la sucursal para listar unicamente sus productos
+        required: true
+        type: string
+
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/ProductoSucursales'
+
+  /ProductoSucursales/actualizar:
+    put:
+      tags:
+      - ProductoSucursales
+      summary: Actualizar datos producto
+      description: Actualizar datos de los productos
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: ProductosSucursales
+        description: Items de producto a actualizar
+        schema:
+          $ref: '#/definitions/UpdateProductoSucursales'
+        
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/ProductoSucursales'
+
+  /ProductoSucursales/eliminar/{_id}:
+    delete:
+      tags:
+      - ProductoSucursales
+      summary: Eliminar un producto
+      description: Eliminar o dar de baja a un producto
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: _id
+        in: path
+        description: ID del producto a eliminar
+        required: true
+        type: string
+
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+
+  /ProductoSucursales/listarPorNombre:
+    post:
+      tags:
+      - ProductoSucursales
+      summary: Listar Productos por coincidencias en su nombre
+      description: Listar Productos por coincidencias en su nombre
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: ProductosSucursales
+        description: Items de producto a actualizar
+        schema:
+          $ref: '#/definitions/DatosProductoSucursales'
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/ProductoSucursales'
+
   /Entradas/crear:
     post:
       tags:
@@ -729,7 +917,7 @@ paths:
       - application/json
       parameters:
       - in: body
-        name: Productos
+        name: Entradas
         description: Items de entrada a agregar
         schema:
           $ref: '#/definitions/NewEntrada'
@@ -764,6 +952,296 @@ paths:
             type : array
             items:
               $ref : '#/definitions/Entrada'
+
+  /Entradas/actualizar:
+    put:
+      tags:
+      - Entradas
+      summary: Actualizar datos de una entrada y existencias
+      description: Actualizar datos de una entrada y existencias
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Entradas
+        description: Items de entrada a actualizar
+        schema:
+          $ref: '#/definitions/UpdateEntrada'
+        
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Entrada'
+
+  /Salidas/crear:
+    post:
+      tags:
+      - Salidas
+      summary: Agregar una nueva salida
+      description: Agregar una nueva salida
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Salidas
+        description: Items de salida a agregar
+        schema:
+          $ref: '#/definitions/NewSalida'
+      security:
+      - api_key: []
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Salida'
+
+  /Salidas/listar:
+    get:
+      tags:
+      - Salidas
+      summary: Listar todas las salidas
+      description: Listar todos las salidas existentes
+      consumes:
+      - application/json
+      produces:
+      - application/json
+
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Salida'
+
+  /Salidas/actualizar:
+    put:
+      tags:
+      - Salidas
+      summary: Actualizar datos de una salida y existencias
+      description: Actualizar datos de una salida y existencias
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Salidas
+        description: Items de salida a actualizar
+        schema:
+          $ref: '#/definitions/UpdateSalida'
+        
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Salida'
+
+  /PeticionEntradas/crear:
+    post:
+      tags:
+      - PeticionEntradas
+      summary: Agregar una nueva peticion de entrada
+      description: Agregar una nueva peticion de entrada
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: PeticionEntradas
+        description: Items de peticion de entrada a agregar
+        schema:
+          $ref: '#/definitions/NewPeticionEntradas'
+      security:
+      - api_key: []
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/PeticionEntradas'
+
+  /PeticionEntradas/listar:
+    post:
+      tags:
+      - PeticionEntradas
+      summary: Listar todas las Peticion de Entrada
+      description: Listar todos las Peticion de Entradas existentes segun su estado
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      
+      parameters:
+      - name: EstadoPeticion
+        in: body
+        name: PeticionEntradas
+        description: Items de peticion de entrada a listar (Estados de peticion[1- Pendientes, 2- Aceptadas, 3- Entregadas] y el id de la sucursal)
+        schema:
+          $ref: '#/definitions/ListarPeticionEntradas'
+
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/PeticionEntradas'
+
+  /PeticionEntradas/actualizar:
+    put:
+      tags:
+      - PeticionEntradas
+      summary: Actualizar datos de una petcion de entrada y existencias
+      description: Actualizar datos de una peticion de entrada y existencias
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: PeticionEntradas
+        description: Items de peticion de entrada a actualizar
+        schema:
+          $ref: '#/definitions/UpdatePeticionEntrada'
+        
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/PeticionEntradas'
+
+  /PeticionEntradas/aceptar:
+    put:
+      tags:
+      - PeticionEntradas
+      summary: Aceptar una peticion de entrada
+      description: Aceptar una peticion de entrada
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: PeticionEntradas
+        description: Items de peticion de entrada a actualizar
+        schema:
+          $ref: '#/definitions/AceptarPeticionEntrada'
+        
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/PeticionEntradas'
+
+  /PeticionEntradas/entregada:
+    put:
+      tags:
+      - PeticionEntradas
+      summary: Confirmar la entrga de una peticion de entrada
+      description: Confirmar la entrega de una peticion de entrada
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: PeticionEntradas
+        description: Items de peticion de entrada a actualizar
+        schema:
+          $ref: '#/definitions/EntregadaPeticionEntrada'
+        
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/PeticionEntradas'
+
+  /PeticionEntradas/eliminar:
+    delete:
+      tags:
+      - PeticionEntradas
+      summary: Eliminar una Peticion de Entrada
+      description: Eliminar una Peticion de Entrada
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: PeticionEntradas
+        description: Items de peticion de entrada a eliminar
+        schema:
+          $ref: '#/definitions/DeletePeticionEntrada'
+
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+
+  /PeticionEntradas/listarTodas:
+    get:
+      tags:
+      - PeticionEntradas
+      summary: Listar todas las Peticion de Entrada
+      description: Listar todos las Peticion de Entradas pendientes
+      consumes:
+      - application/json
+      produces:
+      - application/json
+
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/PeticionEntradas'
 
 securityDefinitions:
   api_key:
@@ -965,8 +1443,7 @@ definitions:
         type: number
     xml:
       name: Nivel
-    
-    
+     
   NewNivel:
     type: object
     properties:
@@ -989,14 +1466,9 @@ definitions:
         items:
           type: string
           minItems: 5
-            
-            
-          
-          
     xml:
       name: Departamentos
 
-  
   Proveedores:
     type: object
     properties:
@@ -1069,7 +1541,7 @@ definitions:
     xml:
       name: UpdateProveedor
   
-  NewSucursal_Bodega:
+  NewSucursal:
     type: object
     properties:
       Nombre:
@@ -1086,18 +1558,8 @@ definitions:
         type: string
       Correo:
         type: string
-      NumeroBodega:
-        type: number
-      Largo:
-        type: number
-      Ancho:
-        type: number
-      Estanterias:
-        type: number
-    
     xml:
-      name: NewSucursal_Bodega
-      
+      name: NewSucursal
 
   Sucursal:
     type: object
@@ -1124,11 +1586,6 @@ definitions:
             type: string
       Estado:
         type: boolean
-      Bodega:
-        type : array
-        items:
-          type: Schema
-          minItems: 1
     xml:
       name: Sucursal
   
@@ -1152,23 +1609,7 @@ definitions:
       Correo:
         type: string
     xml:
-      name: NewSucursal_Bodega
-
-  NewBodega:
-    type: object
-    properties:
-      id:
-        type: object
-      NumeroBodega:
-        type: number
-      Estanterias:
-        type: number
-      Largo:
-        type: number
-      Ancho:
-        type: number
-    xml:
-      name: NewProveedores
+      name: UpdateSucursal
 
   NewProducto:
     type: object
@@ -1277,6 +1718,129 @@ definitions:
     xml:
       name: UpdateProducto
 
+  NewProductoSucursales:
+    type: object
+    properties:
+      idSucursal:
+        type: string
+      CodigoProducto:
+        type: string
+      NombreProducto:
+        type: string
+      Material:
+        type: string
+      Caracteristicas:
+        type: string
+      Existencias:
+        type: number
+      Precio_Unitario:
+        type: number
+      Nombre:
+        type: string
+      Razon_Social:
+        type: string
+      Departamente:
+        type: string
+      Municipio:
+        type: string
+      Descripcion:
+        type: string
+      Telefono: 
+        type: string
+      Correo:
+        type: string
+    xml:
+      name: NewProductoSucursales
+
+  ProductoSucursales:
+    type: object
+    properties:
+      idSucursal:
+        type: string
+      CodigoProducto:
+        type: string
+      NombreProducto:
+        type: string
+      Material:
+        type: string
+      Caracteristicas:
+        type: string
+      Existencias:
+        type: number
+      Proveedor:
+        type: object
+        properties:
+          Nombre:
+            type: string
+          Razon_Social:
+            type: string
+          Contacto:
+            type: object
+            properties:
+              Direccion:
+                type: object
+                properties:
+                  Departamente:
+                    type: string
+                  Municipio:
+                    type: string
+                  Descripcion:
+                    type: string
+              Telefono: 
+                type: string
+              Correo:
+                type: string
+      Precio_Unitario:
+        type: number
+    xml:
+      name: ProductoSucursales
+
+  UpdateProductoSucursales:
+    type: object
+    properties:
+      id:
+        type : object
+      idSucursal:
+        type: string
+      CodigoProducto:
+        type: string
+      NombreProducto:
+        type: string
+      Material:
+        type: string
+      Caracteristicas:
+        type: string
+      Existencias:
+        type: number
+      Precio_Unitario:
+        type: number
+      Nombre:
+        type: string
+      Razon_Social:
+        type: string
+      Departamente:
+        type: string
+      Municipio:
+        type: string
+      Descripcion:
+        type: string
+      Telefono: 
+        type: string
+      Correo:
+        type: string
+    xml:
+      name: UpdateProductoSucursales
+
+  DatosProductoSucursales:
+    type: object
+    properties:
+      Nombre:
+        type : string
+      idSucursal:
+        type: string
+    xml:
+      name: DatosProductoSucursales
+
   NewEntrada:
     type: object
     properties:
@@ -1292,20 +1856,6 @@ definitions:
         type: number
       idSucursal:
         type: string
-      NumeroBodega:
-        type: number
-      Estanterias:
-        type: number
-      Largo:
-        type: number
-      Ancho:
-        type: number
-      Estanteria:
-        type: number
-      X:
-        type: number
-      Y:
-        type: number
     xml:
       name: NewEntrada
 
@@ -1324,32 +1874,200 @@ definitions:
         type: number
       idSucursal:
         type: string
-      Ubicacion_Bodega:
-        type: object
-        properties:
-          Bodega:
-            type: object
-            properties:
-              NumeroBodega:
-                type: number
-              Estanterias:
-                type: number
-              Largo:
-                type: number
-              Ancho:
-                type: number
-          Estanteria:
-            type: number
-          X:
-            type: number
-          Y:
-            type: number
     xml:
       name: Entrada
 
+  UpdateEntrada:
+    type: object
+    properties:
+      id:
+        type: object
+      Detalle:
+        type: string
+      Cantidad:
+        type: number
+      Monto:
+        type: number
+      idProducto:
+        type: string
+    xml:
+      name: UpdateEntrada
+
+  NewSalida:
+    type: object
+    properties:
+      Fecha:
+        type: Date
+      Detalle:
+        type: string
+      idProducto:
+        type: string
+      Cantidad:
+        type: number
+      Monto:
+        type: number
+      idSucursal:
+        type: string
+      idSucursalDestino:
+        type: string
+    xml:
+      name: NewSalida
+
+  Salida:
+    type: object
+    properties:
+      _id:
+        type: object
+      Fecha:
+        type: Date
+      Detalle:
+        type: string
+      idProducto:
+        type: string
+      Cantidad:
+        type: number
+      Monto:
+        type: number
+      idSucursal:
+        type: string
+      idSucursalDestino:
+        type: string
+    xml:
+      name: Salida
+
+  UpdateSalida:
+    type: object
+    properties:
+      id:
+        type: object
+      Detalle:
+        type: string
+      Cantidad:
+        type: number
+      Monto:
+        type: number
+      idProducto:
+        type: string
+    xml:
+      name: UpdateSalida
+
+  NewPeticionEntradas:
+    type: object
+    properties:
+      Fecha:
+        type: date
+      Detalle:
+        type: string
+      idProducto:
+        type: string
+      Cantidad:
+        type: number
+      idSucursal:
+        type: string
+    xml:
+      name: NewPeticionEntradas
+
+  PeticionEntradas:
+    type: object
+    properties:
+      Fecha:
+        type: date
+      Detalle:
+        type: string
+      idProducto:
+        type: string
+      Cantidad:
+        type: number
+      idSucursal:
+        type: string
+      idSucursalDestion:
+        type: string
+      EstadoPeticion:
+        type: number
+    xml:
+      name: PeticionEntradas
+
+  ListarPeticionEntradas:
+    type: object
+    properties:
+      idSucursal:
+        type: string
+      EstadoPeticion:
+        type: number
+    xml:
+      name: ListarPeticionEntradas
+
+  UpdatePeticionEntrada:
+    type: object
+    properties:
+      id:
+        type: object
+      Detalle:
+        type: string
+      Cantidad:
+        type: number
+      idProducto:
+        type: string
+    xml:
+      name: UpdatePeticionEntrada
+
+  DeletePeticionEntrada:
+    type: object
+    properties:
+      _id:
+        type: string
+      idProducto:
+        type: string
+      Cantidad:
+        type: number
+    xml:
+      name: DeletePeticionEntrada
+
+  AceptarPeticionEntrada:
+    type: object
+    properties:
+      _id:
+        type: string
+      Fecha:
+        type: date
+      Detalle:
+        type: string
+      idProducto:
+        type: string
+      Cantidad:
+        type: number
+      idSucursal:
+        type: string
+      idSucursalDestion:
+        type: string
+    xml:
+      name: AceptarPeticionEntrada
+
+  EntregadaPeticionEntrada:
+    type: object
+    properties:
+      _id:
+        type: string
+      Fecha:
+        type: date
+      Cantidad:
+        type: number
+      Detalle:
+        type: string
+      idProducto:
+        type: string
+      idSucursal:
+        type: string
+    xml:
+      name: EntregadaPeticionEntrada
       
+<<<<<<< HEAD
       
 host: apirest-inventarios.herokuapp.com
+=======
+
+host: localhost:3000
+>>>>>>> ControladoresRestantesEmanuel
 basePath: /api
 schemes:
  - https

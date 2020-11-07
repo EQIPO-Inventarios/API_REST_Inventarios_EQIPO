@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const {contactoSchema} = require('../GestionUsuarios/Contactos');
-const {bodegaSchema} = require('../GestionarBodegas/Bodegas');
 
 const sucursalSchema = mongoose.Schema({
     Nombre : {
@@ -10,11 +9,9 @@ const sucursalSchema = mongoose.Schema({
     },
     Codigo : {
         type : Number,
-        required : true,
-        unique : true
+        required : true
     },
     Contacto : contactoSchema,
-    Bodega: [bodegaSchema],
     Estado : {
         type : Boolean,
         default : true

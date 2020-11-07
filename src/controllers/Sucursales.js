@@ -4,13 +4,12 @@ const pool = require("../settings/db");
 const {Sucursales} = require('../models/GestionSucursales/Sucursales');
 const Direcciones = require("../models/GestionUsuarios/Direcciones");
 const Contactos = require("../models/GestionUsuarios/Contactos");
-const  bodega = require('../models/GestionarBodegas/Bodegas');
 const Proveedores = require("../models/GestionProveedores/Proveedores");
 
 //POST
 const crear = async(req, res) =>{
     const {Nombre, Codigo, Telefono, Correo, Departamento, Municipio,
-    Descripcion, NumeroBodega, Largo, Ancho, Estanterias} = req.body;
+    Descripcion} = req.body;
     //Modelo para Sucursal
     const Direccion = ({
         Departamento,
@@ -24,18 +23,10 @@ const crear = async(req, res) =>{
         Correo
     })
 
-    const bodega = ({
-        NumeroBodega,
-        Estanterias,
-        Largo,
-        Ancho
-    })
-
     const sucursal = new Sucursales({
         Nombre,
         Codigo,
-        Contacto,
-        Bodega : bodega,
+        Contacto
     });
 
     const model = await Sucursales.findOne({Nombre : sucursal.Nombre});
@@ -137,4 +128,26 @@ const eliminar = async(req, res)=>{
         });
 }
 
+<<<<<<< HEAD
 module.exports = {crear, listar, actualizar, eliminar, buscar};
+=======
+//GET
+const listarPorNombre = async(req, res)=>{
+    let regex = new RegExp(req.params.Nombre, "i")
+    await Sucursales.find({Nombre : regex, Estado : true}, (error, data)=>{
+        if(error){
+            res.json({
+                mensaje : "Error al listar sucursales",
+                error
+            })
+        }else{
+            res.status(200).json(
+                data
+            )
+        }
+    });
+}
+
+
+module.exports = {crear, listar, actualizar, eliminar, listarPorNombre};
+>>>>>>> ControladoresRestantesEmanuel
