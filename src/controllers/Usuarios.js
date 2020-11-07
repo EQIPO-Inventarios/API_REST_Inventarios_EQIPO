@@ -7,34 +7,9 @@ const {Sucursales} = require("../models/GestionSucursales/Sucursales");
 
 //GET
 const listarUsuarios = async (req, res) =>{
-
-  let model = await Usuario.find({estado : true})
-    Usuario.countDocuments({}, (err, total ) =>{
-      if (err) {
-        return res.json({
-          status:400,
-          mensaje : "Error al leer el archivo",
-          err
-
-        })
-      }
-           
-    })
-
-    for (x in model) {
-        //console.log(x.personal.idSucursal);
-        await Sucursales.findById({_id : model[x].personal.idSucursal}, 
-          (error, data)=>{
-            if(error){
-
-            }
-            else{
-              model[x].personal.idSucursal = data.idSucursal;
-            }
-            //console.log(model[x].personal.idSucursal);
-          })
-    }
-    res.json(model);
+  await Usuario.find({estado : true})
+  .exec()
+  .then(x => { res.status(200).send(x)})
 
 }
 
