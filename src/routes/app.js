@@ -27,11 +27,8 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // usuarios
 app.get("/Usuarios/listar", tokenValidator.rutasProtegidas ,Usuarios.listarUsuarios);
-<<<<<<< HEAD
-app.get("/Usuarios/buscar/:id", tokenValidator.rutasProtegidas, Usuarios.buscar);
-=======
 app.get("/Usuarios/buscarUsuarios/:Usuario", tokenValidator.rutasProtegidas, Usuarios.buscarUsuarios);
->>>>>>> ControladoresRestantesEmanuel
+app.get("/Usuarios/buscar/:id", tokenValidator.rutasProtegidas, Usuarios.buscar);
 app.post("/Usuarios/login", Usuarios.login);
 app.post("/Usuarios/crear",tokenValidator.rutasProtegidas , Usuarios.crear);
 app.put("/Usuarios/actualizar", tokenValidator.rutasProtegidas, Usuarios.actualizar);
@@ -50,11 +47,8 @@ app.get("/Departamentos/listar", tokenValidator.rutasProtegidas ,Departamentos.l
 //Proveedores
 
 app.get("/Proveedores/listar", tokenValidator.rutasProtegidas ,  Proveedores.listar);
-<<<<<<< HEAD
 app.get("/Proveedores/buscar/:id", tokenValidator.rutasProtegidas , Proveedores.buscar);
-=======
 app.get("/Proveedores/listarPorNombre/:Nombre", tokenValidator.rutasProtegidas, Proveedores.listarPorNombre);
->>>>>>> ControladoresRestantesEmanuel
 app.post("/Proveedores/crear", tokenValidator.rutasProtegidas , Proveedores.crear);
 app.put("/Proveedores/actualizar", tokenValidator.rutasProtegidas , Proveedores.actualizar);
 app.delete("/Proveedores/eliminar/:_id", tokenValidator.rutasProtegidas , Proveedores.eliminar);
@@ -62,21 +56,11 @@ app.delete("/Proveedores/eliminar/:_id", tokenValidator.rutasProtegidas , Provee
 //Sucursales
 app.post("/Sucursales/crear",tokenValidator.rutasProtegidas , Sucursales.crear);
 app.get("/Sucursales/listar",tokenValidator.rutasProtegidas , Sucursales.listar);
-<<<<<<< HEAD
+app.get("/Sucursales/listarPorNombre/:Nombre", tokenValidator.rutasProtegidas, Sucursales.listarPorNombre);
 app.get("/Sucursales/buscar/:id",tokenValidator.rutasProtegidas , Sucursales.buscar);
 app.put("/Sucursales/actualizar",tokenValidator.rutasProtegidas , Sucursales.actualizar);
 app.delete("/Sucursales/eliminar/:_id",tokenValidator.rutasProtegidas , Sucursales.eliminar);
 
-//Bodegas
-app.put("/Bodegas/crear", Bodegas.crear);
-app.get("/Bodegas/listar/:_id", Bodegas.listar);
-
-=======
-app.get("/Sucursales/listarPorNombre/:Nombre", tokenValidator.rutasProtegidas, Sucursales.listarPorNombre);
-app.put("/Sucursales/actualizar",tokenValidator.rutasProtegidas , Sucursales.actualizar);
-app.delete("/Sucursales/eliminar/:_id",tokenValidator.rutasProtegidas , Sucursales.eliminar);
-
->>>>>>> ControladoresRestantesEmanuel
 //Productos
 app.post("/Productos/crear", tokenValidator.rutasProtegidas, Productos.crear);
 app.get("/Productos/listar", tokenValidator.rutasProtegidas, Productos.listar);

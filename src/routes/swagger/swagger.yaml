@@ -63,7 +63,6 @@ paths:
               $ref: '#/definitions/User'
         400:
           description: bad input parameter
-<<<<<<< HEAD
   
   /Usuarios/buscar/{id}:
     get:
@@ -89,9 +88,6 @@ paths:
           description: OK
 
           
-=======
-
->>>>>>> ControladoresRestantesEmanuel
   /Usuarios/login:
     post:
       tags:
@@ -369,27 +365,17 @@ paths:
             items:
               $ref : '#/definitions/Proveedores'
 
-<<<<<<< HEAD
   /Proveedores/buscar/{id}:
     get:
       tags:
       - Proveedores
       summary: Buscar un proveedor
       description: Buscar a un proveedor por id
-=======
-  /Proveedores/listarPorNombre/{Nombre}:
-    get:
-      tags:
-      - Proveedores
-      summary: Listar proveedores por coincidencias en su nombre
-      description: Listar proveedores por coincidencias en su nombre
->>>>>>> ControladoresRestantesEmanuel
       consumes:
       - application/json
       produces:
       - application/json
       parameters:
-<<<<<<< HEAD
       - name: id
         in: path
         description: ID del proveedor a buscar
@@ -400,7 +386,18 @@ paths:
       responses:
         200:
           description: OK
-=======
+
+  /Proveedores/listarPorNombre/{Nombre}:
+    get:
+      tags:
+      - Proveedores
+      summary: Listar proveedores por coincidencias en su nombre
+      description: Listar proveedores por coincidencias en su nombre
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
       - name: Nombre
         in: path
         description: Nombre del proveedor a buscar
@@ -416,7 +413,6 @@ paths:
             type : array
             items:
               $ref : '#/definitions/Proveedores'
->>>>>>> ControladoresRestantesEmanuel
   
   /Proveedores/crear:
     post:
@@ -544,27 +540,17 @@ paths:
             items:
               $ref : '#/definitions/Sucursal'
 
-<<<<<<< HEAD
   /Sucursales/buscar/{id}:
     get:
       tags:
       - Sucursales
       summary: Buscar una Sucursal
       description: Buscar a una sucursal por id
-=======
-  /Sucursales/listarPorNombre/{Nombre}:
-    get:
-      tags:
-      - Sucursales
-      summary: Listar Sucursales por coincidencias en su nombre
-      description: Listar Sucursales por coincidencias en su nombre
->>>>>>> ControladoresRestantesEmanuel
       consumes:
       - application/json
       produces:
       - application/json
       parameters:
-<<<<<<< HEAD
       - name: id
         in: path
         description: ID de la sucursal a buscar
@@ -575,7 +561,18 @@ paths:
       responses:
         200:
           description: OK
-=======
+
+  /Sucursales/listarPorNombre/{Nombre}:
+    get:
+      tags:
+      - Sucursales
+      summary: Listar Sucursales por coincidencias en su nombre
+      description: Listar Sucursales por coincidencias en su nombre
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
       - name: Nombre
         in: path
         description: Nombre de la Sucursal a buscar
@@ -591,7 +588,6 @@ paths:
             type : array
             items:
               $ref : '#/definitions/Sucursal'
->>>>>>> ControladoresRestantesEmanuel
 
   /Sucursales/actualizar:
     put:
@@ -2061,13 +2057,8 @@ definitions:
     xml:
       name: EntregadaPeticionEntrada
       
-<<<<<<< HEAD
-      
-host: apirest-inventarios.herokuapp.com
-=======
 
-host: localhost:3000
->>>>>>> ControladoresRestantesEmanuel
+host: apirest-inventarios.herokuapp.com
 basePath: /api
 schemes:
  - https

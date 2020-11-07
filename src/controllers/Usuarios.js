@@ -3,44 +3,21 @@ const pool = require("../settings/db");
 const {Usuario}  = require("../models/GestionUsuarios/Usuario");
 const encryp = require("../middleware/encrypt")
 const tokenValidator = require ("../middleware/tokenValidator")
-<<<<<<< HEAD
-
-
-=======
 const {Sucursales} = require("../models/GestionSucursales/Sucursales"); 
 
 //GET
->>>>>>> ControladoresRestantesEmanuel
 const listarUsuarios = async (req, res) =>{
+  await Usuario.find({estado : true})
+  .exec()
+  .then(x => { res.status(200).send(x)})
 
-  let model = await Usuario.find({estado : true})
-    Usuario.countDocuments({}, (err, total ) =>{
-      if (err) {
-        return res.json({
-          status:400,
-          mensaje : "Error al leer el archivo",
-          err
+}
 
-        })
-      }
-           
-    })
-
-    for (x in model) {
-        //console.log(x.personal.idSucursal);
-        await Sucursales.findById({_id : model[x].personal.idSucursal}, 
-          (error, data)=>{
-            if(error){
-
-            }
-            else{
-              model[x].personal.idSucursal = data.Nombre;
-            }
-            //console.log(model[x].personal.idSucursal);
-          })
-    }
-    res.json(model);
-
+const buscar = async (req, res) =>{
+  const id = req.params.id;
+  await Usuario.findById(id)
+  .exec()
+  .then (x => { res.status(200).send(x) })
 }
 
 //GET
@@ -72,26 +49,15 @@ const buscarUsuarios = async (req, res) =>{
 
 }
 
-const buscar = async (req, res) =>{
-  const id = req.params.id;
-  await Usuario.findById(id)
-  .exec()
-  .then (x => { res.status(200).send(x) })
-}
-
-
 //POST
   let login = async(req, res)  =>{
-<<<<<<< HEAD
-    const   {usuario, password} = req.body;    
-=======
     const   {usuario, password} = req.body;
     
->>>>>>> ControladoresRestantesEmanuel
     const model = await Usuario.findOne({usuario: usuario})
     if(model){  
-      console.log(model)
-      const model2 = await Sucursales.findById({_id : "5f72768d6eae103fb49e1953"});  
+        const idSucursal_model =model.personal.idSucursal
+      const model2 = await Sucursales.findById({_id : idSucursal_model});  
+      console.log(model2);
       if(encryp.comparePassword(String(password), model.password)){
         if(model.estado == true){
           res.status(200).json({           
@@ -266,8 +232,4 @@ const eliminar = async(req, res)=>{
     });
 }
 
-<<<<<<< HEAD
-  module.exports ={listarUsuarios,login, crear, actualizar, eliminar, buscar}
-=======
-  module.exports ={listarUsuarios,login, crear, actualizar, eliminar, buscarUsuarios}
->>>>>>> ControladoresRestantesEmanuel
+  module.exports ={listarUsuarios,login, crear, actualizar, eliminar, buscarUsuarios, buscar}

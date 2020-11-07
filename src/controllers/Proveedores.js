@@ -133,9 +133,6 @@ const eliminar = async (req, res) =>{
     });
 }
 
-<<<<<<< HEAD
-module.exports = {listar, crear, actualizar, eliminar, buscar} 
-=======
 //GET
 const listarPorNombre = async(req, res)=>{
     let regex = new RegExp(req.params.Nombre, "i")
@@ -154,5 +151,4 @@ const listarPorNombre = async(req, res)=>{
 }
 
 
-module.exports = {listar, crear, actualizar, eliminar, listarPorNombre} 
->>>>>>> ControladoresRestantesEmanuel
+module.exports = {listar, crear, actualizar, eliminar, listarPorNombre, buscar} 
