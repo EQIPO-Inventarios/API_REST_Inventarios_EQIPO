@@ -7,6 +7,7 @@ const {Entradas} = require("../models/GestionEntradas/Entradas");
 const {Productos} = require('../models/GestionProductos/Productos');
 const {ProductoSucursales} = require("../models/GestionProductos/ProductoSucursales");
 const PeticionEntrada = require("../models/GestionarPeticionEntrada/PeticionEntrada");
+const format = require('dateformat');
 /*
     LOS ESTADOS DE PETICION SERA:
     1: PENDIENTE
@@ -65,7 +66,7 @@ const crear = async(req, res) =>{
 const listar = async(req, res) =>{
     const {EstadoPeticion, idSucursal} = req.body;
 
-    await PeticionEntradas.find({EstadoPeticion : EstadoPeticion, idSucursal : idSucursal},
+    let model = await PeticionEntradas.find({EstadoPeticion : EstadoPeticion, idSucursal : idSucursal},
         (error, data) =>{
         if(error){
             res.json({
@@ -100,7 +101,7 @@ const listar = async(req, res) =>{
 //GET LISTAR TODAS LAS PETICIONES PENDIENTES
 const listarTodas = async(req, res) =>{
 
-    await PeticionEntradas.find({EstadoPeticion : 1},
+    let model = await PeticionEntradas.find({EstadoPeticion : 1},
         (error, data) =>{
         if(error){
             res.json({

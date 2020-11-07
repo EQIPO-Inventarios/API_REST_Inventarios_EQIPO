@@ -3,6 +3,7 @@ const pool = require("../settings/db");
 //Modelo BD
 const {Salidas} = require("../models/GestionaSalidas/Salidas");
 const {Productos} = require('../models/GestionProductos/Productos');
+const format = require('dateformat');
 
 //POST
 const crear = async(req, res)=>{
