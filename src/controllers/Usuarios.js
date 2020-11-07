@@ -29,7 +29,7 @@ const listarUsuarios = async (req, res) =>{
 
             }
             else{
-              model[x].personal.idSucursal = data.Nombre;
+              model[x].personal.idSucursal = data.idSucursal;
             }
             //console.log(model[x].personal.idSucursal);
           })
