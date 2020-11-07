@@ -232,4 +232,4 @@ const eliminar = async(req, res)=>{
     });
 }
 
-  module.exports ={listarUsuarios,login, crear, actualizar, eliminar, buscarUsuarios}
+  module.exports ={listarUsuarios,login, crear, actualizar, eliminar, buscarUsuarios, buscar}
