@@ -24,7 +24,7 @@ const crear = async(req, res)=>{
     let Total;
 
     //SESION PARA QUE SE EJECUTEN TODAS LAS CONSULTAS
-    if(idSucursal != "5f9121b37ebf700017f7443d"){
+    if(idSucursal == "5f9121b37ebf700017f7443d"){
         const session = await Salidas.startSession();
         session.startTransaction();
         try {
@@ -127,7 +127,7 @@ const actualizar = async(req, res)=>{
     const model = await Salidas.findById({_id: id});
 
     //SESION PARA QUE SE EJECUTEN TODAS LAS CONSULTAS
-    if(model.idSucursal != "5f9121b37ebf700017f7443d"){
+    if(model.idSucursal == "5f9121b37ebf700017f7443d"){
         const session = await Salidas.startSession();
         session.startTransaction();
         try {
@@ -203,7 +203,8 @@ const actualizar = async(req, res)=>{
             // undo any changes that might have happened
             await session.abortTransaction();
             session.endSession();
-            throw
+            throw error
+        }
     }
 }
 
