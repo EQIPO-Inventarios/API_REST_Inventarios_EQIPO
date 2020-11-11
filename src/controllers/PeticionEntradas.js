@@ -294,6 +294,8 @@ const entregada = async(req, res)=>{
             idSucursal
         })
 
+        let nombreProducto;
+
         //SEGUNDA CONSULTA GUARDAR LA SALIDA
         const B = await entrada.save();
         
@@ -301,8 +303,13 @@ const entregada = async(req, res)=>{
         const C = await PeticionEntradas.findOneAndUpdate({_id : _id},
             {EstadoPeticion : 3});
 
-        //CUARTA CONSULTA SUMAR LA ENTRADA AL MODELO PRODUCTOSUCURSALES
-        const D = await ProductoSucursales.findOneAndUpdate({_id : idProducto, idSucursal : idSucursal},
+        //CUARTA CONSULTA CONSEGUIR EL NOMBRE DEL PRODUCTO
+        const D = await Productos.findById({_id : idProducto}, (error, data)=>{
+            nombreProducto : data.NombreProducto;
+        })
+
+        //QUINTA CONSULTA SUMAR LA ENTRADA AL MODELO PRODUCTOSUCURSALES
+        const E = await ProductoSucursales.findOneAndUpdate({NombreProducto : nombreProducto, idSucursal : idSucursal},
             {Existencias : Total});
 
         await session.commitTransaction();
