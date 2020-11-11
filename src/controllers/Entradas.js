@@ -26,9 +26,7 @@ const crear = async(req, res)=>{
     session.startTransaction();
     try {
         const opts = { session };
-        //PRIMERA CONSULTA GUARDAR LA ENTRADA
-        const A = await entrada.save();
-        //SEGUNDA CONSULTA OBTENER EL VALOR DE EXISTENCIAS DE PRODUCTO
+        //PRIMERA CONSULTA OBTENER EL VALOR DE EXISTENCIAS DE PRODUCTO
         const B = await Productos.findOne({_id : idProducto}, (error, data) =>{
             //SUMAR LAS EXISTENCIAS Y LA CANTIDAD DE ENTRADA
             Total = data.Existencias + Cantidad;
@@ -36,6 +34,9 @@ const crear = async(req, res)=>{
         //HACER LA ACTUALIZACION DE EXISTENCIAS EN PRODUCTO
         const C = await Productos.findOneAndUpdate({_id : idProducto},
             {Existencias : Total});
+
+        //TERCERA CONSULTA GUARDAR LA ENTRADA
+        const A = await entrada.save();
 
         await session.commitTransaction();
         session.endSession();
