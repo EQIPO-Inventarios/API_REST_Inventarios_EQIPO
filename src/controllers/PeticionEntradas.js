@@ -31,27 +31,39 @@ const crear = async(req, res) =>{
 
     let Total;
 
+    let CP;
+
+    const verificar1 = await Productos.findById({_id : idProducto}, (error, data)=>{
+        CP = data.Existencias;
+    })
     //SESION PARA QUE SE EJECUTEN TODAS LAS CONSULTAS
     const session = await Salidas.startSession();
     session.startTransaction();
     try {
-        const opts = { session };
-        //PRIMERA CONSULTA GUARDAR LA ENTRADA
-        const A = await peticionEntrada.save();
-        //SEGUNDA CONSULTA OBTENER EL VALOR DE EXISTENCIAS DE PRODUCTO
-        const B = await Productos.findOne({_id : idProducto}, (error, data) =>{
-            //SUMAR LAS EXISTENCIAS Y LA CANTIDAD DE ENTRADA
-            Total = data.Existencias - Cantidad;
-        });
-        //HACER LA ACTUALIZACION DE EXISTENCIAS EN PRODUCTO
-        const C = await Productos.findOneAndUpdate({_id : idProducto},
-            {Existencias : Total});
+        if(CP <= Cantidad){
+            const opts = { session };
+            //PRIMERA CONSULTA GUARDAR LA ENTRADA
+            const A = await peticionEntrada.save();
+            //SEGUNDA CONSULTA OBTENER EL VALOR DE EXISTENCIAS DE PRODUCTO
+            const B = await Productos.findOne({_id : idProducto}, (error, data) =>{
+                //SUMAR LAS EXISTENCIAS Y LA CANTIDAD DE ENTRADA
+                Total = data.Existencias - Cantidad;
+            });
+            //HACER LA ACTUALIZACION DE EXISTENCIAS EN PRODUCTO
+            const C = await Productos.findOneAndUpdate({_id : idProducto},
+                {Existencias : Total});
 
-        await session.commitTransaction();
-        session.endSession();
-        return res.status(200).json({
-            mensaje : "Peticion de Entrada enviada exitosamente"
-        });
+            await session.commitTransaction();
+            session.endSession();
+            return res.status(200).json({
+                mensaje : "Peticion de Entrada enviada exitosamente"
+            });
+        }else{
+            session.endSession();
+            return res.status(400).json({
+                mensaje : "Error: No se puede extraer mas producto del que hay en inventario"
+            });
+        }
     } catch (error) {
         // If an error occurred, abort the whole transaction and
         // undo any changes that might have happened
@@ -139,39 +151,52 @@ const actualizar = async(req, res)=>{
 
     let  difCantidad = 0, Total = 0;
 
+    let CP;
+
+    const verificar2 = await Productos.findById({_id : idProducto}, (error, data)=>{
+        CP = data.Existencias;
+    })
+
     //SESION PARA QUE SE EJECUTEN TODAS LAS CONSULTAS
     const session = await PeticionEntradas.startSession();
     session.startTransaction();
     try {
-        const opts = { session };
-        //PRIMERA CONSULTA PARA OBTENER LA CANTDAD PASADA
-        const A = await PeticionEntradas.findOne({_id : id}, (error, data)=>{
-            //Sacando la diferencia de cantidad
-            difCantidad = data.Cantidad - Cantidad;
-            /*console.log("En la entrada " + data.Cantidad);
-            console.log("La diferencia " + difCantidad);*/
-        });
+        if(CP <= Cantidad){
+            const opts = { session };
+            //PRIMERA CONSULTA PARA OBTENER LA CANTDAD PASADA
+            const A = await PeticionEntradas.findOne({_id : id}, (error, data)=>{
+                //Sacando la diferencia de cantidad
+                difCantidad = data.Cantidad - Cantidad;
+                /*console.log("En la entrada " + data.Cantidad);
+                console.log("La diferencia " + difCantidad);*/
+            });
 
-        //SEGUNDA CONSULTA ACTUALIZACION DE DATOS DE LA PETICION DE SALIDA
-        const B = await PeticionEntradas.findOneAndUpdate({_id : id},
-            {Detalle : Detalle, Cantidad : Cantidad});
-        
-        //TERCERA CONSULTA OBTENER EL VALOR DE EXISTENCIAS DE PRODUCTO
-        const C = await Productos.findOne({_id : idProducto}, (error, data) =>{
-            //SUMAR LAS EXISTENCIAS Y LA DIFERENCIA DE LA ENTRADA Y SU ACTUALIZACION
-            Total = data.Existencias + difCantidad;
-            //console.log("El total " + Total);
-        });
+            //SEGUNDA CONSULTA ACTUALIZACION DE DATOS DE LA PETICION DE SALIDA
+            const B = await PeticionEntradas.findOneAndUpdate({_id : id},
+                {Detalle : Detalle, Cantidad : Cantidad});
+            
+            //TERCERA CONSULTA OBTENER EL VALOR DE EXISTENCIAS DE PRODUCTO
+            const C = await Productos.findOne({_id : idProducto}, (error, data) =>{
+                //SUMAR LAS EXISTENCIAS Y LA DIFERENCIA DE LA ENTRADA Y SU ACTUALIZACION
+                Total = data.Existencias + difCantidad;
+                //console.log("El total " + Total);
+            });
 
-        //CUARTA CONSULTA HACER LA ACTUALIZACION DE EXISTENCIAS EN PRODUCTO
-        const D = await Productos.findOneAndUpdate({_id : idProducto},
-            {Existencias : Total});
+            //CUARTA CONSULTA HACER LA ACTUALIZACION DE EXISTENCIAS EN PRODUCTO
+            const D = await Productos.findOneAndUpdate({_id : idProducto},
+                {Existencias : Total});
 
-        await session.commitTransaction();
-        session.endSession();
-        return res.status(200).json({
-            mensaje : "Peticion de entrada actualizada exitosamente"
-        });
+            await session.commitTransaction();
+            session.endSession();
+            return res.status(200).json({
+                mensaje : "Peticion de entrada actualizada exitosamente"
+            });
+        }else{
+            session.endSession();
+            return res.status(400).json({
+                mensaje : "Error: No se puede extraer mas producto del que hay en inventario"
+            });
+        }
     } catch (error) {
         // If an error occurred, abort the whole transaction and
         // undo any changes that might have happened
