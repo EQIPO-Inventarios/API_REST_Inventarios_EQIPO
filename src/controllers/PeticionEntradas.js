@@ -340,7 +340,7 @@ const entregada = async(req, res)=>{
         await session.commitTransaction();
         session.endSession();
         return res.status(200).json({
-            mensaje : "Peticion de Entrada aceptada"
+            mensaje : "Peticion de Entrada entrega confirmada exitosamente"
         });
     } catch (error) {
         // If an error occurred, abort the whole transaction and
