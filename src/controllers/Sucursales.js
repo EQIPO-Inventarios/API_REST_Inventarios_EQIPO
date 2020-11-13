@@ -57,7 +57,7 @@ const listar = async(req, res)=>{
     await Sucursales.find({Estado : true}, (error, data)=>{
         if(error){
             res.json({
-                mensaje : "Erro al listar proveedores",
+                mensaje : "Error al listar sucursales",
             });
         }else{
             res.status(200).json(
