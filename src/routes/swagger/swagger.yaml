@@ -2034,7 +2034,7 @@ definitions:
         type: number
       idSucursal:
         type: string
-      idSucursalDestion:
+      idSucursalDestino:
         type: string
     xml:
       name: AceptarPeticionEntrada
