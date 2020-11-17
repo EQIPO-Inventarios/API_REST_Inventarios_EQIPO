@@ -218,4 +218,38 @@ const actualizar = async(req, res)=>{
     })
 }
 
-module.exports = {crear, listar, actualizar}
+//GET 
+const listarId = async(req, res)=>{
+    const idSucursal = req.params.idSucursal;
+    let model = await Salidas.find({idSucursal : idSucursal}, (error, data) =>{
+        if(error){
+            res.json({
+                mensaje : "Error al listar las entradas",
+                error
+            });
+        }
+    });
+
+    let model2 = [];
+
+    model.forEach(element =>{
+
+        let fecha = element.Fecha
+        let fechaArreglada = format(fecha, "dd-mm-yyyy");
+        let model3 = {_id : element._id,
+            Fecha : fechaArreglada,
+            Detalle: element.Detalle,
+            idProducto: element.idProducto,
+            Cantidad: element.Cantidad,
+            Monto: element.Monto,
+            idSucursal: element.idSucursal,
+            idSucursalDestino : element.idSucursalDestino}
+
+         model2.push(model3)    
+        
+    })
+
+    res.json(model2);
+}
+
+module.exports = {crear, listar, actualizar, listarId}

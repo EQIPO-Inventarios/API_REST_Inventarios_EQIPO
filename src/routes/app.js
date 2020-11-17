@@ -80,6 +80,7 @@ app.put("/Entradas/actualizar", tokenValidator.rutasProtegidas, Entradas.actuali
 //Salidas
 app.post("/Salidas/crear", tokenValidator.rutasProtegidas, Salidas.crear);
 app.get("/Salidas/listar", tokenValidator.rutasProtegidas, Salidas.listar);
+app.get("/Salidas/listarporIdSucursal/:idSucursal", tokenValidator.rutasProtegidas, Salidas.listarId);
 app.put("/Salidas/actualizar", tokenValidator.rutasProtegidas, Salidas.actualizar);
 
 //Peticiones de entrada

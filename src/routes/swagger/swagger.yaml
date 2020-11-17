@@ -955,6 +955,33 @@ paths:
             items:
               $ref : '#/definitions/Salida'
 
+  /Salidas/listarporIdSucursal/{idSucursal}:
+    get:
+      tags:
+      - Salidas
+      summary: Listar todas las salidas correspondientes a una sucursal
+      description: Listar todos las salidas existentes correspondientes a una sucursal
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: idSucursal
+        in: path
+        description: ID de la sucursal a listar sus entradas
+        required: true
+        type: string
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Salida'
+
   /Salidas/actualizar:
     put:
       tags:
