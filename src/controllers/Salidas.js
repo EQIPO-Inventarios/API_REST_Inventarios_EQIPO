@@ -32,7 +32,7 @@ const crear = async(req, res)=>{
         const verificar = await Productos.findById({_id : idProducto})
         .then(x=>{
             CP = x.Existencias;
-            if(Cantidad <= CP){
+            if(Cantidad <= CP && Cantidad > 0){
                 Total = x.Existencias - Cantidad;
                 const A = Productos.findOneAndUpdate({_id : idProducto},
                     {Existencias : Total})
@@ -75,7 +75,7 @@ const crear = async(req, res)=>{
         const verificar = await ProductoSucursales.findById({_id : idProducto})
         .then(x=>{
             CP = x.Existencias;
-            if(Cantidad <= CP){
+            if(Cantidad <= CP && Cantidad > 0){
                 Total = x.Existencias - Cantidad;
                 const A = ProductoSucursales.findOneAndUpdate({_id : idProducto},
                     {Existencias : Total})
@@ -174,33 +174,39 @@ const actualizar = async(req, res)=>{
             const B =  Productos.findById({_id : idProducto})
             .then(x=>{
                 Total = x.Existencias + difCantidad;
-                const C = Productos.findByIdAndUpdate({_id : idProducto},
-                    {Existencias : Total})
-                .then(x=>{
-                    const D = Salidas.findByIdAndUpdate({_id : id},
-                        {Detalle : Detalle, Cantidad : Cantidad, Monto : Monto})
+                if(Cantidad <= (x.Existencias + CA) && Cantidad > 0){
+                    const C = Productos.findByIdAndUpdate({_id : idProducto},
+                        {Existencias : Total})
                     .then(x=>{
-                        res.status(200).json({
-                            mensaje : "Salida actualizada exitosamente",
-                            x
-                        })
-                    }).catch(x=>{
-                        Total += difCantidad; 
-                        const C = Productos.findByIdAndUpdate({_id : idProducto},
-                            {Existencias : Total})
-                        .then(x2=>{
-                            res.status(400).json({
-                                mensaje : "No se ha podido actualizar el producto",
+                        const D = Salidas.findByIdAndUpdate({_id : id},
+                            {Detalle : Detalle, Cantidad : Cantidad, Monto : Monto})
+                        .then(x=>{
+                            res.status(200).json({
+                                mensaje : "Salida actualizada exitosamente",
                                 x
                             })
+                        }).catch(x=>{
+                            Total += difCantidad; 
+                            const C = Productos.findByIdAndUpdate({_id : idProducto},
+                                {Existencias : Total})
+                            .then(x2=>{
+                                res.status(400).json({
+                                    mensaje : "No se ha podido actualizar el producto",
+                                    x
+                                })
+                            })
+                        })
+                    }).catch(x=>{
+                        res.status(400).json({
+                            mensaje : "Error al actualizar las existencias del producto",
+                            x
                         })
                     })
-                }).catch(x=>{
-                    res.status(400).json({
-                        mensaje : "Error al actualizar las existencias del producto",
-                        x
+                }else{
+                    return res.status(400).json({
+                        mensaje : "No se puede sacar mas producto del que hay en existencia"
                     })
-                })
+                }
             }).catch(x=>{
                 res.status(400).json({
                     mensaje : "Error no se encontro el producto",
@@ -208,7 +214,48 @@ const actualizar = async(req, res)=>{
                 })
             })
         }else{
-
+            const B =  ProductoSucursales.findById({_id : idProducto})
+            .then(x=>{
+                Total = x.Existencias + difCantidad;
+                if(Cantidad <= (x.Existencias + CA) && Cantidad > 0){
+                    const C = ProductoSucursales.findByIdAndUpdate({_id : idProducto},
+                        {Existencias : Total})
+                    .then(x=>{
+                        const D = Salidas.findByIdAndUpdate({_id : id},
+                            {Detalle : Detalle, Cantidad : Cantidad, Monto : Monto})
+                        .then(x=>{
+                            res.status(200).json({
+                                mensaje : "Salida actualizada exitosamente",
+                                x
+                            })
+                        }).catch(x=>{
+                            Total += difCantidad; 
+                            const C = ProductoSucursales.findByIdAndUpdate({_id : idProducto},
+                                {Existencias : Total})
+                            .then(x2=>{
+                                res.status(400).json({
+                                    mensaje : "No se ha podido actualizar el producto",
+                                    x
+                                })
+                            })
+                        })
+                    }).catch(x=>{
+                        res.status(400).json({
+                            mensaje : "Error al actualizar las existencias del producto",
+                            x
+                        })
+                    })
+                }else{
+                    return res.status(400).json({
+                        mensaje : "No se puede sacar mas producto del que hay en existencia"
+                    })
+                }
+            }).catch(x=>{
+                res.status(400).json({
+                    mensaje : "Error no se encontro el producto",
+                    x
+                })
+            })
         }
     }).catch(x=>{
         res.status(400).json({
