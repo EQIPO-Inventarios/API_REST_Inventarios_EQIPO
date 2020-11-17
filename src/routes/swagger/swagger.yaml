@@ -2036,7 +2036,7 @@ definitions:
         type: string
       idProducto:
         type: string
-      idSucursal:
+      idSucursalDestino:
         type: string
     xml:
       name: EntregadaPeticionEntrada
