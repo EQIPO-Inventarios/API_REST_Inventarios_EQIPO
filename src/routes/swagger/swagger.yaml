@@ -879,6 +879,33 @@ paths:
             items:
               $ref : '#/definitions/Entrada'
 
+  /Entradas/listarporIdSucursal/{idSucursal}:
+    get:
+      tags:
+      - Entradas
+      summary: Listar todas las entradas correspondientes a una sucursal
+      description: Listar todos las entradas existentes correspondientes a una sucursal
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: idSucursal
+        in: path
+        description: ID de la sucursal a listar sus entradas
+        required: true
+        type: string
+      security:
+      - api_key: []
+      
+      responses:
+        200:
+          description: OK
+          schema :
+            type : array
+            items:
+              $ref : '#/definitions/Entrada'
+
   /Entradas/actualizar:
     put:
       tags:

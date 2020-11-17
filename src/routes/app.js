@@ -75,6 +75,7 @@ app.delete("/ProductoSucursales/eliminar/:_id",tokenValidator.rutasProtegidas , 
 //Entradas
 app.post("/Entradas/crear", tokenValidator.rutasProtegidas, Entradas.crear);
 app.get("/Entradas/listar", tokenValidator.rutasProtegidas, Entradas.listar);
+app.get("/Entradas/listarporIdSucursal/:idSucursal", tokenValidator.rutasProtegidas, Entradas.listarId);
 app.put("/Entradas/actualizar", tokenValidator.rutasProtegidas, Entradas.actualizar);
 
 //Salidas
