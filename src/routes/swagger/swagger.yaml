@@ -1248,7 +1248,7 @@ paths:
               $ref : '#/definitions/PeticionEntradas'
 
   /PeticionEntradas/eliminar:
-    delete:
+    post:
       tags:
       - PeticionEntradas
       summary: Eliminar una Peticion de Entrada
