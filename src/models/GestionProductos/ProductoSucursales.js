@@ -16,8 +16,7 @@ const productoSucursalesSchema = mongoose.Schema(
     NombreProducto: {
       type : String,
       required : true,
-      trim : true,
-      unique : true
+      trim : true
     },
     Material: {
       type : String,
